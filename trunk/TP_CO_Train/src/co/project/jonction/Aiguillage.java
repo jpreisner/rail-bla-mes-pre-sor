@@ -9,7 +9,7 @@ import co.project.rail.Rail;
 public class Aiguillage extends Jonction {
 
 	/* au moins 3 rails*/
-	private List<Rail> lRail;
+	private ArrayList<Rail> lRail;
 	
 	/* element de régulation*/
 	private ElemRegulation elemRegul;
