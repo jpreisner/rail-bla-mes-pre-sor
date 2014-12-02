@@ -1,5 +1,5 @@
 package co.project.capteur;
 
-public class Capteur {
+public class Capteur extends  {
 
 }
