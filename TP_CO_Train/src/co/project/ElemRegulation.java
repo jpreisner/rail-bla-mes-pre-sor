@@ -2,7 +2,7 @@ package co.project;
 
 import co.project.capteur.Capteur;
 import co.project.feu.Semaphore;
-import co.project.jonction.Aiguillage;
+import co.project.infrastructure.jonction.Aiguillage;
 
 public class ElemRegulation {
 

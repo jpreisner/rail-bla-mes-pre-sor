@@ -1,9 +1,9 @@
-package co.project.jonction;
+package co.project.infrastructure.jonction;
 import java.util.ArrayList;
 import java.util.List;
 
 import co.project.ElemRegulation;
-import co.project.rail.Rail;
+import co.project.infrastructure.rail.Rail;
 
 
 public class Aiguillage extends Jonction {

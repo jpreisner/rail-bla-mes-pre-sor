@@ -1,4 +1,4 @@
-package co.project.jonction;
+package co.project.infrastructure.jonction;
 
 public class Jonction {
 
