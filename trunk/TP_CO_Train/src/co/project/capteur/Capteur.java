@@ -1,5 +1,7 @@
 package co.project.capteur;
 
-public class Capteur  {
+import java.util.Observable;
+
+public class Capteur extends Observable {
 
 }
