@@ -1,7 +1,7 @@
-package co.project.rail;
+package co.project.infrastructure.rail;
 
 import co.project.feu.Semaphore;
-import co.project.jonction.Jonction;
+import co.project.infrastructure.jonction.Jonction;
 
 
 public class Rail {

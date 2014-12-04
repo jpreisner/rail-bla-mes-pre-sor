@@ -4,9 +4,9 @@ import co.project.exception.ErreurSignalisation;
 
 public class FeuBicolore extends Semaphore {
 
-	protected boolean feuVert;
+	private boolean feuVert;
 	/* ARRET IMMEDIAT */
-	protected boolean feuRouge;
+	private boolean feuRouge;
 	
 	@Override
 	public EtatFeu getEtatActuel() throws ErreurSignalisation {

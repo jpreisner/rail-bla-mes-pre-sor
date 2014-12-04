@@ -1,4 +1,4 @@
-package co.project.rail;
+package co.project.infrastructure.rail;
 
 import co.project.ElemRegulation;
 import co.project.capteur.Capteur;

@@ -2,9 +2,13 @@ package co.project.feu;
 
 import co.project.exception.ErreurSignalisation;
 
-public class FeuTricolore extends FeuBicolore {
+public class FeuTricolore extends Semaphore {
 
+	private boolean feuVert;
+	/* VITESSE/2 */
 	private boolean feuOrange;
+	/* ARRET IMMEDIAT */
+	private boolean feuRouge;
 	
 	@Override
 	public EtatFeu getEtatActuel() throws ErreurSignalisation {

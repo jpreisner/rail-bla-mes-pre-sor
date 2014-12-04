@@ -1,6 +1,6 @@
-package co.project.jonction;
+package co.project.infrastructure.jonction;
 
-import co.project.rail.Rail;
+import co.project.infrastructure.rail.Rail;
 
 public class JonctionSimple extends Jonction {
 
