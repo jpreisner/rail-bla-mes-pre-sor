@@ -1,8 +1,7 @@
 package co.project.infrastructure.jonction;
 
-public class Jonction {
+import co.project.infrastructure.Infrastructure;
 
-	public Jonction() {
-	}
+public class Jonction extends Infrastructure{
 
 }

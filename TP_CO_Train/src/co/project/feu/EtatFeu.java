@@ -1,7 +1,11 @@
 package co.project.feu;
 
-public enum EtatFeu {
-	  VERT,
-	  ORANGE,
-	  ROUGE;	
+import co.project.exception.ErreurSignalisation;
+
+public abstract class EtatFeu {
+
+	public abstract EtatFeuEnum getEtatActuel() throws ErreurSignalisation;
+
+	public abstract void setEtatActuel(EtatFeuEnum etat) throws ErreurSignalisation;
+
 }
