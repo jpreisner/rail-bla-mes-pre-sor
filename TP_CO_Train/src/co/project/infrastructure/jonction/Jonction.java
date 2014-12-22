@@ -10,8 +10,16 @@ public abstract class Jonction extends Infrastructure {
 		super(0, idJonction);
 	}
 
+	/**
+	 * @param rail
+	 * @return le rail suivant connecté a la joncton du rail en parametre
+	 * @throws ErreurJonction
+	 */
 	abstract public Rail getRailSuivant(Rail rail) throws ErreurJonction;
 	
+	/**
+	 * @return true/false si le train est sur la jonction
+	 */
 	abstract public boolean trainPasse();
 
 }

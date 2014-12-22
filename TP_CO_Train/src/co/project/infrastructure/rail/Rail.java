@@ -15,8 +15,8 @@ public class Rail extends Infrastructure {
 
 	private HashMap<Capteur, Integer> capteurNumeroTroncon;
 
-	public Rail(int longueur, int idRail) {
-		super(longueur, idRail);
+	public Rail(int idRail, int longueur) {
+		super(idRail, longueur);
 	}
 
 	public Jonction getJ1() {

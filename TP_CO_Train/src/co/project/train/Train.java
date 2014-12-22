@@ -7,6 +7,7 @@ public class Train {
 	private int taille;
 	/* exprimee en nombre de tronçon par unité de temps */
 	private double vitesseMax;
+	/* pattern STATE */
 	private EtatCourant etatTrain;
 
 	/* position de la tête sur les tronçons */

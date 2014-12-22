@@ -9,24 +9,37 @@ import co.project.infrastructure.rail.Rail;
 
 public class FabriqueInfrastructure {
 
+	/**
+	 * @param i
+	 * @return un rail de i km
+	 */
 	public static Rail creerRail(int i) {
 		return new Rail(1, i);
 	}
-	
-	public static JonctionSimple connecterDeuxRails(Rail r1, Rail r2){
+
+	/**
+	 * @param r1
+	 * @param r2
+	 * @return JonctionSimple des 2 rails r1 et r2
+	 */
+	public static JonctionSimple connecterDeuxRails(Rail r1, Rail r2) {
 		return new JonctionSimple(2, r1, r2);
 	}
-	
-	public static Butee connecterUnRail(Rail rail){
+
+	/**
+	 * @param rail
+	 * @return Butee connectée a 1 rail
+	 */
+	public static Butee connecterUnRail(Rail rail) {
 		return new Butee(3, rail);
 	}
-	
-	public static Aiguillage connecterPlusieursRails(ArrayList<Rail> listRails){
+
+	/**
+	 * @param listRails
+	 * @return Aiguillage de plusieurs rails
+	 */
+	public static Aiguillage connecterPlusieursRails(ArrayList<Rail> listRails) {
 		return new Aiguillage(4, listRails);
 	}
-	
-	public void creer10kmRail() {
-		Rail r1 = FabriqueInfrastructure.creerRail(1);
-		r1.setJ1(FabriqueInfrastructure.connecterUnRail(r1));
-	}
+
 }
