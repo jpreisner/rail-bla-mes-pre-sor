@@ -1,6 +1,7 @@
 package co.project.exception;
 
 public class ErreurCollision  extends Exception{
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @param string

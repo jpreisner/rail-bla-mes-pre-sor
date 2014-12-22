@@ -1,6 +1,5 @@
 package co.project.infrastructure.rail;
 
-import java.math.BigInteger;
 import java.util.HashMap;
 
 import co.project.capteur.Capteur;
@@ -8,7 +7,7 @@ import co.project.infrastructure.Infrastructure;
 import co.project.infrastructure.jonction.Jonction;
 
 public class Rail extends Infrastructure {
-	/* nb de troncons TODO*/
+	/* nb de troncons TODO */
 
 	/* 2 jonctions aux extrémités du rail */
 	private Jonction j1;
@@ -20,12 +19,28 @@ public class Rail extends Infrastructure {
 		super(longueur, idRail);
 	}
 
+	public Jonction getJ1() {
+		return j1;
+	}
+
 	public void setJ1(Jonction j1) {
 		this.j1 = j1;
 	}
 
+	public Jonction getJ2() {
+		return j2;
+	}
+
 	public void setJ2(Jonction j2) {
 		this.j2 = j2;
+	}
+
+	public HashMap<Capteur, Integer> getCapteurNumeroTroncon() {
+		return capteurNumeroTroncon;
+	}
+
+	public void setCapteurNumeroTroncon(HashMap<Capteur, Integer> capteurNumeroTroncon) {
+		this.capteurNumeroTroncon = capteurNumeroTroncon;
 	}
 
 	@Override

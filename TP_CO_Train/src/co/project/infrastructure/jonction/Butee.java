@@ -1,7 +1,5 @@
 package co.project.infrastructure.jonction;
 
-import java.math.BigInteger;
-
 import co.project.exception.ErreurJonction;
 import co.project.infrastructure.rail.Rail;
 
@@ -13,9 +11,19 @@ public class Butee extends Jonction {
 		this.rail = rail;
 	}
 
+	public Rail getRail() {
+		return rail;
+	}
+
 	@Override
 	public Rail getRailSuivant(Rail rail) throws ErreurJonction {
 		throw new ErreurJonction("Fin de la voie");
+	}
+
+	@Override
+	public boolean trainPasse() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
