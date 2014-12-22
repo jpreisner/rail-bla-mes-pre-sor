@@ -1,4 +1,5 @@
 package co.project.infrastructure.jonction;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,8 @@ public class Aiguillage extends Jonction {
 	/* element de régulation*/
 	private ElemRegulation elemRegul;
 	
-	public Aiguillage(ArrayList<Rail> lRail) {
+	public Aiguillage(int idJonction, ArrayList<Rail> lRail) {
+		super(idJonction);
 		this.lRail = lRail;
 	}
 

@@ -1,12 +1,15 @@
 package co.project.infrastructure.jonction;
 
+import java.math.BigInteger;
+
 import co.project.exception.ErreurJonction;
 import co.project.infrastructure.rail.Rail;
 
 public class Butee extends Jonction {
 	private Rail rail;
 
-	public Butee(Rail rail) {
+	public Butee(int idJonction, Rail rail) {
+		super(idJonction);
 		this.rail = rail;
 	}
 

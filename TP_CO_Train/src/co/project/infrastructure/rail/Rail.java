@@ -8,8 +8,7 @@ import co.project.infrastructure.Infrastructure;
 import co.project.infrastructure.jonction.Jonction;
 
 public class Rail extends Infrastructure {
-	private static BigInteger idRail;
-	/* nb de troncons */
+	/* nb de troncons TODO*/
 
 	/* 2 jonctions aux extrémités du rail */
 	private Jonction j1;
@@ -17,8 +16,8 @@ public class Rail extends Infrastructure {
 
 	private HashMap<Capteur, Integer> capteurNumeroTroncon;
 
-	public Rail(int longueur) {
-		super(longueur);
+	public Rail(int longueur, int idRail) {
+		super(longueur, idRail);
 	}
 
 	public void setJ1(Jonction j1) {
@@ -39,7 +38,7 @@ public class Rail extends Infrastructure {
 		}
 		try {
 			Rail r = (Rail) obj;
-			if (r.idRail == this.idRail) {
+			if (r.idInfrastructure == this.idInfrastructure) {
 				return true;
 			} else {
 				return false;
