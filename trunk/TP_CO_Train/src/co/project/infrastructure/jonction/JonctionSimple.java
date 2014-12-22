@@ -1,7 +1,5 @@
 package co.project.infrastructure.jonction;
 
-import java.math.BigInteger;
-
 import co.project.exception.ErreurJonction;
 import co.project.infrastructure.rail.Rail;
 
@@ -26,4 +24,11 @@ public class JonctionSimple extends Jonction {
 			throw new ErreurJonction("Erreur dans la récuperation du rail suivant");
 		}
 	}
+
+	@Override
+	public boolean trainPasse() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
