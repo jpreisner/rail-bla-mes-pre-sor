@@ -24,4 +24,9 @@ public class FabriqueInfrastructure {
 	public static Aiguillage connecterPlusieursRails(ArrayList<Rail> listRails){
 		return new Aiguillage(listRails);
 	}
+	
+	public void creer10kmRail() {
+		Rail r1 = FabriqueInfrastructure.creerRail(1);
+		r1.setJ1(FabriqueInfrastructure.connecterUnRail(r1));
+	}
 }
