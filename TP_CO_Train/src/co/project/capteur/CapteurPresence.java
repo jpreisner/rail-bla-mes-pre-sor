@@ -13,6 +13,7 @@ public class CapteurPresence extends Capteur {
 	 * sinon
 	 */
 	public boolean trainPassant() {
+		notifyObservers();
 		return false;
 	}
 
