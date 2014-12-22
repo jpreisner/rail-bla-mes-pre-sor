@@ -18,7 +18,7 @@ public class Rail extends Infrastructure {
 	private HashMap<Capteur, Integer> capteurNumeroTroncon;
 
 	public Rail(int longueur) {
-		this.longueur = longueur;
+		super(longueur);
 	}
 
 	public void setJ1(Jonction j1) {

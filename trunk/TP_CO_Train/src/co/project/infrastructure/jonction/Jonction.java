@@ -6,6 +6,10 @@ import co.project.infrastructure.rail.Rail;
 
 public abstract class Jonction extends Infrastructure {
 
+	public Jonction() {
+		super(0);
+	}
+
 	abstract public Rail getRailSuivant(Rail rail) throws ErreurJonction;
 
 }

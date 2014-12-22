@@ -2,10 +2,32 @@ package co.project.train;
 
 public class EtatCourant {
 
-	/* FIXME type*/
-	private int positionCourante;
+	private float positionCourante;
 	private boolean sensDeplacement;
-	
-	/* vitesse en nombre de tronçons par Unité de Temps*/
+	/* vitesse en nombre de tronçons par Unité de Temps */
 	private double vitesseCourante;
+
+	public float getPositionCourante() {
+		return positionCourante;
+	}
+
+	public void setPositionCourante(float positionCourante) {
+		this.positionCourante = positionCourante;
+	}
+
+	public boolean isSensDeplacement() {
+		return sensDeplacement;
+	}
+
+	public void setSensDeplacement(boolean sensDeplacement) {
+		this.sensDeplacement = sensDeplacement;
+	}
+
+	public double getVitesseCourante() {
+		return vitesseCourante;
+	}
+
+	public void setVitesseCourante(double vitesseCourante) {
+		this.vitesseCourante = vitesseCourante;
+	}
 }
