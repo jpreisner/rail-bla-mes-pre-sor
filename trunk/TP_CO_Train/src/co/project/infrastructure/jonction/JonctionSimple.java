@@ -31,4 +31,9 @@ public class JonctionSimple extends Jonction {
 		return false;
 	}
 
+	@Override
+	public String toString() {
+		return super.toString()+
+				"Jonction Simple ]";
+	}
 }

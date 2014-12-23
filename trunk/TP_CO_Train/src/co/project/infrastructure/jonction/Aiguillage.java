@@ -38,4 +38,11 @@ public class Aiguillage extends Jonction {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return super.toString()+
+				"Aiguillage à "+lRail.size()+" rails ]";
+	}
 }

@@ -17,4 +17,9 @@ public class FeuTricolore extends Semaphore {
 	public void setEtatActuel(EtatFeuEnum etatFeu) throws ErreurSignalisation {
 		etatActuel.setEtatActuel(etatFeu);
 	}
+	
+	@Override
+	public String toString() {
+		return "Feu Tricolore, "+etatActuel;
+	}
 }

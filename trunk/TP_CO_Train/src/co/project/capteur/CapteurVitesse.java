@@ -13,4 +13,9 @@ public class CapteurVitesse extends Capteur {
 		notifyObservers(0);
 		return 0;
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString()+" Vitesse";
+	}
 }

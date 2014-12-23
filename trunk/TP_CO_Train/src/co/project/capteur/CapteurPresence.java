@@ -17,4 +17,8 @@ public class CapteurPresence extends Capteur {
 		return false;
 	}
 
+	@Override
+	public String toString() {
+		return super.toString()+" Presence";
+	}
 }

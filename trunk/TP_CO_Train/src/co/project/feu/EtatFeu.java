@@ -17,4 +17,12 @@ public abstract class EtatFeu {
 	 */
 	public abstract void setEtatActuel(EtatFeuEnum etat) throws ErreurSignalisation;
 
+	@Override
+	public String toString(){
+		try {
+			return getEtatActuel().toString();
+		} catch (ErreurSignalisation e) {
+			return "ErreurSignalisation";
+		}
+	}
 }

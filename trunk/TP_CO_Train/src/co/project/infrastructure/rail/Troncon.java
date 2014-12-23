@@ -16,4 +16,11 @@ public class Troncon {
 	public void setCapteur(Capteur capteur) {
 		this.capteur = capteur;
 	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return super.toString()+
+				"[ Troncon ]";
+	}
 }
