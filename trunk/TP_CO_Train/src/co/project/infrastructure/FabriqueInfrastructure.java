@@ -14,7 +14,7 @@ public class FabriqueInfrastructure {
 	 * @return un rail de i km
 	 */
 	public static Rail creerRail(int i) {
-		return new Rail(1, i);
+		return new Rail(i);
 	}
 
 	/**

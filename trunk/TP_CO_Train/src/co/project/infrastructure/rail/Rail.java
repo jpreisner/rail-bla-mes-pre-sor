@@ -9,14 +9,14 @@ import co.project.infrastructure.jonction.Jonction;
 public class Rail extends Infrastructure {
 	/* nb de troncons TODO */
 
-	/* 2 jonctions aux extrémités du rail */
+	/* 2 jonctions aux extrï¿½mitï¿½s du rail */
 	private Jonction j1;
 	private Jonction j2;
 
 	private HashMap<Capteur, Integer> capteurNumeroTroncon;
 
-	public Rail(int idRail, int longueur) {
-		super(idRail, longueur);
+	public Rail(int longueur) {
+		super(longueur);
 	}
 
 	public Jonction getJ1() {

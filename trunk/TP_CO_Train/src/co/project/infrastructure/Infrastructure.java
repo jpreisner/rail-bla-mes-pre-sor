@@ -3,9 +3,11 @@ package co.project.infrastructure;
 public class Infrastructure {
 	protected int longueur = 0; // Longueur de l'element
 	protected int idInfrastructure;
-
-	public Infrastructure(int idInfra, int longueur) {
-		this.idInfrastructure = idInfra;
+	private static int id = 0;
+	
+	public Infrastructure(int longueur) {
+		this.idInfrastructure = id;
+		id++;
 		this.longueur = longueur;
 	}
 	
