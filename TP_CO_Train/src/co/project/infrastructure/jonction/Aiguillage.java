@@ -11,7 +11,7 @@ public class Aiguillage extends Jonction {
 	/* au moins 3 rails */
 	private ArrayList<Rail> lRail;
 
-	/* element de régulation */
+	/* element de rï¿½gulation */
 	private ElemRegulation elemRegul;
 
 	public Aiguillage(int idJonction, ArrayList<Rail> lRail) {
@@ -33,6 +33,7 @@ public class Aiguillage extends Jonction {
 		return null;
 	}
 
+	//TODO Ne pas bouger aiguillage sur lequel il y a un vagon dessus
 	@Override
 	public boolean trainPasse() {
 		// TODO Auto-generated method stub
@@ -43,6 +44,6 @@ public class Aiguillage extends Jonction {
 	public String toString() {
 		// TODO Auto-generated method stub
 		return super.toString()+
-				"Aiguillage à "+lRail.size()+" rails ]";
+				"Aiguillage ï¿½ "+lRail.size()+" rails ]";
 	}
 }
