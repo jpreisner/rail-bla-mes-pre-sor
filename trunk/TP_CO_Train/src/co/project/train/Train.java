@@ -3,14 +3,14 @@ package co.project.train;
 public class Train {
 
 	private int id;
-	/* exprimee en nb de tronçons */
+	/* exprimee en nb de troncons */
 	private int taille;
-	/* exprimee en nombre de tronçon par unité de temps */
+	/* exprimee en nombre de troncon par unite de temps */
 	private double vitesseMax;
 	/* pattern STATE */
 	private EtatCourant etatTrain;
 
-	/* position de la tête sur les tronçons */
+	/* position de la tete sur les troncons */
 
 	public Train(int id, int taille, double vitesseMax) {
 		this.id = id;

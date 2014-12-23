@@ -16,7 +16,7 @@ public abstract class Semaphore {
 	}
 
 	/**
-	 * modifie l'état du feu en passant par l'état du feu
+	 * modifie l'etat du feu en passant par l'etat du feu
 	 * 
 	 * @param EtatFeuEnum
 	 * @throws ErreurSignalisation

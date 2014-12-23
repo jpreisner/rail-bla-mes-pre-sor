@@ -8,7 +8,7 @@ public class CapteurVitesse extends Capteur {
 		addObserver(elm);
 	}
 
-	/* FIXME vitesse du train passant sur le tronçon */
+	/* FIXME vitesse du train passant sur le troncon */
 	public double getVitesse() {
 		notifyObservers(0);
 		return 0;

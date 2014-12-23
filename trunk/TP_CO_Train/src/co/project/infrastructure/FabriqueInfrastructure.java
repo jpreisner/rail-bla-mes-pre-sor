@@ -28,7 +28,7 @@ public class FabriqueInfrastructure {
 
 	/**
 	 * @param rail
-	 * @return Butee connect�e a 1 rail
+	 * @return Butee connectee a 1 rail
 	 */
 	public static Butee connecterUnRail(Rail rail) {
 		return new Butee(3, rail);

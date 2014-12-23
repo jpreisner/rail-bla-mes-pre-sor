@@ -49,8 +49,8 @@ public class ElemRegulation implements Observer {
 
 	/**
 	 * 
-	 * @param Observable o : observable ayant envoyé une notification
-	 * @param Object arg : objet notifié (peut être nulle)
+	 * @param Observable o : observable ayant envoye une notification
+	 * @param Object arg : objet notifie (peut etre nulle)
 	 */
 	@Override
 	public void update(Observable o, Object arg) {

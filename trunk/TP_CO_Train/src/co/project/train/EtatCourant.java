@@ -4,7 +4,7 @@ public class EtatCourant {
 
 	private float positionCourante;
 	private boolean sensDeplacement;
-	/* vitesse en nombre de tronçons par Unité de Temps */
+	/* vitesse en nombre de troncons par Unite de Temps */
 	private double vitesseCourante;
 
 	public float getPositionCourante() {
