@@ -38,7 +38,7 @@ public class ElemRegulation implements Observer {
 	public Aiguillage getAiguillage() {
 		return aiguillage;
 	}
-
+	
 	public void setAiguillage(Aiguillage aiguillage) {
 		this.aiguillage = aiguillage;
 	}
@@ -47,6 +47,11 @@ public class ElemRegulation implements Observer {
 	public void ActionSemaphore() {
 	}
 
+	/**
+	 * 
+	 * @param Observable o : observable ayant envoyé une notification
+	 * @param Object arg : objet notifié (peut être nulle)
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub

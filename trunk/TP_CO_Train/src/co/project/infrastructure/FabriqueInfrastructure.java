@@ -28,7 +28,7 @@ public class FabriqueInfrastructure {
 
 	/**
 	 * @param rail
-	 * @return Butee connectée a 1 rail
+	 * @return Butee connectï¿½e a 1 rail
 	 */
 	public static Butee connecterUnRail(Rail rail) {
 		return new Butee(3, rail);
@@ -40,6 +40,16 @@ public class FabriqueInfrastructure {
 	 */
 	public static Aiguillage connecterPlusieursRails(ArrayList<Rail> listRails) {
 		return new Aiguillage(4, listRails);
+	}
+	
+	public static Aiguillage creeAiguillageX()
+	{
+		return null;
+	}
+	
+	public static Aiguillage creeAiguillageY()
+	{
+		return null;
 	}
 
 }
