@@ -4,16 +4,20 @@ import co.project.exception.ErreurSignalisation;
 
 public abstract class Semaphore {
 
-	protected EtatFeu etatActuel;
+	protected EtatFeuEnum[] etatsPossibles;
+	protected EtatFeuEnum etatActuel;
 
 	/**
 	 * @return etat actuel du feu
 	 * @throws ErreurSignalisation
 	 */
-	public abstract EtatFeuEnum getEtatActuel() throws ErreurSignalisation;
+	public EtatFeuEnum getEtatActuel() throws ErreurSignalisation {
+		return etatActuel;
+	}
 
 	/**
 	 * modifie l'état du feu en passant par l'état du feu
+	 * 
 	 * @param EtatFeuEnum
 	 * @throws ErreurSignalisation
 	 */
