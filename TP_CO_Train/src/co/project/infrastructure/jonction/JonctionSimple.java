@@ -21,7 +21,7 @@ public class JonctionSimple extends Jonction {
 		} else if (rail.equals(this.rail2)) {
 			return this.rail1;
 		} else {
-			throw new ErreurJonction("Erreur dans la récuperation du rail suivant");
+			throw new ErreurJonction("Erreur dans la recuperation du rail suivant");
 		}
 	}
 

@@ -9,7 +9,7 @@ import co.project.infrastructure.jonction.Jonction;
 public class Rail extends Infrastructure {
 	/* nb de troncons TODO */
 
-	/* 2 jonctions aux extr�mit�s du rail */
+	/* 2 jonctions aux extremitees du rail */
 	private Jonction j1;
 	private Jonction j2;
 
