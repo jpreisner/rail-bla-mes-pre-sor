@@ -7,12 +7,12 @@ import co.project.infrastructure.rail.Rail;
 public abstract class Jonction extends Infrastructure {
 
 	public Jonction(int idJonction) {
-		super(0, idJonction);
+		super(idJonction);
 	}
 
 	/**
 	 * @param rail
-	 * @return le rail suivant connecté a la joncton du rail en parametre
+	 * @return le rail suivant connectï¿½ a la joncton du rail en parametre
 	 * @throws ErreurJonction
 	 */
 	abstract public Rail getRailSuivant(Rail rail) throws ErreurJonction;
