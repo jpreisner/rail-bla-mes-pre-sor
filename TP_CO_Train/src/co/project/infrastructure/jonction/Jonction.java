@@ -22,4 +22,10 @@ public abstract class Jonction extends Infrastructure {
 	 */
 	abstract public boolean trainPasse();
 
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return super.toString()+
+				"[ Jonction ";
+	}
 }

@@ -8,4 +8,10 @@ public class Infrastructure {
 		this.idInfrastructure = idInfra;
 		this.longueur = longueur;
 	}
+	
+	@Override
+	public String toString() {
+		return "[ Element Infrastructure id : "+idInfrastructure+
+				"\nlongueur : "+longueur+" ]\n";
+	}
 }

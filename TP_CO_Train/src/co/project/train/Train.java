@@ -50,4 +50,10 @@ public class Train {
 		this.etatTrain = etatTrain;
 	}
 
+	@Override
+	public String toString() {
+		return "Train [ id : " + id + " \n" + 
+				"taille : " + taille+ " \n" + 
+				"Vitesse maximale : " + vitesseMax+ " \n" + etatTrain+" ] ";
+	}
 }
