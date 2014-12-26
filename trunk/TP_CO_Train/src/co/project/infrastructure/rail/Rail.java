@@ -43,6 +43,14 @@ public class Rail extends Infrastructure {
 		this.capteurNumeroTroncon = capteurNumeroTroncon;
 	}
 
+	/**
+	 * @return true/false si le train est sur la jonction
+	 */
+	public boolean trainPasse(){
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) {
