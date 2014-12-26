@@ -14,6 +14,14 @@ public abstract class Semaphore {
 	public EtatFeuEnum getEtatActuel() throws ErreurSignalisation {
 		return etatActuel;
 	}
+	
+	/**
+	 * @return etats possibles du feu
+	 * @throws ErreurSignalisation
+	 */
+	public EtatFeuEnum[] getEtatsPossibles() throws ErreurSignalisation {
+		return etatsPossibles;
+	}
 
 	/**
 	 * modifie l'etat du feu en passant par l'etat du feu

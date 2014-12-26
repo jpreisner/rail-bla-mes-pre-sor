@@ -2,7 +2,8 @@ package co.project.train;
 
 public class Train {
 
-	private int id;
+	private static int id = 0;
+	private int idTrain;
 	/* exprimee en nb de troncons */
 	private int taille;
 	/* exprimee en nombre de troncon par unite de temps */
@@ -12,18 +13,15 @@ public class Train {
 
 	/* position de la tete sur les troncons */
 
-	public Train(int id, int taille, double vitesseMax) {
-		this.id = id;
+	public Train(int taille, double vitesseMax) {
+		this.idTrain = id;
 		this.taille = taille;
 		this.vitesseMax = vitesseMax;
+		id++;
 	}
 
 	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
+		return idTrain;
 	}
 
 	public int getTaille() {
@@ -52,8 +50,7 @@ public class Train {
 
 	@Override
 	public String toString() {
-		return "Train [ id : " + id + " \n" + 
-				"taille : " + taille+ " \n" + 
-				"Vitesse maximale : " + vitesseMax+ " \n" + etatTrain+" ] ";
+		return "Train [ id : " + idTrain + " \n" + "taille : " + taille + " \n" + "Vitesse maximale : " + vitesseMax
+				+ " \n" + etatTrain + " ] ";
 	}
 }
