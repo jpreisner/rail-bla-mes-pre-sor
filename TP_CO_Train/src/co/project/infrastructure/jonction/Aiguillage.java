@@ -3,6 +3,7 @@ package co.project.infrastructure.jonction;
 import java.util.ArrayList;
 
 import co.project.ElemRegulation;
+import co.project.exception.ErreurAiguillage;
 import co.project.exception.ErreurJonction;
 import co.project.infrastructure.rail.Rail;
 
@@ -27,21 +28,29 @@ public class Aiguillage extends Jonction {
 	public ElemRegulation getElemRegul() {
 		return elemRegul;
 	}
-	
+
 	public Rail getRailConnecte1() {
 		return railConnecte1;
 	}
-	
+
 	public Rail getRailConnecte2() {
 		return railConnecte2;
 	}
-	
-	public void setRailConnecte1(Rail r1) {
-		this.railConnecte1 = r1;
+
+	public void setRailConnecte1(Rail r1) throws ErreurAiguillage {
+		if (trainPasse()) {
+			throw new ErreurAiguillage("changement d'aiguillage impossible sur le rail : "+r1);
+		} else {
+			this.railConnecte1 = r1;
+		}
 	}
-	
-	public void setRailConnecte2(Rail r2) {
-		this.railConnecte2 = r2;
+
+	public void setRailConnecte2(Rail r2) throws ErreurAiguillage {
+		if (trainPasse()) {
+			throw new ErreurAiguillage("changement d'aiguillage impossible sur le rail : "+r2);
+		} else {
+			this.railConnecte2 = r2;
+		}
 	}
 
 	@Override
@@ -49,16 +58,13 @@ public class Aiguillage extends Jonction {
 		return (rail.equals(railConnecte1)) ? railConnecte2 : railConnecte1;
 	}
 
-	// TODO Ne pas bouger aiguillage sur lequel il y a un wagon dessus
 	@Override
 	public boolean trainPasse() {
-		// TODO Auto-generated method stub
-		return false;
+		return elemRegul.getCapteur().trainPassant();
 	}
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return super.toString() + "Aiguillage a " + lRail.size() + " rails ]";
 	}
 }

@@ -19,8 +19,6 @@ public class Troncon {
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString()+
-				"[ Troncon ]";
+		return super.toString()+"[ Troncon ]";
 	}
 }

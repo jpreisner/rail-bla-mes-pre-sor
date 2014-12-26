@@ -17,12 +17,12 @@ public class Butee extends Jonction {
 
 	@Override
 	public Rail getRailSuivant(Rail rail) throws ErreurJonction {
-		throw new ErreurJonction("Fin de la voie");
+		throw new ErreurJonction("Fin de la voie, depassement de butee");
 	}
 
+	/* */
 	@Override
 	public boolean trainPasse() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

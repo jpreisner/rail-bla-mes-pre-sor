@@ -18,4 +18,10 @@ public class CapteurVitesse extends Capteur {
 	public String toString() {
 		return super.toString()+" Vitesse";
 	}
+
+	@Override
+	public boolean trainPassant() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

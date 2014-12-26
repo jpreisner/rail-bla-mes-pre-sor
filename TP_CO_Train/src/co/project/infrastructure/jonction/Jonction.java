@@ -24,8 +24,6 @@ public abstract class Jonction extends Infrastructure {
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString()+
-				"[ Jonction ";
+		return super.toString()+"[ Jonction ";
 	}
 }
