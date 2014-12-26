@@ -73,8 +73,6 @@ public class Rail extends Infrastructure {
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString()+
-				"[ Rail ]";
+		return super.toString()+"[ Rail ]";
 	}
 }
