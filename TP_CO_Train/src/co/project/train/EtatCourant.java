@@ -2,16 +2,22 @@ package co.project.train;
 
 public class EtatCourant {
 
-	private float positionCourante;
+	private int positionCourante;
 	private boolean sensDeplacement;
 	/* vitesse en nombre de troncons par Unite de Temps */
-	private double vitesseCourante;
+	private int vitesseCourante;
+	
+	public EtatCourant(int positionCourante, boolean sensDeplacement, int vitesseCourante) {
+		this.positionCourante = positionCourante;
+		this.sensDeplacement = sensDeplacement;
+		this.vitesseCourante = vitesseCourante;
+	}
 
-	public float getPositionCourante() {
+	public int getPositionCourante() {
 		return positionCourante;
 	}
 
-	public void setPositionCourante(float positionCourante) {
+	public void setPositionCourante(int positionCourante) {
 		this.positionCourante = positionCourante;
 	}
 
@@ -23,11 +29,11 @@ public class EtatCourant {
 		this.sensDeplacement = sensDeplacement;
 	}
 
-	public double getVitesseCourante() {
+	public int getVitesseCourante() {
 		return vitesseCourante;
 	}
 
-	public void setVitesseCourante(double vitesseCourante) {
+	public void setVitesseCourante(int vitesseCourante) {
 		this.vitesseCourante = vitesseCourante;
 	}
 

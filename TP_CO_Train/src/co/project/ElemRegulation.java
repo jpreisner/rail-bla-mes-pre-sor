@@ -4,6 +4,8 @@ import java.util.Observable;
 import java.util.Observer;
 
 import co.project.capteur.Capteur;
+import co.project.exception.ErreurSignalisation;
+import co.project.feu.EtatFeuEnum;
 import co.project.feu.Semaphore;
 import co.project.infrastructure.jonction.Aiguillage;
 
@@ -23,28 +25,22 @@ public class ElemRegulation implements Observer {
 		return capteur;
 	}
 
-	public void setCapteur(Capteur capteur) {
-		this.capteur = capteur;
-	}
-
 	public Semaphore getFeu() {
 		return feu;
-	}
-
-	public void setFeu(Semaphore feu) {
-		this.feu = feu;
 	}
 
 	public Aiguillage getAiguillage() {
 		return aiguillage;
 	}
-	
-	public void setAiguillage(Aiguillage aiguillage) {
-		this.aiguillage = aiguillage;
-	}
 
 	/* action en fonction des informations du capteur */
-	public void ActionSemaphore() {
+	public void ActionSemaphore(){
+		if(capteur.trainPassant()){
+			try {
+				getFeu().setEtatActuel(EtatFeuEnum.ROUGE);
+			} catch (ErreurSignalisation e) {
+			}
+		}
 	}
 
 	/**
