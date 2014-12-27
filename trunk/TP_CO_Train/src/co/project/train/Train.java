@@ -7,16 +7,17 @@ public class Train {
 	/* exprimee en nb de troncons */
 	private int taille;
 	/* exprimee en nombre de troncon par unite de temps */
-	private double vitesseMax;
+	private int vitesseMax;
 	/* pattern STATE */
 	private EtatCourant etatTrain;
 
 	/* position de la tete sur les troncons */
 
-	public Train(int taille, double vitesseMax) {
+	public Train(int taille, int vMax, int pCourante, boolean sensDep, int vCourante) {
 		this.idTrain = id;
 		this.taille = taille;
-		this.vitesseMax = vitesseMax;
+		this.vitesseMax = vMax;
+		this.etatTrain = new EtatCourant(pCourante, sensDep, vCourante);
 		id++;
 	}
 
@@ -32,20 +33,16 @@ public class Train {
 		this.taille = taille;
 	}
 
-	public double getVitesseMax() {
+	public int getVitesseMax() {
 		return vitesseMax;
 	}
 
-	public void setVitesseMax(double vitesseMax) {
+	public void setVitesseMax(int vitesseMax) {
 		this.vitesseMax = vitesseMax;
 	}
 
 	public EtatCourant getEtatTrain() {
 		return etatTrain;
-	}
-
-	public void setEtatTrain(EtatCourant etatTrain) {
-		this.etatTrain = etatTrain;
 	}
 
 	@Override

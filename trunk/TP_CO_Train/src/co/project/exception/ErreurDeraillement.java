@@ -5,7 +5,8 @@ public class ErreurDeraillement extends Exception{
 
 	/**
 	 * @param string
-	 * depassement de butee
+	 * depassement de butee ou
+	 * franchissement d'aiguillage mal configure
 	 */
 	public ErreurDeraillement(String string) {
 		super(string);
