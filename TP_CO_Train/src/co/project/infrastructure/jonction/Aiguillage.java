@@ -16,8 +16,8 @@ public class Aiguillage extends Jonction {
 	private Rail railConnecte1;
 	private Rail railConnecte2;
 
-	public Aiguillage(int idJonction, ArrayList<Rail> lRail) {
-		super(idJonction);
+	public Aiguillage(ArrayList<Rail> lRail) {
+		super(0);
 		this.lRail = lRail;
 	}
 

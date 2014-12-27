@@ -8,8 +8,8 @@ public class JonctionSimple extends Jonction {
 	private Rail rail1;
 	private Rail rail2;
 
-	public JonctionSimple(int idJonction, Rail rail1, Rail rail2) {
-		super(idJonction);
+	public JonctionSimple(Rail rail1, Rail rail2) {
+		super(0);
 		this.rail1 = rail1;
 		this.rail2 = rail2;
 	}
@@ -34,6 +34,6 @@ public class JonctionSimple extends Jonction {
 	@Override
 	public String toString() {
 		return super.toString()+
-				"Jonction Simple ]";
+				"de type Simple ]";
 	}
 }

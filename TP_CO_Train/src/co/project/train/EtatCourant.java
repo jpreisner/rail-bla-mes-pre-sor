@@ -40,7 +40,7 @@ public class EtatCourant {
 	@Override
 	public String toString() {
 		return "Etat [ Position actuelle : " + positionCourante + " \n" + 
-				"Roule dans le sens de la voie : " + sensDeplacement+ " \n" + 
-				"Vitesse courante : " + vitesseCourante+" ] ";
+				"\tSens de la voie : " + sensDeplacement+ " \n" + 
+				"\tVitesse courante : " + vitesseCourante+" ] ";
 	}
 }
