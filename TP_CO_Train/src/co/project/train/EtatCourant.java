@@ -2,7 +2,9 @@ package co.project.train;
 
 public class EtatCourant {
 
+	/* position sur le rail */
 	private int positionCourante;
+	/* true = sens normal, false = sens inverse*/
 	private boolean sensDeplacement;
 	/* vitesse en nombre de troncons par Unite de Temps */
 	private int vitesseCourante;
