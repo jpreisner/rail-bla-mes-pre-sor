@@ -6,28 +6,43 @@ import co.project.train.Train;
 
 public class Reseau {
 
-	private ArrayList<Infrastructure> reseau;
-	private ArrayList<Train> roulant;
+	/** Unique instance non initialisee */
+	private static Reseau INSTANCE = null;
+	private ArrayList<Infrastructure> reseauInfra;
+	private ArrayList<Train> matRoulant;
 
-	public Reseau(ArrayList<Infrastructure> reseau, ArrayList<Train> roulant) {
-		this.reseau = reseau;
-		this.roulant = roulant;
+	/**
+	 * Constructeur prive
+	 */
+	private Reseau() {
+		this.reseauInfra = new ArrayList<Infrastructure>();
+		this.matRoulant = new ArrayList<Train>();
 	}
 
-	public ArrayList<Infrastructure> getReseau() {
-		return reseau;
+	/**
+	 * @return unique point d'acces du singleton reseau
+	 */
+	public static synchronized Reseau getInstance() {
+		if (INSTANCE == null) {
+			INSTANCE = new Reseau();
+		}
+		return INSTANCE;
 	}
 
-	public ArrayList<Train> getRoulant() {
-		return roulant;
+	public ArrayList<Infrastructure> getReseauInfra() {
+		return reseauInfra;
 	}
-	
-	public void addTrain(Train t){
-		roulant.add(t);
+
+	public ArrayList<Train> getMatRoulant() {
+		return matRoulant;
 	}
-	
-	public void addPartieReseau(ArrayList<Infrastructure> alInfra){
-		reseau.addAll(alInfra);
+
+	public void addTrain(Train t) {
+		matRoulant.add(t);
+	}
+
+	public void addPartieReseau(ArrayList<Infrastructure> alInfra) {
+		reseauInfra.addAll(alInfra);
 	}
 
 }
