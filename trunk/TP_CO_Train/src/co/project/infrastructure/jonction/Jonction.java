@@ -6,8 +6,8 @@ import co.project.infrastructure.rail.Rail;
 
 public abstract class Jonction extends Infrastructure {
 
-	public Jonction(int idJonction) {
-		super(idJonction);
+	public Jonction(int longueur) {
+		super(longueur);
 	}
 
 	/**

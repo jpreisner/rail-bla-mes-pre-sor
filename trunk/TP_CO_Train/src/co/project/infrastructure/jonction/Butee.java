@@ -6,8 +6,8 @@ import co.project.infrastructure.rail.Rail;
 public class Butee extends Jonction {
 	private Rail rail;
 
-	public Butee(int idJonction, Rail rail) {
-		super(idJonction);
+	public Butee(Rail rail) {
+		super(0);
 		this.rail = rail;
 	}
 

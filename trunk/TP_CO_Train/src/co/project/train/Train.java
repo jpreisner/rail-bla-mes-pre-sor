@@ -47,7 +47,9 @@ public class Train {
 
 	@Override
 	public String toString() {
-		return "Train [ id : " + idTrain + " \n" + "taille : " + taille + " \n" + "Vitesse maximale : " + vitesseMax
-				+ " \n" + etatTrain + " ] ";
+		return "Train [ id : " + idTrain + 
+				", taille : " + taille + 
+				", Vitesse maximale : " + vitesseMax+  " ] "+
+				" \n" + etatTrain;
 	}
 }

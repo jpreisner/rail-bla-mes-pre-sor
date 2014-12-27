@@ -23,7 +23,7 @@ public class FabriqueInfrastructure {
 	 * @return JonctionSimple des 2 rails r1 et r2
 	 */
 	public static JonctionSimple connecterDeuxRails(Rail r1, Rail r2) {
-		return new JonctionSimple(2, r1, r2);
+		return new JonctionSimple(r1, r2);
 	}
 
 	/**
@@ -31,7 +31,7 @@ public class FabriqueInfrastructure {
 	 * @return Butee connectee a 1 rail
 	 */
 	public static Butee connecterUnRail(Rail rail) {
-		return new Butee(3, rail);
+		return new Butee(rail);
 	}
 
 	/**
@@ -39,7 +39,7 @@ public class FabriqueInfrastructure {
 	 * @return Aiguillage de plusieurs rails
 	 */
 	public static Aiguillage connecterPlusieursRails(ArrayList<Rail> listRails) {
-		return new Aiguillage(4, listRails);
+		return new Aiguillage(listRails);
 	}
 	
 	public static Aiguillage creeAiguillageX()

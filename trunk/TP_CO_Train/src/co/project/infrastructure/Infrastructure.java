@@ -13,7 +13,7 @@ public class Infrastructure {
 	
 	@Override
 	public String toString() {
-		return "[ Element Infrastructure id : "+idInfrastructure+
-				"\nlongueur : "+longueur+" ]\n";
+		return "Element Infrastructure [ id : "+idInfrastructure+
+				", longueur : "+longueur+" ]\n";
 	}
 }
