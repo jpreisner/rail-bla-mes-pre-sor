@@ -2,11 +2,12 @@ package co.project.train;
 
 public class Train {
 
+	/* compteur d'instance*/
 	private static int id = 0;
 	private int idTrain;
 	/* exprimee en nb de troncons */
 	private int taille;
-	/* exprimee en nombre de troncon par unite de temps */
+	/* fixe, exprimee en nombre de troncon par unite de temps */
 	private int vitesseMax;
 	/* pattern STATE */
 	private EtatCourant etatTrain;

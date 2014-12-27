@@ -41,15 +41,28 @@ public class FabriqueInfrastructure {
 	public static Aiguillage connecterPlusieursRails(ArrayList<Rail> listRails) {
 		return new Aiguillage(listRails);
 	}
-	
-	public static Aiguillage creeAiguillageX()
-	{
-		return null;
+
+	/**
+	 * @return Aiguillage en X, avec 4 rails connectes, mais sans rails amont ni aval
+	 */
+	public static Aiguillage creeAiguillageX() {
+		ArrayList<Rail> listRails = new ArrayList<Rail>();
+		listRails.add(creerRail(10));
+		listRails.add(creerRail(10));
+		listRails.add(creerRail(10));
+		listRails.add(creerRail(10));
+		return new Aiguillage(listRails);
 	}
-	
-	public static Aiguillage creeAiguillageY()
-	{
-		return null;
+
+	/**
+	 * @return Aiguillage en Y, avec 3 rails connectes, mais sans rails amont ni aval
+	 */
+	public static Aiguillage creeAiguillageY() {
+		ArrayList<Rail> listRails = new ArrayList<Rail>();
+		listRails.add(creerRail(10));
+		listRails.add(creerRail(10));
+		listRails.add(creerRail(10));
+		return new Aiguillage(listRails);
 	}
 
 }

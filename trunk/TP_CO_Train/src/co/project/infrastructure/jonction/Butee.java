@@ -20,7 +20,6 @@ public class Butee extends Jonction {
 		throw new ErreurJonction("Fin de la voie, depassement de butee");
 	}
 
-	/* */
 	@Override
 	public boolean trainPasse() {
 		return false;

@@ -6,7 +6,7 @@ import co.project.train.Train;
 
 public class Reseau {
 
-	/** Unique instance non initialisee */
+	/* Unique instance non initialisee */
 	private static Reseau INSTANCE = null;
 	private ArrayList<Infrastructure> reseauInfra;
 	private ArrayList<Train> matRoulant;
@@ -43,6 +43,21 @@ public class Reseau {
 
 	public void addPartieReseau(ArrayList<Infrastructure> alInfra) {
 		reseauInfra.addAll(alInfra);
+	}
+	
+	@Override
+	public String toString() {
+		String result = "";
+		
+		for(Infrastructure infra : reseauInfra){
+			result += infra ;
+		}
+		
+		for(Train train : matRoulant){
+			result += train ;
+		}
+		
+		return result;
 	}
 
 }

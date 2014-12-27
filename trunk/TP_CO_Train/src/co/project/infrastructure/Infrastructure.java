@@ -1,10 +1,12 @@
 package co.project.infrastructure;
 
 public class Infrastructure {
-	protected int longueur = 0; // Longueur de l'element
-	protected int idInfrastructure;
+
+	/* compteur d'instances */
 	private static int id = 0;
-	
+	protected int idInfrastructure;
+	protected int longueur = 0;
+
 	public Infrastructure(int longueur) {
 		this.idInfrastructure = id;
 		id++;

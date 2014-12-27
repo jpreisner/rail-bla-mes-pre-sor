@@ -3,6 +3,7 @@ package co.project.infrastructure.jonction;
 import java.util.ArrayList;
 
 import co.project.ElemRegulation;
+import co.project.capteur.CapteurPresence;
 import co.project.exception.ErreurAiguillage;
 import co.project.exception.ErreurJonction;
 import co.project.infrastructure.rail.Rail;
@@ -13,12 +14,15 @@ public class Aiguillage extends Jonction {
 	private ArrayList<Rail> lRail;
 	/* element de regulation */
 	private ElemRegulation elemRegul;
+	/* rails connectes de l'aiguillage*/
 	private Rail railConnecte1;
 	private Rail railConnecte2;
 
 	public Aiguillage(ArrayList<Rail> lRail) {
 		super(0);
 		this.lRail = lRail;
+		railConnecte1 = this.lRail.get(0);
+		railConnecte2 = this.lRail.get(1);
 	}
 
 	public ArrayList<Rail> getlRail() {
@@ -60,7 +64,12 @@ public class Aiguillage extends Jonction {
 
 	@Override
 	public boolean trainPasse() {
-		return elemRegul.getCapteur().trainPassant();
+		for(CapteurPresence capt : elemRegul.getListCapteurs()){
+			if(capt.trainPassant()){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
