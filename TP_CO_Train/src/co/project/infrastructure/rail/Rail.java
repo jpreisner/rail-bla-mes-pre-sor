@@ -46,6 +46,7 @@ public class Rail extends Infrastructure {
 	/**
 	 * @return true/false si le train est sur la jonction
 	 */
+	@Override
 	public boolean trainPasse(){
 		// TODO Auto-generated method stub
 		return false;

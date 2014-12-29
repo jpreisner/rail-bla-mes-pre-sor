@@ -17,11 +17,6 @@ public abstract class Jonction extends Infrastructure {
 	 */
 	abstract public Rail getRailSuivant(Rail rail) throws ErreurJonction;
 	
-	/**
-	 * @return true/false si le train est sur la jonction
-	 */
-	abstract public boolean trainPasse();
-
 	@Override
 	public String toString() {
 		return super.toString()+"[ Jonction ";
