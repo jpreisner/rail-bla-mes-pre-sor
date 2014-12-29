@@ -45,6 +45,12 @@ public class Reseau {
 		reseauInfra.addAll(alInfra);
 	}
 	
+	public void startTimer(){
+		
+	}
+	public void init(){
+		
+	}
 	@Override
 	public String toString() {
 		String result = "";
