@@ -1,6 +1,6 @@
 package co.project.infrastructure;
 
-public class Infrastructure {
+public abstract class Infrastructure {
 
 	/* compteur d'instances */
 	private static int id = 0;
@@ -12,6 +12,11 @@ public class Infrastructure {
 		id++;
 		this.longueur = longueur;
 	}
+	
+	/**
+	 * @return true/false si le train est sur la jonction
+	 */
+	public abstract boolean trainPasse();
 	
 	@Override
 	public String toString() {
