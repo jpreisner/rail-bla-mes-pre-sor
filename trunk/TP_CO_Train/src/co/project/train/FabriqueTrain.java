@@ -1,5 +1,7 @@
 package co.project.train;
 
+import co.project.infrastructure.rail.Rail;
+
 public class FabriqueTrain {
 
 	/**
@@ -8,8 +10,9 @@ public class FabriqueTrain {
 	 * @return un train de (taille) wagons
 	 */
 
-	public static Train creerTrain(int taille, int vMax) {
-		return new Train(taille, vMax, 0, true, vMax);
+	public static Train creerTrain(int taille, int vMax, Rail pCourante) {
+
+		return new Train(taille, vMax, pCourante, true, vMax);
 	}
 
 }

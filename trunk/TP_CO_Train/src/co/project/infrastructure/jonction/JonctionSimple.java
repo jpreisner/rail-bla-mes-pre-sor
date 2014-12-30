@@ -33,7 +33,6 @@ public class JonctionSimple extends Jonction {
 
 	@Override
 	public String toString() {
-		return super.toString()+
-				"de type Simple ]";
+		return "[JS]";
 	}
 }
