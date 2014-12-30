@@ -77,6 +77,6 @@ public class EtatCourant {
 	public String toString() {
 		return "Etat [ Position actuelle : " + positionCouranteTete + " \n" + 
 				"\tDirection vers la : " + direction+ " \n" + 
-				"\tVitesse courante : " + vitesseCourante+" ] ";
+				"\tVitesse courante : " + vitesseCourante+" tr/t ] ";
 	}
 }

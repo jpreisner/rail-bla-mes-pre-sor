@@ -52,7 +52,7 @@ public class Train {
 	public String toString() {
 		return "\nTrain [ id : " + idTrain + 
 				", taille : " + taille + 
-				", Vitesse maximale : " + vitesseMax+  " ] "+
+				", Vitesse maximale : " + vitesseMax+  " tr/t ] "+
 				" \n" + etatTrain;
 	}
 }
