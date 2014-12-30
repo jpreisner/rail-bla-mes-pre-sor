@@ -126,7 +126,7 @@ public class TestTrain {
 			e.printStackTrace();
 		}
 
-		System.out.println(Reseau.getInstance());
+		System.out.println("Nouveau etat du réseau : \n"+Reseau.getInstance());
 	}
 	
 	/* Arret du train a un aiguillage pour permettre le passage d'un autre train */

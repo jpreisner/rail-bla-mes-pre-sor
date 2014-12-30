@@ -69,8 +69,10 @@ public class Reseau {
 		Rail railcourante = etatTrain.getPositionCouranteTete();
 		//On change la position de la tête à la suivante
 		
-		System.out.println("Etat train "+etatTrain+" railcourante = "+railcourante + " jd = " +railcourante.getJonctionDroite());
+		System.out.println("Train avant : "+train);
 
+		System.out.println("\nDéplacement du train\n");
+		
 		/* Le train va de gauche à droite dans le réseau*/
 		if(etatTrain.isDirectionDroite())
 		{
