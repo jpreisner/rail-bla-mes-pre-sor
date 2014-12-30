@@ -75,6 +75,11 @@ public class Aiguillage extends Jonction {
 	@Override
 	public String toString() {
 		//return super.toString() + "Aiguillage a " + lRail.size() + " rails ]";
-		return "[A -"+lRail.size()+" directions]";
+		String listeRailNumero = "";
+		for(Rail r : lRail)
+		{
+			listeRailNumero+=r.getIdInfrastructure()+",";
+		}
+		return "[A -"+lRail.size()+" directions : rails : " + listeRailNumero +"]";
 	}
 }

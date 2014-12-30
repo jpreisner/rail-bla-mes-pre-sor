@@ -2,6 +2,7 @@ package co.project.tests;
 
 import java.util.ArrayList;
 
+import co.project.exception.ErreurConstruction;
 import co.project.exception.ErreurJonction;
 import co.project.exception.ErreurTrain;
 import co.project.infrastructure.FabriqueInfrastructure;
@@ -120,13 +121,23 @@ public class TestTrain {
 		
 		
 		try {
-			Reseau.getInstance().deplacementTrain(train);
-		} catch (ErreurJonction | ErreurTrain e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			Reseau.getInstance().verifieReseau();
+			
+			try {
+				Reseau.getInstance().deplacementTrain(train);
+			} catch (ErreurJonction | ErreurTrain e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
-		System.out.println("Nouveau etat du réseau : \n"+Reseau.getInstance());
+			System.out.println("Nouveau etat du réseau : \n"+Reseau.getInstance());
+			
+		} catch (ErreurConstruction e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
 	}
 	
 	/* Arret du train a un aiguillage pour permettre le passage d'un autre train */
