@@ -10,8 +10,8 @@ public class Rail extends Infrastructure {
 	/* nb de troncons TODO */
 
 	/* 2 jonctions aux extremitees du rail */
-	private Jonction j1;
-	private Jonction j2;
+	private Jonction gauche;
+	private Jonction droite;
 
 	private HashMap<Capteur, Integer> capteurNumeroTroncon;
 
@@ -19,20 +19,20 @@ public class Rail extends Infrastructure {
 		super(longueur);
 	}
 
-	public Jonction getJ1() {
-		return j1;
+	public Jonction getJonctionGauche() {
+		return gauche;
 	}
 
-	public void setJ1(Jonction j1) {
-		this.j1 = j1;
+	public void setJonctionGauche(Jonction j1) {
+		this.gauche = j1;
 	}
 
-	public Jonction getJ2() {
-		return j2;
+	public Jonction getJonctionDroite() {
+		return droite;
 	}
 
-	public void setJ2(Jonction j2) {
-		this.j2 = j2;
+	public void setJonctionDroite(Jonction j2) {
+		this.droite = j2;
 	}
 
 	public HashMap<Capteur, Integer> getCapteurNumeroTroncon() {
@@ -74,6 +74,6 @@ public class Rail extends Infrastructure {
 	
 	@Override
 	public String toString() {
-		return super.toString()+"[ Rail ]";
+		return "[ Rail id = " +idInfrastructure+ " ]";
 	}
 }

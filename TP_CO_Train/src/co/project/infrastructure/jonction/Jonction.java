@@ -19,6 +19,6 @@ public abstract class Jonction extends Infrastructure {
 	
 	@Override
 	public String toString() {
-		return super.toString()+"[ Jonction ";
+		return "[Jonction]";
 	}
 }

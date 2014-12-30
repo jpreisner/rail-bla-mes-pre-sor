@@ -1,5 +1,7 @@
 package co.project.train;
 
+import co.project.infrastructure.rail.Rail;
+
 public class Train {
 
 	/* compteur d'instance*/
@@ -14,11 +16,11 @@ public class Train {
 
 	/* position de la tete sur les troncons */
 
-	public Train(int taille, int vMax, int pCourante, boolean sensDep, int vCourante) {
+	public Train(int taille, int vMax, Rail pCourante, boolean sensDep, int vCourante) {
 		this.idTrain = id;
 		this.taille = taille;
 		this.vitesseMax = vMax;
-		this.etatTrain = new EtatCourant(pCourante, sensDep, vCourante);
+		this.etatTrain = new EtatCourant(pCourante, EtatCourant.Direction.DROITE, vCourante);
 		id++;
 	}
 

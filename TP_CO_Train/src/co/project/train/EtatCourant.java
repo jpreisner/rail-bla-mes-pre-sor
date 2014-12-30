@@ -1,36 +1,70 @@
 package co.project.train;
 
+import co.project.infrastructure.rail.Rail;
+
 public class EtatCourant {
 
+	public enum Direction{
+		DROITE,
+		GAUCHE;
+	}
+	
 	/* position sur le rail */
-	private int positionCourante;
-	/* true = sens normal, false = sens inverse*/
-	private boolean sensDeplacement;
+	private Rail positionCouranteTete,positionCouranteQueue;
+	private Direction direction;
 	/* vitesse en nombre de troncons par Unite de Temps */
 	private int vitesseCourante;
 	
-	public EtatCourant(int positionCourante, boolean sensDeplacement, int vitesseCourante) {
-		this.positionCourante = positionCourante;
-		this.sensDeplacement = sensDeplacement;
+	public EtatCourant(Rail positionCourante, Direction direction , int vitesseCourante) {
+		this.positionCouranteTete = positionCourante;
 		this.vitesseCourante = vitesseCourante;
+		this.direction = direction;
 	}
 
-	public int getPositionCourante() {
-		return positionCourante;
+	public Rail getPositionCouranteTete() {
+		return positionCouranteTete;
 	}
 
-	public void setPositionCourante(int positionCourante) {
-		this.positionCourante = positionCourante;
+	public void setPositionCouranteTete(Rail positionCouranteTete) {
+		this.positionCouranteTete = positionCouranteTete;
 	}
 
-	public boolean isSensDeplacement() {
-		return sensDeplacement;
+	public Rail getPositionCouranteQueue() {
+		return positionCouranteQueue;
 	}
 
-	public void setSensDeplacement(boolean sensDeplacement) {
-		this.sensDeplacement = sensDeplacement;
+	public void setPositionCouranteQueue(Rail positionCouranteQueue) {
+		this.positionCouranteQueue = positionCouranteQueue;
+	}
+	
+	public boolean isDirectionDroite()
+	{
+		return direction == Direction.DROITE;
+	}
+	
+	public boolean isDirectionGauche()
+	{
+		return direction == Direction.GAUCHE;
+	}
+	
+	public void changeDirection()
+	{
+		switch (direction) {
+		case DROITE:
+			direction = Direction.GAUCHE;
+			break;
+		case GAUCHE:
+			direction = Direction.DROITE;
+			break;
+		default:
+			break;
+		}
 	}
 
+	public Direction getDirection() {
+		return direction;
+	}
+	
 	public int getVitesseCourante() {
 		return vitesseCourante;
 	}
@@ -41,8 +75,8 @@ public class EtatCourant {
 
 	@Override
 	public String toString() {
-		return "Etat [ Position actuelle : " + positionCourante + " \n" + 
-				"\tSens de la voie : " + sensDeplacement+ " \n" + 
+		return "Etat [ Position actuelle : " + positionCouranteTete + " \n" + 
+				"\tDirection vers la : " + direction+ " \n" + 
 				"\tVitesse courante : " + vitesseCourante+" ] ";
 	}
 }

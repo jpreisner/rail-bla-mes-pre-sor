@@ -27,7 +27,6 @@ public class Butee extends Jonction {
 
 	@Override
 	public String toString() {
-		return super.toString()+
-				"Butee ]";
+		return "[B]";
 	}
 }
