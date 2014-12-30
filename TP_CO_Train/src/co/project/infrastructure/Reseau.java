@@ -2,6 +2,7 @@ package co.project.infrastructure;
 
 import java.util.ArrayList;
 
+import co.project.exception.ErreurConstruction;
 import co.project.exception.ErreurJonction;
 import co.project.exception.ErreurTrain;
 import co.project.infrastructure.rail.Rail;
@@ -92,6 +93,23 @@ public class Reseau {
 		}
 	}
 	
+	
+	/**
+	 * S'il y a une erreur de construction du réseau
+	 * @throws ErreurConstruction
+	 */
+	public void verifieReseau() throws ErreurConstruction
+	{
+		//Par exemple un utilisateur construit [B][Rail][B] => problème de construction
+		//[B] = Butee
+		
+		if(reseauInfra.size()==0)
+			throw new ErreurConstruction("Votre reseau est vide");
+		else
+		{
+			
+		}
+	}
 	
 	@Override
 	public String toString() {

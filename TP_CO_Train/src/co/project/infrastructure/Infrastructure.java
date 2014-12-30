@@ -12,7 +12,15 @@ public abstract class Infrastructure {
 		id++;
 		this.longueur = longueur;
 	}
-	
+
+	public int getIdInfrastructure() {
+		return idInfrastructure;
+	}
+
+	public int getLongueur() {
+		return longueur;
+	}
+
 	/**
 	 * @return true/false si le train est sur la jonction
 	 */
