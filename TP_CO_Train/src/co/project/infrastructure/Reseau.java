@@ -95,19 +95,34 @@ public class Reseau {
 	
 	
 	/**
-	 * S'il y a une erreur de construction du rÃ©seau
+	 * S'il y a une erreur de construction du reseau
 	 * @throws ErreurConstruction
+	 */
+	
+	/**
+	 * A COMPLETER
 	 */
 	public void verifieReseau() throws ErreurConstruction
 	{
-		//Par exemple un utilisateur construit [B][Rail][B] => probleme de construction
-		//[B] = Butee
 		
 		if(reseauInfra.size()==0)
 			throw new ErreurConstruction("Votre reseau est vide");
 		else
 		{
-			
+			for(int i = 0; i < reseauInfra.size(); i++){
+				if(reseauInfra.get(i).getClass().getName().equals("Butee")){
+					// on incremente i tant qu'on a des rails
+					do{
+						i++;
+					} while(!reseauInfra.get(i).getClass().getName().equals("Rail"));
+					
+					// Erreur si on retombe directe sur une butee
+					if(reseauInfra.get(i).getClass().getName().equals("Butee")){
+						// Erreur de type : [B][Rail][B]
+						throw new ErreurConstruction("Une portion du reseau est isole entre 2 butées");
+					}
+				}
+			}
 		}
 	}
 	
