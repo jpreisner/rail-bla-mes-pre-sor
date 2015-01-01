@@ -65,22 +65,22 @@ public class Reseau {
 	 */
 	public void deplacementTrain(Train train) throws ErreurJonction,ErreurTrain
 	{
-		//Rail ou se trouve la tête du train actuellement
+		//Rail ou se trouve la tete du train actuellement
 		EtatCourant etatTrain = train.getEtatTrain();
 		Rail railcourante = etatTrain.getPositionCouranteTete();
 		//On change la position de la tête à la suivante
 		
 		System.out.println("Train avant : "+train);
 
-		System.out.println("\nDéplacement du train\n");
+		System.out.println("\nDeplacement du train\n");
 		
-		/* Le train va de gauche à droite dans le réseau*/
+		/* Le train va de gauche a droite dans le reseau*/
 		if(etatTrain.isDirectionDroite())
 		{
 			etatTrain.setPositionCouranteTete( railcourante.getJonctionDroite().getRailSuivant(railcourante));
 			//Mise à jour automatique dans setPositionCouranteTete de la positioncourante queue
 		}
-		/* Le train va de droite à gauche dans le réseau*/
+		/* Le train va de droite a gauche dans le reseau*/
 		else if(etatTrain.isDirectionGauche())
 		{
 			etatTrain.setPositionCouranteTete( railcourante.getJonctionGauche().getRailSuivant(railcourante));
@@ -100,7 +100,7 @@ public class Reseau {
 	 */
 	public void verifieReseau() throws ErreurConstruction
 	{
-		//Par exemple un utilisateur construit [B][Rail][B] => problème de construction
+		//Par exemple un utilisateur construit [B][Rail][B] => probleme de construction
 		//[B] = Butee
 		
 		if(reseauInfra.size()==0)
