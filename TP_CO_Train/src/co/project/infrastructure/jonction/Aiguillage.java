@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import co.project.ElemRegulation;
 import co.project.capteur.CapteurPresence;
 import co.project.exception.ErreurAiguillage;
+import co.project.exception.ErreurConstruction;
 import co.project.exception.ErreurJonction;
 import co.project.infrastructure.rail.Rail;
 
@@ -14,15 +15,16 @@ public class Aiguillage extends Jonction {
 	private ArrayList<Rail> lRail;
 	/* element de regulation */
 	private ElemRegulation elemRegul;
-	/* rails connectes de l'aiguillage*/
+	/* rails connectes de l'aiguillage */
 	private Rail railConnecte1;
 	private Rail railConnecte2;
 
-	public Aiguillage(ArrayList<Rail> lRail) {
+	public Aiguillage(ArrayList<Rail> lRail) throws ErreurConstruction {
 		super(0);
 		this.lRail = lRail;
 		railConnecte1 = this.lRail.get(0);
 		railConnecte2 = this.lRail.get(1);
+		connecteRailJonction();
 	}
 
 	public ArrayList<Rail> getlRail() {
@@ -43,7 +45,7 @@ public class Aiguillage extends Jonction {
 
 	public void setRailConnecte1(Rail r1) throws ErreurAiguillage {
 		if (trainPasse()) {
-			throw new ErreurAiguillage("changement d'aiguillage impossible sur le rail : "+r1);
+			throw new ErreurAiguillage("changement d'aiguillage impossible sur le rail : " + r1);
 		} else {
 			this.railConnecte1 = r1;
 		}
@@ -51,7 +53,7 @@ public class Aiguillage extends Jonction {
 
 	public void setRailConnecte2(Rail r2) throws ErreurAiguillage {
 		if (trainPasse()) {
-			throw new ErreurAiguillage("changement d'aiguillage impossible sur le rail : "+r2);
+			throw new ErreurAiguillage("changement d'aiguillage impossible sur le rail : " + r2);
 		} else {
 			this.railConnecte2 = r2;
 		}
@@ -64,8 +66,8 @@ public class Aiguillage extends Jonction {
 
 	@Override
 	public boolean trainPasse() {
-		for(CapteurPresence capt : elemRegul.getListCapteurs()){
-			if(capt.trainPassant()){
+		for (CapteurPresence capt : elemRegul.getListCapteurs()) {
+			if (capt.trainPassant()) {
 				return true;
 			}
 		}
@@ -74,12 +76,29 @@ public class Aiguillage extends Jonction {
 
 	@Override
 	public String toString() {
-		//return super.toString() + "Aiguillage a " + lRail.size() + " rails ]";
+		// return super.toString() + "Aiguillage a " + lRail.size() +
+		// " rails ]";
 		String listeRailNumero = "";
-		for(Rail r : lRail)
-		{
-			listeRailNumero+=r.getIdInfrastructure()+",";
+		for (Rail r : lRail) {
+			listeRailNumero += r.getIdInfrastructure() + ",";
 		}
-		return "[A -"+lRail.size()+" directions : rails : " + listeRailNumero +"]";
+		return "[A -" + lRail.size() + " directions : rails : " + listeRailNumero + "]";
+	}
+
+	@Override
+	public void connecteRailJonction() throws ErreurConstruction {
+		for (Rail rail : lRail) {
+			if (!rail.connectable()) {
+				throw new ErreurConstruction("le rail : " + rail + ", n'est pas connectable a l'aiguillage.");
+			}
+		}
+		for (Rail rail : lRail) {
+			if (rail.getJonctionGauche() == null) {
+				rail.setJonctionGauche(this);
+			} else {
+				rail.setJonctionDroite(this);
+			}
+		}
+
 	}
 }

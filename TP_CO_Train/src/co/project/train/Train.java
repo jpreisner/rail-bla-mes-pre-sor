@@ -3,7 +3,6 @@ package co.project.train;
 import co.project.infrastructure.rail.Rail;
 
 public class Train {
-
 	/* compteur d'instance*/
 	private static int id = 0;
 	private int idTrain;
