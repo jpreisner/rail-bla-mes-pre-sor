@@ -13,7 +13,7 @@ public class Rail extends Infrastructure {
 	private Jonction gauche;
 	private Jonction droite;
 
-	private HashMap<Capteur, Integer> capteurNumeroTroncon;
+	private HashMap<Capteur, Troncon> capteurTroncon;
 
 	public Rail(int longueur) {
 		super(longueur);
@@ -35,23 +35,27 @@ public class Rail extends Infrastructure {
 		this.droite = j2;
 	}
 
-	public HashMap<Capteur, Integer> getCapteurNumeroTroncon() {
-		return capteurNumeroTroncon;
+	public HashMap<Capteur, Troncon> getCapteurTroncon() {
+		return capteurTroncon;
 	}
 
-	public void setCapteurNumeroTroncon(HashMap<Capteur, Integer> capteurNumeroTroncon) {
-		this.capteurNumeroTroncon = capteurNumeroTroncon;
+	public void setCapteurTroncon(HashMap<Capteur, Troncon> capteurNumeroTroncon) {
+		this.capteurTroncon = capteurNumeroTroncon;
+	}
+
+	public boolean connectable() {
+		return (getJonctionDroite() == null || getJonctionGauche() == null);
 	}
 
 	/**
 	 * @return true/false si le train est sur la jonction
 	 */
 	@Override
-	public boolean trainPasse(){
+	public boolean trainPasse() {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) {
@@ -71,9 +75,9 @@ public class Rail extends Infrastructure {
 			return false;
 		}
 	}
-	
+
 	@Override
 	public String toString() {
-		return "[ Rail id = " +idInfrastructure+ " ]";
+		return "[ Rail id = " + idInfrastructure + " ]";
 	}
 }
