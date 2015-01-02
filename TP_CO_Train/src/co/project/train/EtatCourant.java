@@ -7,12 +7,9 @@ public class EtatCourant {
 	/* position sur le rail */
 	private Rail positionCouranteTete,positionCouranteQueue;
 	private Direction direction;
-	/* vitesse en nombre de troncons par Unite de Temps */
-	private int vitesseCourante;
 	
-	public EtatCourant(Rail positionCourante, Direction direction , int vitesseCourante) {
+	public EtatCourant(Rail positionCourante, Direction direction) {
 		this.positionCouranteTete = positionCourante;
-		this.vitesseCourante = vitesseCourante;
 		this.direction = direction;
 	}
 
@@ -59,19 +56,10 @@ public class EtatCourant {
 	public Direction getDirection() {
 		return direction;
 	}
-	
-	public int getVitesseCourante() {
-		return vitesseCourante;
-	}
-
-	public void setVitesseCourante(int vitesseCourante) {
-		this.vitesseCourante = vitesseCourante;
-	}
 
 	@Override
 	public String toString() {
 		return "Etat [ Position actuelle : " + positionCouranteTete + " \n" + 
-				"\tDirection vers la : " + direction+ " \n" + 
-				"\tVitesse courante : " + vitesseCourante+" tr/t ] ";
+				"\tDirection vers la : " + direction+ " \n]";
 	}
 }
