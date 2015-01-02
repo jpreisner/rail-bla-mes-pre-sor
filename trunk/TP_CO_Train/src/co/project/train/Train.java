@@ -10,17 +10,20 @@ public class Train {
 	/* exprimee en nb de troncons */
 	private int taille;
 	/* fixe, exprimee en nombre de troncon par unite de temps */
-	private int vitesseMax;
+	private int vMax;
+	/* vitesse en nombre de troncons par Unite de Temps */
+	private int vCourante;
 	/* pattern STATE */
 	private EtatCourant etatTrain;
 
 	/* position de la tete sur les troncons */
 
-	public Train(int taille, int vMax, Rail pCourante, Direction direction, int vCourante) {
+	public Train(int taille, int vMax, Rail pCourante, Direction direction) {
 		this.idTrain = id;
 		this.taille = taille;
-		this.vitesseMax = vMax;
-		this.etatTrain = new EtatCourant(pCourante, direction, vCourante);
+		this.vMax = vMax;
+		this.vCourante = vMax;
+		this.etatTrain = new EtatCourant(pCourante, direction);
 		id++;
 	}
 
@@ -37,13 +40,21 @@ public class Train {
 	}
 
 	public int getVitesseMax() {
-		return vitesseMax;
+		return vMax;
 	}
 
 	public void setVitesseMax(int vitesseMax) {
-		this.vitesseMax = vitesseMax;
+		this.vMax = vitesseMax;
+	}
+	
+	public int getVitesseCourante() {
+		return vCourante;
 	}
 
+	public void setVitesseCourante(int vitesseCourante) {
+		this.vCourante = vitesseCourante;
+	}
+	
 	public EtatCourant getEtatTrain() {
 		return etatTrain;
 	}
@@ -52,7 +63,7 @@ public class Train {
 	public String toString() {
 		return "\nTrain [ id : " + idTrain + 
 				", taille : " + taille + 
-				", Vitesse maximale : " + vitesseMax+  " tr/t ] "+
+				", Vitesse maximale : " + vMax+  " tr/t ] "+
 				" \n" + etatTrain;
 	}
 }

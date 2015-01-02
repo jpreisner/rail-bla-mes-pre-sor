@@ -13,7 +13,7 @@ public class FabriqueTrain {
 
 	public static Train creerTrain(int taille, int vMax, Rail pCourante, Direction direction) {
 
-		return new Train(taille, vMax, pCourante, direction , vMax);
+		return new Train(taille, vMax, pCourante, direction);
 	}
 
 }
