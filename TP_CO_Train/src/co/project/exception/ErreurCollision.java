@@ -1,6 +1,6 @@
 package co.project.exception;
 
-public class ErreurCollision  extends Exception{
+public class ErreurCollision  extends ErreurSignalisation{
 	private static final long serialVersionUID = 1L;
 
 	/**

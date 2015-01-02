@@ -16,11 +16,11 @@ public class Train {
 
 	/* position de la tete sur les troncons */
 
-	public Train(int taille, int vMax, Rail pCourante, boolean sensDep, int vCourante) {
+	public Train(int taille, int vMax, Rail pCourante, Direction direction, int vCourante) {
 		this.idTrain = id;
 		this.taille = taille;
 		this.vitesseMax = vMax;
-		this.etatTrain = new EtatCourant(pCourante, EtatCourant.Direction.DROITE, vCourante);
+		this.etatTrain = new EtatCourant(pCourante, direction, vCourante);
 		id++;
 	}
 

@@ -3,11 +3,6 @@ package co.project.train;
 import co.project.infrastructure.rail.Rail;
 
 public class EtatCourant {
-
-	public enum Direction{
-		DROITE,
-		GAUCHE;
-	}
 	
 	/* position sur le rail */
 	private Rail positionCouranteTete,positionCouranteQueue;
