@@ -12,6 +12,7 @@ import co.project.infrastructure.jonction.Aiguillage;
 import co.project.infrastructure.jonction.Butee;
 import co.project.infrastructure.jonction.JonctionSimple;
 import co.project.infrastructure.rail.Rail;
+import co.project.train.Direction;
 import co.project.train.FabriqueTrain;
 import co.project.train.Train;
 
@@ -116,7 +117,7 @@ public class TestTrain {
 		}
 		System.out.println("\n");
 		
-		Train train = FabriqueTrain.creerTrain(5, 300, pCourante);
+		Train train = FabriqueTrain.creerTrain(5, 300, pCourante, Direction.DROITE);
 		Reseau.getInstance().addTrain(train);
 		
 		

@@ -1,6 +1,6 @@
 package co.project.exception;
 
-public class ErreurDeraillement extends Exception{
+public class ErreurDeraillement extends ErreurSignalisation{
 	private static final long serialVersionUID = 1L;
 
 	/**
