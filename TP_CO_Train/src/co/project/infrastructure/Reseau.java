@@ -67,7 +67,7 @@ public class Reseau {
 	{
 		//Rail ou se trouve la tete du train actuellement
 		EtatCourant etatTrain = train.getEtatTrain();
-		Rail railcourante = etatTrain.getPositionCouranteTete();
+		Rail railcourante = train.getPositionCouranteTete();
 		//On change la position de la tête à la suivante
 		
 		System.out.println("Train avant : "+train);
@@ -77,13 +77,13 @@ public class Reseau {
 		/* Le train va de gauche a droite dans le reseau*/
 		if(etatTrain.isDirectionDroite())
 		{
-			etatTrain.setPositionCouranteTete( railcourante.getJonctionDroite().getRailSuivant(railcourante));
+			train.setPositionCouranteTete( railcourante.getJonctionDroite().getRailSuivant(railcourante));
 			//Mise à jour automatique dans setPositionCouranteTete de la positioncourante queue
 		}
 		/* Le train va de droite a gauche dans le reseau*/
 		else if(etatTrain.isDirectionGauche())
 		{
-			etatTrain.setPositionCouranteTete( railcourante.getJonctionGauche().getRailSuivant(railcourante));
+			train.setPositionCouranteTete( railcourante.getJonctionGauche().getRailSuivant(railcourante));
 			//Mise à jour automatique dans setPositionCouranteTete de la positioncourante queue
 		}
 		/* Le train n'a aucune direction*/
@@ -119,7 +119,7 @@ public class Reseau {
 					// Erreur si on retombe directe sur une butee
 					if(reseauInfra.get(i).getClass().getName().equals("Butee")){
 						// Erreur de type : [B][Rail][B]
-						throw new ErreurConstruction("Une portion du reseau est isole entre 2 but�es");
+						throw new ErreurConstruction("Une portion du reseau est isole entre 2 but�es");
 					}
 				}
 			}
