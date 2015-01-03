@@ -1,5 +1,7 @@
 package co.project.infrastructure.jonction;
 
+import java.util.ArrayList;
+
 import co.project.exception.ErreurConstruction;
 import co.project.exception.ErreurJonction;
 import co.project.infrastructure.Infrastructure;
@@ -7,8 +9,11 @@ import co.project.infrastructure.rail.Rail;
 
 public abstract class Jonction extends Infrastructure {
 
+	protected ArrayList<Rail> rails;
+	
 	public Jonction(int longueur) {
 		super(longueur);
+		rails = new ArrayList<Rail>();
 	}
 
 	/**
@@ -23,6 +28,8 @@ public abstract class Jonction extends Infrastructure {
 	 * @throws ErreurConstruction
 	 */
 	abstract public void connecteRailJonction() throws ErreurConstruction;
+	
+	
 	
 	@Override
 	public String toString() {

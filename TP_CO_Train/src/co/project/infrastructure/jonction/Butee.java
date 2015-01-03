@@ -5,16 +5,15 @@ import co.project.exception.ErreurJonction;
 import co.project.infrastructure.rail.Rail;
 
 public class Butee extends Jonction {
-	private Rail rail;
 
 	public Butee(Rail rail) throws ErreurConstruction {
 		super(0);
-		this.rail = rail;
+		rails.add(rail);
 		connecteRailJonction();
 	}
 
 	public Rail getRail() {
-		return rail;
+		return rails.get(0);
 	}
 
 	@Override
@@ -34,15 +33,15 @@ public class Butee extends Jonction {
 
 	@Override
 	public void connecteRailJonction() throws ErreurConstruction {
-		if (!rail.connectable()) {
-			throw new ErreurConstruction("Le rail a deja 2 jonctions a ses extremités, pose de butee impossible");
+		if (!getRail().connectable()) {
+			throw new ErreurConstruction("Le rail a deja 2 jonctions a ses extremitï¿½s, pose de butee impossible");
 		} else {
-			if (rail.getJonctionDroite() == null && rail.getJonctionGauche() == null) {
-				rail.setJonctionGauche(this);
-			} else if (rail.getJonctionDroite() == null && rail.getJonctionGauche() != null) {
-				rail.setJonctionDroite(this);
+			if (getRail().getJonctionDroite() == null && getRail().getJonctionGauche() == null) {
+				getRail().setJonctionGauche(this);
+			} else if (getRail().getJonctionDroite() == null && getRail().getJonctionGauche() != null) {
+				getRail().setJonctionDroite(this);
 			} else {
-				rail.setJonctionGauche(this);
+				getRail().setJonctionGauche(this);
 			}
 		}
 	}
