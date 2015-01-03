@@ -8,5 +8,12 @@ public abstract class Semaphore {
 
 	protected EtatFeu etatActuel;
 	
+	//Rouge par defaut
+	public Semaphore()
+	{
+		etatActuel = new EtatRouge();
+	}
+	
+	public abstract void changeEtat();
 	
 }
