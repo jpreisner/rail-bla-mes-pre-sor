@@ -66,7 +66,6 @@ public class Reseau {
 	public void deplacementTrain(Train train) throws ErreurJonction,ErreurTrain
 	{
 		//Rail ou se trouve la tete du train actuellement
-		EtatCourant etatTrain = train.getEtatTrain();
 		Rail railcourante = train.getPositionCouranteTete();
 		//On change la position de la tête à la suivante
 		
