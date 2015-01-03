@@ -2,10 +2,13 @@ package co.project.feu;
 
 public class EtatOrange extends EtatFeu {
 
+	public EtatOrange() {
+		super("orange");
+	}
+	
 	@Override
-	public void change_etat() {
-		// TODO Auto-generated method stub
-		
+	public EtatFeu changeEtat(Semaphore sema) {
+		return new EtatRouge();
 	}
 
 }
