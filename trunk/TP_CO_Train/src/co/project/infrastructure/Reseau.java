@@ -65,31 +65,7 @@ public class Reseau {
 	 */
 	public void deplacementTrain(Train train) throws ErreurJonction,ErreurTrain
 	{
-		//Rail ou se trouve la tete du train actuellement
-		Rail railcourante = train.getPositionCouranteTete();
-		//On change la position de la tête à la suivante
-		
-		System.out.println("Train avant : "+train);
-
-		System.out.println("\nDeplacement du train\n");
-		
-		/* Le train va de gauche a droite dans le reseau*/
-		if(etatTrain.isDirectionDroite())
-		{
-			train.setPositionCouranteTete( railcourante.getJonctionDroite().getRailSuivant(railcourante));
-			//Mise à jour automatique dans setPositionCouranteTete de la positioncourante queue
-		}
-		/* Le train va de droite a gauche dans le reseau*/
-		else if(etatTrain.isDirectionGauche())
-		{
-			train.setPositionCouranteTete( railcourante.getJonctionGauche().getRailSuivant(railcourante));
-			//Mise à jour automatique dans setPositionCouranteTete de la positioncourante queue
-		}
-		/* Le train n'a aucune direction*/
-		else
-		{
-			throw new ErreurTrain("Votre train "+train+" n'a aucun sens de déplacement");
-		}
+		train.Deplacer();
 	}
 	
 	
