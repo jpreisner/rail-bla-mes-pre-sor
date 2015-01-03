@@ -86,7 +86,7 @@ public class TestTrain {
 			arrayRails.add(r4);
 			arrayRails.add(r5);
 			arrayRails.add(r6);
-			Aiguillage a1 = FabriqueInfrastructure.connecterPlusieursRails(arrayRails);
+			Aiguillage a1 = new Aiguillage(arrayRails);
 
 			infrastructure.add(a1);
 

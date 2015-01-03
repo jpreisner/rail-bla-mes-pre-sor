@@ -2,13 +2,22 @@ package co.project.feu;
 
 public class FeuBicolore extends Semaphore {
 
+
 	public FeuBicolore() {
-		etatsPossibles = new EtatFeuEnum[] { EtatFeuEnum.VERT, EtatFeuEnum.ROUGE };
-		etatActuel = etatsPossibles[0];
+		// TODO Auto-generated constructor stub
+		super();
+	}
+	
+	@Override
+	public void changeEtat() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public String toString() {
 		return "Feu Bicolore, " + etatActuel;
 	}
+
+	
 }

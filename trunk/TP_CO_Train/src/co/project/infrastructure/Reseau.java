@@ -6,7 +6,6 @@ import co.project.exception.ErreurConstruction;
 import co.project.exception.ErreurJonction;
 import co.project.exception.ErreurTrain;
 import co.project.infrastructure.rail.Rail;
-import co.project.train.EtatCourant;
 import co.project.train.Train;
 
 public class Reseau {
