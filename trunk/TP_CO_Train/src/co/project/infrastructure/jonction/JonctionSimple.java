@@ -6,22 +6,19 @@ import co.project.infrastructure.rail.Rail;
 
 public class JonctionSimple extends Jonction {
 
-	private Rail rail1;
-	private Rail rail2;
-
 	public JonctionSimple(Rail rail1, Rail rail2) throws ErreurConstruction {
 		super(0);
-		this.rail1 = rail1;
-		this.rail2 = rail2;
+		rails.add(rail1);
+		rails.add(rail2);
 		connecteRailJonction();
 	}
 
 	@Override
 	public Rail getRailSuivant(Rail rail) throws ErreurJonction {
-		if (rail.equals(this.rail1)) {
-			return this.rail2;
-		} else if (rail.equals(this.rail2)) {
-			return this.rail1;
+		if (rail.equals(getRailGauche())) {
+			return getRailDroite();
+		} else if (rail.equals(getRailDroite())) {
+			return getRailGauche();
 		} else {
 			throw new ErreurJonction("Erreur dans la recuperation du rail suivant");
 		}
@@ -33,6 +30,16 @@ public class JonctionSimple extends Jonction {
 		return false;
 	}
 
+	public Rail getRailGauche()
+	{
+		return rails.get(0);
+	}
+	
+	public Rail getRailDroite()
+	{
+		return rails.get(1);
+	}
+	
 	@Override
 	public String toString() {
 		return "[JS]";
@@ -40,19 +47,19 @@ public class JonctionSimple extends Jonction {
 
 	@Override
 	public void connecteRailJonction() throws ErreurConstruction {
-		if (!rail1.connectable() || !rail2.connectable()) {
+		if (!getRailGauche().connectable() || !getRailDroite().connectable()) {
 			throw new ErreurConstruction("Les 2 rails ont deja des jonctions, pose de jonction simple impossible");
 		} else {
-			if(rail1.getJonctionDroite()==null){
-				rail1.setJonctionDroite(this);
+			if(getRailGauche().getJonctionDroite()==null){
+				getRailGauche().setJonctionDroite(this);
 			}else{
-				rail1.setJonctionGauche(this);
+				getRailGauche().setJonctionGauche(this);
 			}
 			
-			if(rail2.getJonctionGauche()==null){
-				rail2.setJonctionGauche(this);
+			if(getRailDroite().getJonctionGauche()==null){
+				getRailDroite().setJonctionGauche(this);
 			}else{
-				rail2.setJonctionDroite(this);
+				getRailDroite().setJonctionDroite(this);
 			}
 		}
 	}

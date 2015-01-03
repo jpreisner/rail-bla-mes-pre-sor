@@ -12,23 +12,23 @@ import co.project.infrastructure.rail.Rail;
 public class Aiguillage extends Jonction {
 
 	/* au moins 3 rails */
-	private ArrayList<Rail> lRail;
+
 	/* element de regulation */
 	private ElemRegulation elemRegul;
 	/* rails connectes de l'aiguillage */
 	private Rail railConnecte1;
 	private Rail railConnecte2;
 
-	public Aiguillage(ArrayList<Rail> lRail) throws ErreurConstruction {
+	public Aiguillage(ArrayList<Rail> rails) throws ErreurConstruction {
 		super(0);
-		this.lRail = lRail;
-		railConnecte1 = this.lRail.get(0);
-		railConnecte2 = this.lRail.get(1);
+		this.rails = rails;
+		railConnecte1 = this.rails.get(0);
+		railConnecte2 = this.rails.get(1);
 		connecteRailJonction();
 	}
 
-	public ArrayList<Rail> getlRail() {
-		return lRail;
+	public ArrayList<Rail> getrails() {
+		return rails;
 	}
 
 	public ElemRegulation getElemRegul() {
@@ -76,23 +76,23 @@ public class Aiguillage extends Jonction {
 
 	@Override
 	public String toString() {
-		// return super.toString() + "Aiguillage a " + lRail.size() +
+		// return super.toString() + "Aiguillage a " + rails.size() +
 		// " rails ]";
 		String listeRailNumero = "";
-		for (Rail r : lRail) {
+		for (Rail r : rails) {
 			listeRailNumero += r.getIdInfrastructure() + ",";
 		}
-		return "[A -" + lRail.size() + " directions : rails : " + listeRailNumero + "]";
+		return "[A -" + rails.size() + " directions : rails : " + listeRailNumero + "]";
 	}
 
 	@Override
 	public void connecteRailJonction() throws ErreurConstruction {
-		for (Rail rail : lRail) {
+		for (Rail rail : rails) {
 			if (!rail.connectable()) {
 				throw new ErreurConstruction("le rail : " + rail + ", n'est pas connectable a l'aiguillage.");
 			}
 		}
-		for (Rail rail : lRail) {
+		for (Rail rail : rails) {
 			if (rail.getJonctionGauche() == null) {
 				rail.setJonctionGauche(this);
 			} else {
