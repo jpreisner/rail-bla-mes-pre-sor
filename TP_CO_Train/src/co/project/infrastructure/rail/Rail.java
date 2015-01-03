@@ -3,6 +3,7 @@ package co.project.infrastructure.rail;
 import java.util.HashMap;
 
 import co.project.capteur.Capteur;
+import co.project.feu.Semaphore;
 import co.project.infrastructure.Infrastructure;
 import co.project.infrastructure.jonction.Jonction;
 
@@ -12,6 +13,7 @@ public class Rail extends Infrastructure {
 	/* 2 jonctions aux extremitees du rail */
 	private Jonction gauche;
 	private Jonction droite;
+	private Semaphore sema;
 
 	private HashMap<Capteur, Troncon> capteurTroncon;
 
@@ -41,6 +43,15 @@ public class Rail extends Infrastructure {
 
 	public void setCapteurTroncon(HashMap<Capteur, Troncon> capteurNumeroTroncon) {
 		this.capteurTroncon = capteurNumeroTroncon;
+	}
+	
+
+	public Semaphore getSema() {
+		return sema;
+	}
+
+	public void setSema(Semaphore sema) {
+		this.sema = sema;
 	}
 
 	public boolean connectable() {
