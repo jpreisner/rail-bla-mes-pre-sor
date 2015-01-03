@@ -16,7 +16,16 @@ public class FeuTricolore extends Semaphore {
 
 	@Override
 	public String toString() {
-		return "Feu Tricolore, " + etatActuel;
+		return "Feu Tricolore, " + etat;
+	}
+
+	@Override
+	public boolean changementEtatPossible(EtatFeu etat) {
+		// TODO Auto-generated method stub
+		
+		//TODO A voir si on autorise passage directe de vert->rouge
+		//Je pense que oui
+		return true;
 	}
 
 }

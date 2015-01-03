@@ -16,7 +16,23 @@ public class FeuBicolore extends Semaphore {
 
 	@Override
 	public String toString() {
-		return "Feu Bicolore, " + etatActuel;
+		return "Feu Bicolore, " + etat;
+	}
+
+	@Override
+	public boolean changementEtatPossible(EtatFeu etat) {
+		// TODO Auto-generated method stub
+		
+		if(etat.getName().equals("orange"))
+			return false;
+		
+		return true;
+	}
+	
+	public static void main(String[] args) {
+		FeuBicolore bico = new FeuBicolore();
+		
+		System.out.println("Changement possible ? "+bico.changementEtatPossible(new EtatRouge()));
 	}
 
 	
