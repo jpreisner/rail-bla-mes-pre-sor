@@ -1,6 +1,6 @@
 package co.project.feu;
 
-public class EtatRouge extends EtatFeu {
+public final class EtatRouge extends EtatFeu {
 
 	/* Unique instance non initialisee */
 	private static EtatRouge INSTANCE = null;
@@ -24,5 +24,9 @@ public class EtatRouge extends EtatFeu {
 	public EtatFeu changeEtat(Semaphore sema) {
 		return EtatVert.getInstance();
 	}
-
+	
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		return this;
+	}
 }
