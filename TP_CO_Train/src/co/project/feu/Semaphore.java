@@ -14,7 +14,10 @@ public abstract class Semaphore {
 		etat = new EtatRouge();
 	}
 	
-	public abstract void changeEtat();
+	public void changeEtat()
+	{
+		etat = etat.changeEtat(this);
+	}
 	
 	public abstract boolean changementEtatPossible(EtatFeu etat);
 }

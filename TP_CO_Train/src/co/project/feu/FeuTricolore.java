@@ -11,7 +11,7 @@ public class FeuTricolore extends Semaphore {
 	@Override
 	public void changeEtat() {
 		// TODO Auto-generated method stub
-		
+		super.changeEtat();
 	}
 
 	@Override
