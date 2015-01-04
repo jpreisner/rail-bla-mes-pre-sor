@@ -1,13 +1,13 @@
 package co.project.feu;
 
-public class EtatVert extends EtatFeu {
+public final class EtatVert extends EtatFeu {
 
 	/* Unique instance non initialisee */
 	private static EtatVert INSTANCE = null;
 
 	// Constructeur prive
 	private EtatVert() {
-		super("rouge");
+		super("vert");
 	}
 
 	/**
@@ -27,6 +27,11 @@ public class EtatVert extends EtatFeu {
 			return EtatOrange.getInstance();
 		else
 			return EtatRouge.getInstance();
+	}
+	
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		return this;
 	}
 
 }
