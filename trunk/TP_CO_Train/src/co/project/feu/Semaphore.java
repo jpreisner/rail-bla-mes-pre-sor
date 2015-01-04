@@ -1,23 +1,17 @@
 package co.project.feu;
 
-import java.util.Arrays;
-
-import co.project.exception.ErreurSignalisation;
-
 public abstract class Semaphore {
 
 	protected EtatFeu etat;
-	
-	//Rouge par defaut
-	public Semaphore()
-	{
-		etat = new EtatRouge();
+
+	// Rouge par defaut
+	public Semaphore() {
+		etat = EtatRouge.getInstance();
 	}
-	
-	public void changeEtat()
-	{
+
+	public void changeEtat() {
 		etat = etat.changeEtat(this);
 	}
-	
+
 	public abstract boolean changementEtatPossible(EtatFeu etat);
 }
