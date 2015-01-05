@@ -10,11 +10,6 @@ public class FeuTricolore extends Semaphore {
 	}
 
 	@Override
-	public void changeEtat() {
-		super.changeEtat();
-	}
-
-	@Override
 	public String toString() {
 		return "Feu Tricolore, " + etat;
 	}
