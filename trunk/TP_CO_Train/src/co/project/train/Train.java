@@ -1,9 +1,13 @@
 package co.project.train;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import co.project.exception.ErreurJonction;
+import co.project.feu.Semaphore;
 import co.project.infrastructure.rail.Rail;
 
-public class Train {
+public class Train implements Observer{
 	/* compteur d'instance */
 	private static int id = 0;
 	private int idTrain;
@@ -80,6 +84,7 @@ public class Train {
 	 * Fonction du deplacement du train
 	 * @throws ErreurJonction
 	 */
+	//TODO Prendre en compte les semaphore
 	public void deplacer() throws ErreurJonction {
 		etat.deplaceTroncontete(vCourante);
 		
@@ -139,5 +144,28 @@ public class Train {
 			return rail.getJonctionDroite().getRailSuivant(rail);
 		else	
 			return rail.getJonctionGauche().getRailSuivant(rail);
+	}
+	
+	public void stop()
+	{
+		setVitesseCourante(0);
+	}
+	
+	public void start()
+	{
+		setVitesseCourante(vMax); 
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
+		try {
+			Semaphore sema = (Semaphore)o;
+			start();
+		} catch (ClassCastException e) {
+			// TODO: handle exception
+		}
+		
 	}
 }
