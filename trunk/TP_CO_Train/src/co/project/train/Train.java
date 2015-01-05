@@ -77,7 +77,7 @@ public class Train {
 	}
 
 	public void deplacer() throws ErreurJonction {
-		etat.deplaceTrancontete(vCourante);
+		etat.deplaceTroncontete(vCourante);
 		
 		/**
 		 * Représente la différence de taille qu'on a entre la disposition de la
