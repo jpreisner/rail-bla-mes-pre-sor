@@ -10,6 +10,7 @@ import co.project.infrastructure.rail.Rail;
 
 public class FabriqueInfrastructure {
 
+	private static int TAILLE_RAIL_DEFAUT = 10;
 	/**
 	 * Creer une ligne de rails connecté par des jonctions
 	 * @param nb
@@ -25,7 +26,7 @@ public class FabriqueInfrastructure {
 	 * @throws ErreurConstruction 
 	 */
 	public static Aiguillage creeAiguillageX() throws ErreurConstruction {
-		return creeAiguillageX(10);
+		return creeAiguillageX(TAILLE_RAIL_DEFAUT);
 	}
 
 	/**
@@ -33,12 +34,14 @@ public class FabriqueInfrastructure {
 	 * @throws ErreurConstruction 
 	 */
 	public static Aiguillage creeAiguillageY() throws ErreurConstruction {
-		return creeAiguillageY(10);
+		return creeAiguillageY(TAILLE_RAIL_DEFAUT);
 	}
 
 	/**
+	 * 
+	 * @param tailleRail : la taille de chaque rail autour
 	 * @return Aiguillage en X, avec 4 rails connectes, mais sans rails amont ni aval
-	 * @throws ErreurConstruction 
+	 * @throws ErreurConstruction
 	 */
 	public static Aiguillage creeAiguillageX(int tailleRail) throws ErreurConstruction {
 		ArrayList<Rail> listRails = new ArrayList<Rail>();
@@ -50,8 +53,10 @@ public class FabriqueInfrastructure {
 	}
 
 	/**
+	 * 
+	 * @param tailleRail : la taille de chaque rail autour
 	 * @return Aiguillage en Y, avec 3 rails connectes, mais sans rails amont ni aval
-	 * @throws ErreurConstruction 
+	 * @throws ErreurConstruction
 	 */
 	public static Aiguillage creeAiguillageY(int tailleRail) throws ErreurConstruction {
 		ArrayList<Rail> listRails = new ArrayList<Rail>();
