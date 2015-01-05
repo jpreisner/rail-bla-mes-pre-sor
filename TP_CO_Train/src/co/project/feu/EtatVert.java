@@ -32,5 +32,10 @@ public final class EtatVert extends EtatFeu {
 	protected Object clone() throws CloneNotSupportedException {
 		return getInstance();
 	}
+	
+	@Override
+	public String toString() {
+		return "[Vert]";
+	}
 
 }

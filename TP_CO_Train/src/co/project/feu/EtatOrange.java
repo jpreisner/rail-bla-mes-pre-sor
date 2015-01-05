@@ -29,4 +29,9 @@ public final class EtatOrange extends EtatFeu {
 	protected Object clone() throws CloneNotSupportedException {
 		return getInstance();
 	}
+	
+	@Override
+	public String toString() {
+		return "[Orange]";
+	}
 }
