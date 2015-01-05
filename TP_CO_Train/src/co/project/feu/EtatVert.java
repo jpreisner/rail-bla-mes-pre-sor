@@ -19,15 +19,6 @@ public final class EtatVert extends EtatFeu {
 		}
 		return INSTANCE;
 	}
-
-	@Override
-	public EtatFeu changeEtat(Semaphore sema) {
-		if (sema.changementEtatPossible(EtatOrange.getInstance()))
-			return EtatOrange.getInstance();
-		else
-			return EtatRouge.getInstance();
-	}
-	
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
 		return getInstance();
