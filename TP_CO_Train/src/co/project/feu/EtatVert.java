@@ -31,7 +31,7 @@ public final class EtatVert extends EtatFeu {
 	
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
-		return this;
+		return getInstance();
 	}
 
 }
