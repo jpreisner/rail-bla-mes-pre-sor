@@ -15,13 +15,12 @@ public class JonctionSimple extends Jonction {
 
 	@Override
 	public Rail getRailSuivant(Rail rail) throws ErreurJonction {
+		
 		if (rail.equals(getRailGauche())) {
 			return getRailDroite();
-		} else if (rail.equals(getRailDroite())) {
-			return getRailGauche();
 		} else {
-			throw new ErreurJonction("Erreur dans la recuperation du rail suivant");
-		}
+			return getRailGauche();
+		} 
 	}
 
 	@Override

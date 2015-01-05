@@ -11,10 +11,10 @@ public class Etat {
 		this.direction=d;
 		this.trancon_tete=0;
 	}
-	public int getTrancon_tete() {
+	public int getTronconTete() {
 		return trancon_tete;
 	}
-	public void Deplace_Trancon_tete(int trancon_tete) {
+	public void deplaceTrancontete(int trancon_tete) {
 		this.trancon_tete += trancon_tete;
 	}
 	public Direction getDirection() {
@@ -23,7 +23,7 @@ public class Etat {
 	public void setDirection(Direction direction) {
 		this.direction = direction;
 	}
-	public void setTrancon_tete(int trancon_tete) {
+	public void setTronconTete(int trancon_tete) {
 		this.trancon_tete = trancon_tete;
 	}
 	

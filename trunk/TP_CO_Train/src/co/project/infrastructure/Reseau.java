@@ -8,7 +8,7 @@ import co.project.exception.ErreurTrain;
 import co.project.infrastructure.rail.Rail;
 import co.project.train.Train;
 
-public class Reseau {
+public final class Reseau {
 
 	/* Unique instance non initialisee */
 	private static Reseau INSTANCE = null;
@@ -33,6 +33,14 @@ public class Reseau {
 		return INSTANCE;
 	}
 
+	/**
+	 * 
+	 */
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		return getInstance();
+	}
+	
 	public ArrayList<Infrastructure> getReseauInfra() {
 		return reseauInfra;
 	}
@@ -52,6 +60,9 @@ public class Reseau {
 	public void startTimer(){
 		
 	}
+	/**
+	 * Mettre les trains au bon endroit sur les rails
+	 */
 	public void init(){
 		
 	}
@@ -64,7 +75,7 @@ public class Reseau {
 	 */
 	public void deplacementTrain(Train train) throws ErreurJonction,ErreurTrain
 	{
-		train.Deplacer();
+		train.deplacer();
 	}
 	
 	

@@ -27,6 +27,6 @@ public final class EtatOrange extends EtatFeu {
 	
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
-		return this;
+		return getInstance();
 	}
 }
