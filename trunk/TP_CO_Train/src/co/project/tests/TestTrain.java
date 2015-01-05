@@ -38,6 +38,9 @@ public class TestTrain {
 	// System.out.println(js);
 	// System.out.println(train);
 	// }
+	
+	//TODO Verifier que les exception soit gérées LE PLUS HAUT POSSIBLE !!!
+	//Pas de try catch dans les fonctions !!
 
 	/* creation d'aiguillage */
 	public static void main(String[] args) {
