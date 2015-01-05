@@ -84,7 +84,7 @@ public class Train implements Observer{
 	 * Fonction du deplacement du train
 	 * @throws ErreurJonction
 	 */
-	//TODO Prendre en compte les semaphore
+	//TODO Prendre en compte les semaphores
 	public void deplacer() throws ErreurJonction {
 		etat.deplaceTroncontete(vCourante);
 		
@@ -125,8 +125,8 @@ public class Train implements Observer{
 				 * On décremente la différence par la taille de la rail suivante
 				 */
 				else {
-					rail = railSuivanteDirection();
 					diff -= rail.getLongueur();
+					rail = railSuivanteDirection();
 				}
 			}
 
