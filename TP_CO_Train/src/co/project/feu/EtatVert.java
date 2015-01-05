@@ -22,7 +22,6 @@ public final class EtatVert extends EtatFeu {
 
 	@Override
 	public EtatFeu changeEtat(Semaphore sema) {
-		// TODO Auto-generated method stub
 		if (sema.changementEtatPossible(EtatOrange.getInstance()))
 			return EtatOrange.getInstance();
 		else
