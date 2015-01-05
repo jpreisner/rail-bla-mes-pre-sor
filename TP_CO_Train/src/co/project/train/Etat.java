@@ -1,21 +1,21 @@
 package co.project.train;
 /*modelisation de la relation association*/
 public class Etat {
-	private int trancon_tete;
+	private int tranconTete;
 	private Direction direction;
 	public Etat(int t,Direction d){
 		this(d);
-		this.trancon_tete=t;
+		this.tranconTete=t;
 	}
 	public Etat(Direction d){
 		this.direction=d;
-		this.trancon_tete=0;
+		this.tranconTete=0;
 	}
 	public int getTronconTete() {
-		return trancon_tete;
+		return tranconTete;
 	}
-	public void deplaceTrancontete(int trancon_tete) {
-		this.trancon_tete += trancon_tete;
+	public void deplaceTroncontete(int tronconTete) {
+		this.tranconTete += tronconTete;
 	}
 	public Direction getDirection() {
 		return direction;
@@ -23,8 +23,8 @@ public class Etat {
 	public void setDirection(Direction direction) {
 		this.direction = direction;
 	}
-	public void setTronconTete(int trancon_tete) {
-		this.trancon_tete = trancon_tete;
+	public void setTronconTete(int tronconTete) {
+		this.tranconTete = tronconTete;
 	}
 	
 }
