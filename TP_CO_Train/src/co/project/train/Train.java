@@ -76,6 +76,10 @@ public class Train {
 				+ ", Vitesse maximale : " + vMax + " tr/t ] ";
 	}
 
+	/**
+	 * Fonction du deplacement du train
+	 * @throws ErreurJonction
+	 */
 	public void deplacer() throws ErreurJonction {
 		etat.deplaceTroncontete(vCourante);
 		
