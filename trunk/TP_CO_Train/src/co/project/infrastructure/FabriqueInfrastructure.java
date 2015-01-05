@@ -25,12 +25,7 @@ public class FabriqueInfrastructure {
 	 * @throws ErreurConstruction 
 	 */
 	public static Aiguillage creeAiguillageX() throws ErreurConstruction {
-		ArrayList<Rail> listRails = new ArrayList<Rail>();
-		listRails.add(new Rail(10));
-		listRails.add(new Rail(10));
-		listRails.add(new Rail(10));
-		listRails.add(new Rail(10));
-		return new Aiguillage(listRails);
+		return creeAiguillageX(10);
 	}
 
 	/**
@@ -38,11 +33,32 @@ public class FabriqueInfrastructure {
 	 * @throws ErreurConstruction 
 	 */
 	public static Aiguillage creeAiguillageY() throws ErreurConstruction {
+		return creeAiguillageY(10);
+	}
+
+	/**
+	 * @return Aiguillage en X, avec 4 rails connectes, mais sans rails amont ni aval
+	 * @throws ErreurConstruction 
+	 */
+	public static Aiguillage creeAiguillageX(int tailleRail) throws ErreurConstruction {
 		ArrayList<Rail> listRails = new ArrayList<Rail>();
-		listRails.add(new Rail(10));
-		listRails.add(new Rail(10));
-		listRails.add(new Rail(10));
+		listRails.add(new Rail(tailleRail));
+		listRails.add(new Rail(tailleRail));
+		listRails.add(new Rail(tailleRail));
+		listRails.add(new Rail(tailleRail));
 		return new Aiguillage(listRails);
 	}
 
+	/**
+	 * @return Aiguillage en Y, avec 3 rails connectes, mais sans rails amont ni aval
+	 * @throws ErreurConstruction 
+	 */
+	public static Aiguillage creeAiguillageY(int tailleRail) throws ErreurConstruction {
+		ArrayList<Rail> listRails = new ArrayList<Rail>();
+		listRails.add(new Rail(tailleRail));
+		listRails.add(new Rail(tailleRail));
+		listRails.add(new Rail(tailleRail));
+		return new Aiguillage(listRails);
+	}
+	
 }
