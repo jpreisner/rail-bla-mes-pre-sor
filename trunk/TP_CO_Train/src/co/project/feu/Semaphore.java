@@ -1,10 +1,13 @@
 package co.project.feu;
 
+import java.util.Arrays;
+
 public abstract class Semaphore {
 
 	protected EtatFeu etat;
+	protected EtatFeu[] etatsPossibles;
 
-	// Rouge par defaut
+	// Rouge par defaut au debut
 	public Semaphore() {
 		etat = EtatRouge.getInstance();
 	}
@@ -13,5 +16,7 @@ public abstract class Semaphore {
 		etat = etat.changeEtat(this);
 	}
 
-	public abstract boolean changementEtatPossible(EtatFeu etat);
+	public boolean changementEtatPossible(EtatFeu etat){
+		return Arrays.asList(etatsPossibles).contains(etat);
+	}
 }

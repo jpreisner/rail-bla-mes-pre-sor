@@ -1,15 +1,16 @@
 package co.project.feu;
 
+import java.util.Arrays;
+
 public class FeuBicolore extends Semaphore {
 
 	public FeuBicolore() {
-		// TODO Auto-generated constructor stub
 		super();
+		etatsPossibles = new EtatFeu[] { EtatVert.getInstance(), EtatRouge.getInstance() };
 	}
 
 	@Override
 	public void changeEtat() {
-		// TODO Auto-generated method stub
 		super.changeEtat();
 	}
 
@@ -18,20 +19,16 @@ public class FeuBicolore extends Semaphore {
 		return "Feu Bicolore, " + etat;
 	}
 
-	@Override
-	public boolean changementEtatPossible(EtatFeu etat) {
-		// TODO Auto-generated method stub
-
-		if (etat.getName().equals("orange"))
-			return false;
-
-		return true;
-	}
+//	@Override
+//	public boolean changementEtatPossible(EtatFeu etat) {
+//		return Arrays.asList(etatsPossibles).contains(etat);
+//	}
 
 	public static void main(String[] args) {
 		FeuBicolore bico = new FeuBicolore();
 
-		System.out.println("Changement possible ? " + bico.changementEtatPossible(EtatRouge.getInstance()));
+		System.out.println("Changement orange possible ? " + bico.changementEtatPossible(EtatOrange.getInstance()));
+		System.out.println("Changement vert possible ? " + bico.changementEtatPossible(EtatVert.getInstance()));
 	}
 
 }
