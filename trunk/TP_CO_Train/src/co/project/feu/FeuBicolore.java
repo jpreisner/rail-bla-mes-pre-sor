@@ -1,7 +1,5 @@
 package co.project.feu;
 
-import java.util.Arrays;
-
 public class FeuBicolore extends Semaphore {
 
 	public FeuBicolore() {
@@ -13,11 +11,6 @@ public class FeuBicolore extends Semaphore {
 	public String toString() {
 		return "Feu Bicolore, " + etat;
 	}
-
-//	@Override
-//	public boolean changementEtatPossible(EtatFeu etat) {
-//		return Arrays.asList(etatsPossibles).contains(etat);
-//	}
 
 	public static void main(String[] args) {
 		FeuBicolore bico = new FeuBicolore();
