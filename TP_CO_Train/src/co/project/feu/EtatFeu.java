@@ -4,11 +4,16 @@ import co.project.exception.ErreurSemaphore;
 
 public abstract class EtatFeu  {
 	
-	protected String name;
 	
-	public EtatFeu(String name) {
+	/*
+	 * Si le coefficient est a 0 le train s'arrête
+	 * S'il est a 1 le train continu sur la meme vitesse 
+	 * S'il est entre ]0,1[ cela reduire la vitesse du train
+	 */
+	protected Float coefficient;
+	
+	public EtatFeu() {
 		// TODO Auto-generated constructor stub
-		this.name = name;
 	}
 	
 	/**
@@ -22,9 +27,11 @@ public abstract class EtatFeu  {
 		return sema.getNextEtat();
 	}
 
-	public String getName() {
-		return name;
+	public Float getCoefficient() {
+		return coefficient;
 	}
+	
+	
 	
 	
 }
