@@ -7,7 +7,8 @@ public final class EtatOrange extends EtatFeu {
 
 	// Constructeur prive
 	private EtatOrange() {
-		super("orange");
+		super();
+		coefficient = Float.valueOf(1/2);
 	}
 
 	/**

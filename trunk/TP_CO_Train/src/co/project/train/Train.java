@@ -86,50 +86,63 @@ public class Train implements Observer{
 	 */
 	//TODO Prendre en compte les semaphores
 	public void deplacer() throws ErreurJonction {
-		etat.deplaceTroncontete(vCourante);
 		
-		/**
-		 * Représente la différence de taille qu'on a entre la disposition de la
-		 * tête du train et que l'extremité de cette dernière
-		 */
-		int diff = etat.getTronconTete() - rail.getLongueur();
-		//On est au bout de la rail donc on passe simplement à la suivante
-		if (diff == 0) {
-			rail = railSuivanteDirection();
-		}
-		//On est au delà de la capacité de la rail
-		//Un changement de rail est nécessaire
-		else if(diff>0)
+		if(rail.getSema()!=null)
 		{
-			/**
-			 * On change de rail de facon instantannément
-			 * Puis on regarde à travers la boucle
-			 * si la rail peut supporter la tête du train
-			 */
+			//TODO cast force : mettre la vitesse en double
+			vCourante = (int)(vCourante*rail.getSema().getEtat().getCoefficient());
+		}
+		
+		/*
+		 * On se deplace seulement si on a une vitesse > 0
+		 */
+		if(vCourante>0)
+		{
+			etat.deplaceTroncontete(vCourante);
 			
-			rail = railSuivanteDirection();
-			boolean continuer = true;
-			while (continuer) {
-				/**
-				 * La rail courante est suffisante
-				 * On change la disposition de la nouvelle tête
-				 * Puis on s'arrête
-				 */
-				if (rail.getLongueur() > diff) {
-					etat.setTronconTete(diff);
-					continuer = false;
-				}
-				/**
-				 * Il y a encore du chemin à faire
-				 * La rail courante ne suffit pas on va regarder la suivante
-				 * On décremente la différence par la taille de la rail suivante
-				 */
-				else {
-					diff -= rail.getLongueur();
-					rail = railSuivanteDirection();
-				}
+			/**
+			 * Représente la différence de taille qu'on a entre la disposition de la
+			 * tête du train et que l'extremité de cette dernière
+			 */
+			int diff = etat.getTronconTete() - rail.getLongueur();
+			//On est au bout de la rail donc on passe simplement à la suivante
+			if (diff == 0) {
+				rail = railSuivanteDirection();
 			}
+			//On est au delà de la capacité de la rail
+			//Un changement de rail est nécessaire
+			else if(diff>0)
+			{
+				/**
+				 * On change de rail de facon instantannément
+				 * Puis on regarde à travers la boucle
+				 * si la rail peut supporter la tête du train
+				 */
+				
+				rail = railSuivanteDirection();
+				boolean continuer = true;
+				while (continuer) {
+					/**
+					 * La rail courante est suffisante
+					 * On change la disposition de la nouvelle tête
+					 * Puis on s'arrête
+					 */
+					if (rail.getLongueur() > diff) {
+						etat.setTronconTete(diff);
+						continuer = false;
+					}
+					/**
+					 * Il y a encore du chemin à faire
+					 * La rail courante ne suffit pas on va regarder la suivante
+					 * On décremente la différence par la taille de la rail suivante
+					 */
+					else {
+						diff -= rail.getLongueur();
+						rail = railSuivanteDirection();
+					}
+				}
 
+			}
 		}
 	}
 	

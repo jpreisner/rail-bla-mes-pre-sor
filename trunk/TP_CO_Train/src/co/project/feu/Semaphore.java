@@ -24,6 +24,12 @@ public abstract class Semaphore extends Observable{
 		}
 	}
 	
+	
+	
+	public EtatFeu getEtat() {
+		return etat;
+	}
+
 	public EtatFeu getNextEtat() throws ErreurSemaphore
 	{
 		for(int i = 0; i<etatsPossibles.length; i++)
