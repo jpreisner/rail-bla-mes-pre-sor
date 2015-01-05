@@ -19,11 +19,6 @@ public final class EtatRouge extends EtatFeu {
 		}
 		return INSTANCE;
 	}
-
-	@Override
-	public EtatFeu changeEtat(Semaphore sema) {
-		return EtatVert.getInstance();
-	}
 	
 	@Override
 	protected Object clone() throws CloneNotSupportedException {

@@ -1,5 +1,7 @@
 package co.project.feu;
 
+import co.project.exception.ErreurSemaphore;
+
 public abstract class EtatFeu  {
 	
 	protected String name;
@@ -11,11 +13,14 @@ public abstract class EtatFeu  {
 	
 	/**
 	 * @param sema
-	 * @return l'état suivant dans du cycle
+	 * @return l'ï¿½tat suivant dans du cycle
 	 * pour feu Bicolore : VERT -> ROUGE -> VERT
 	 * pour le feu Tricolore : VERT -> ORANGE -> ROUGE -> VERT
 	 */
-	public abstract EtatFeu changeEtat(Semaphore sema);
+	public EtatFeu changeEtat(Semaphore sema) throws ErreurSemaphore
+	{
+		return sema.getNextEtat();
+	}
 
 	public String getName() {
 		return name;
