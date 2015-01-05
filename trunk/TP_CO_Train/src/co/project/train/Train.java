@@ -128,6 +128,11 @@ public class Train {
 		}
 	}
 	
+	/**
+	 * Retourne la rail suivante de la rail courante en fonction de la direction
+	 * @return la rail suivante de la rail courante en fonction de la direction
+	 * @throws ErreurJonction
+	 */
 	private Rail railSuivanteDirection() throws ErreurJonction
 	{
 		if(etat.getDirection().equals(Direction.DROITE))
