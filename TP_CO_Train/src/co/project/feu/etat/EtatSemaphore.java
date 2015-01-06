@@ -27,5 +27,11 @@ public abstract class EtatSemaphore {
 		return limitation;
 	}
 	
+	/**
+	 * Classe retournant une vitesse a partir de la limitation instaure
+	 * Pour plus d'informations : EtatLimiteFixe et EtatLimiteCoeff
+	 * @param vitesse : l'ancienne vitesse
+	 * @return : la nouvelle vitesse (typiquement il se pourrait qu'elle soit egale a l'ancienne vitesse)
+	 */
 	public abstract int getVitesse(int vitesse);
 }

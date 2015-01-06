@@ -4,7 +4,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import co.project.exception.ErreurJonction;
-import co.project.feu.etat.EtatLimiteCoeff;
+import co.project.feu.etat.coeff.EtatLimiteCoeff;
 import co.project.infrastructure.rail.Rail;
 
 public class Train implements Observer{
