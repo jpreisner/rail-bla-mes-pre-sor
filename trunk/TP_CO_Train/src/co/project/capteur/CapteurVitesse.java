@@ -1,15 +1,16 @@
 package co.project.capteur;
 
-import co.project.ElemRegulation;
+import co.project.infrastructure.rail.Rail;
 
 public class CapteurVitesse extends Capteur {
 
-	public CapteurVitesse(ElemRegulation elm) {
-		addObserver(elm);
+	public CapteurVitesse(Rail rail) {
+		super(rail);
 	}
 
 	/* FIXME vitesse du train passant sur le troncon */
 	public double getVitesse() {
+		setChanged();
 		notifyObservers(0);
 		return 0;
 	}
@@ -17,11 +18,5 @@ public class CapteurVitesse extends Capteur {
 	@Override
 	public String toString() {
 		return super.toString()+" Vitesse";
-	}
-
-	@Override
-	public boolean trainPassant() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 }

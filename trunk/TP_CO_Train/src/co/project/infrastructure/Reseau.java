@@ -104,14 +104,7 @@ public final class Reseau {
 					}
 				}catch(ClassCastException c){
 					/* Jonction */
-					try{
-						Jonction jonction = (Jonction) infra;
-						if(jonction.){
-							throw new ErreurConstruction("le rail "+jonction+", a une jonction manquante");
-						}
-					}catch(ClassCastException c){
-						/* ne rien faire, c'est une jonction */
-					}
+					
 				}
 			}
 			
