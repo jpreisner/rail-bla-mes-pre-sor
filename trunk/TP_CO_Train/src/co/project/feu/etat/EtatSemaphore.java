@@ -11,7 +11,7 @@ public abstract class EtatSemaphore {
 	 * pour feu Bicolore : VERT -> ROUGE -> VERT
 	 * pour le feu Tricolore : VERT -> ORANGE -> ROUGE -> VERT
 	 */
-	public EtatLimiteCoeff changeEtat(Semaphore sema) throws ErreurSemaphore
+	public EtatSemaphore changeEtat(Semaphore sema) throws ErreurSemaphore
 	{
 		return sema.getNextEtat();
 	}

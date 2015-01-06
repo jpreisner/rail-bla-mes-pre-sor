@@ -29,8 +29,6 @@ public abstract class Jonction extends Infrastructure {
 	 */
 	abstract public void connecteRailJonction() throws ErreurConstruction;
 	
-	
-	
 	@Override
 	public String toString() {
 		return "[Jonction]";

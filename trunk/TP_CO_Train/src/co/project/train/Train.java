@@ -4,7 +4,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import co.project.exception.ErreurJonction;
-import co.project.feu.Semaphore;
+import co.project.feu.etat.EtatLimiteCoeff;
 import co.project.infrastructure.rail.Rail;
 
 public class Train implements Observer{
@@ -59,8 +59,15 @@ public class Train implements Observer{
 		return vCourante;
 	}
 
+	/**
+	 * La methode change la vitesse courante en garantissant qu'on ne depasse pas la vitesse maximale
+	 * @param vitesseCourante
+	 */
 	public void setVitesseCourante(int vitesseCourante) {
-		this.vCourante = vitesseCourante;
+		if(vitesseCourante>vMax)
+			this.vCourante = vMax;
+		else
+			this.vCourante = vitesseCourante;
 	}
 
 	public Rail getRail() {
@@ -90,7 +97,7 @@ public class Train implements Observer{
 		if(rail.getSema()!=null)
 		{
 			//TODO cast force : mettre la vitesse en double
-			vCourante = (int)(vCourante*rail.getSema().getEtat().getCoefficient());
+			setVitesseCourante(rail.getSema().getEtat().getVitesse(vCourante));
 		}
 		
 		/*
@@ -174,8 +181,13 @@ public class Train implements Observer{
 		// TODO Auto-generated method stub
 		
 		try {
-			Semaphore sema = (Semaphore)o;
-			start();
+			EtatLimiteCoeff etat = (EtatLimiteCoeff)arg;
+			
+			/**
+			 * TODO En fonction de la signalisation ADAPTER la vitesse
+			 */
+			
+			//start();
 		} catch (ClassCastException e) {
 			// TODO: handle exception
 		}

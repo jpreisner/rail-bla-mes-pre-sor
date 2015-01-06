@@ -5,7 +5,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import co.project.capteur.CapteurPresence;
-import co.project.feu.Semaphore;
+import co.project.feu.semaphore.Semaphore;
 import co.project.infrastructure.jonction.Aiguillage;
 
 public class ElemRegulation implements Observer {

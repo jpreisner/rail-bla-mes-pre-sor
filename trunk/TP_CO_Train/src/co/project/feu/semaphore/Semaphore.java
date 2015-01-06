@@ -3,13 +3,13 @@ package co.project.feu.semaphore;
 import java.util.Observable;
 
 import co.project.exception.ErreurSemaphore;
-import co.project.feu.etat.EtatLimiteCoeff;
 import co.project.feu.etat.EtatRouge;
+import co.project.feu.etat.EtatSemaphore;
 
 public abstract class Semaphore extends Observable{
 
-	protected EtatLimiteCoeff etat;
-	protected EtatLimiteCoeff[] etatsPossibles;
+	protected EtatSemaphore etat;
+	protected EtatSemaphore[] etatsPossibles;
 
 	// Rouge par defaut au debut
 	public Semaphore() {
@@ -24,20 +24,29 @@ public abstract class Semaphore extends Observable{
 	
 	
 	
-	public EtatLimiteCoeff getEtat() {
+	public EtatSemaphore getEtat() {
 		return etat;
 	}
 
-	public EtatLimiteCoeff getNextEtat() throws ErreurSemaphore
+	public EtatSemaphore getNextEtat() throws ErreurSemaphore
 	{
 		for(int i = 0; i<etatsPossibles.length; i++)
 		{
+			/**
+			 * Vu que ce sont des singleton
+			 */
 			if(etat==etatsPossibles[i])
 			{
+				/**
+				 * On est pas a la fin de la liste d'etat possible
+				 */
 				if(i!=etatsPossibles.length-1)
 				{
 					return etatsPossibles[i+1];
 				}
+				/**
+				 * On retourne a l'etat initial
+				 */
 				else
 				{
 					return etatsPossibles[0];
@@ -46,6 +55,6 @@ public abstract class Semaphore extends Observable{
 				
 		}
 		
-		throw new ErreurSemaphore("Pas d'etat suivant : votre feu n'a qu'un seul etat possible");
+		throw new ErreurSemaphore("Pas d'etat suivant : votre semaphore n'a qu'un seul etat possible");
 	}
 }
