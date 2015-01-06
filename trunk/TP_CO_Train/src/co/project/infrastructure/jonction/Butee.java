@@ -34,7 +34,7 @@ public class Butee extends Jonction {
 	@Override
 	public void connecteRailJonction() throws ErreurConstruction {
 		if (!getRail().connectable()) {
-			throw new ErreurConstruction("Le rail a deja 2 jonctions a ses extremit�s, pose de butee impossible");
+			throw new ErreurConstruction("Le rail a deja 2 jonctions a ses extremites, pose de butee impossible");
 		} else {
 			if (getRail().getJonctionDroite() == null && getRail().getJonctionGauche() == null) {
 				getRail().setJonctionGauche(this);

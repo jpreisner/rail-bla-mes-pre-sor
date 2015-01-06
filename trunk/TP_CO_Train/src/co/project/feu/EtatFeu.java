@@ -6,19 +6,18 @@ public abstract class EtatFeu  {
 	
 	
 	/*
-	 * Si le coefficient est a 0 le train s'arrête
+	 * Si le coefficient est a 0 le train s'arrete
 	 * S'il est a 1 le train continu sur la meme vitesse 
 	 * S'il est entre ]0,1[ cela reduire la vitesse du train
 	 */
 	protected Float coefficient;
 	
 	public EtatFeu() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	/**
 	 * @param sema
-	 * @return l'�tat suivant dans du cycle
+	 * @return l'etat suivant dans du cycle
 	 * pour feu Bicolore : VERT -> ROUGE -> VERT
 	 * pour le feu Tricolore : VERT -> ORANGE -> ROUGE -> VERT
 	 */
