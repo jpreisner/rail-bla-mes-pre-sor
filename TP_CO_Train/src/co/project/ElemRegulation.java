@@ -10,12 +10,12 @@ import co.project.infrastructure.jonction.Aiguillage;
 
 public class ElemRegulation implements Observer {
 
-	private Aiguillage aiguillage;
+	private ArrayList<Aiguillage> listAiguillage;
 	private ArrayList<CapteurPresence> listCapteur;
 	private ArrayList<Semaphore> listFeu;
 
 	public ElemRegulation(Aiguillage aiguillage) {
-		this.aiguillage = aiguillage;
+		this.listAiguillage =new ArrayList<Aiguillage>() ;
 		this.listCapteur = new ArrayList<CapteurPresence>();
 		this.listFeu = new ArrayList<Semaphore>();
 	}
@@ -28,8 +28,8 @@ public class ElemRegulation implements Observer {
 		return listFeu;
 	}
 
-	public Aiguillage getAiguillage() {
-		return aiguillage;
+	public ArrayList<Aiguillage> getListAiguillage() {
+		return listAiguillage;
 	}
 
 	/*
