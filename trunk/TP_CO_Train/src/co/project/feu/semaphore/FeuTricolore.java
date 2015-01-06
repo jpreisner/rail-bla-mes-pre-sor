@@ -1,9 +1,9 @@
 package co.project.feu.semaphore;
 
-import co.project.feu.etat.EtatLimiteCoeff;
-import co.project.feu.etat.EtatOrange;
-import co.project.feu.etat.EtatRouge;
-import co.project.feu.etat.EtatVert;
+import co.project.feu.etat.coeff.EtatLimiteCoeff;
+import co.project.feu.etat.coeff.neutre.EtatVert;
+import co.project.feu.etat.coeff.ralenti.EtatOrange;
+import co.project.feu.etat.coeff.stop.EtatRouge;
 
 public class FeuTricolore extends Semaphore {
 
