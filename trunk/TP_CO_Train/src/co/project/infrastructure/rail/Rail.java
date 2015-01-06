@@ -77,9 +77,6 @@ public class Rail extends Infrastructure {
 		return (getJonctionDroite() == null || getJonctionGauche() == null);
 	}
 
-	/**
-	 * @return true/false si le train est sur la jonction
-	 */
 	@Override
 	public boolean trainPassant() {
 		return !trains.isEmpty();
