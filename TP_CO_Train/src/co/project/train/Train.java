@@ -191,6 +191,20 @@ public class Train implements Observer{
 		} catch (ClassCastException e) {
 			// TODO: handle exception
 		}
-		
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj==this)
+			return true;
+		if(obj==null)
+			return false;
+		try {
+			Train second = (Train)obj;
+			return (this.idTrain == second.getId());
+			
+		} catch (ClassCastException e) {
+			return false;
+		}
 	}
 }

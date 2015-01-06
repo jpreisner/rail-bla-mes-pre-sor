@@ -1,11 +1,13 @@
 package co.project.infrastructure.rail;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import co.project.capteur.Capteur;
 import co.project.feu.semaphore.Semaphore;
 import co.project.infrastructure.Infrastructure;
 import co.project.infrastructure.jonction.Jonction;
+import co.project.train.Train;
 
 public class Rail extends Infrastructure {
 	/* nb de troncons TODO */
@@ -15,7 +17,24 @@ public class Rail extends Infrastructure {
 	private Jonction droite;
 	private Semaphore sema;
 
-	private HashMap<Capteur, Troncon> capteurTroncon;
+	private HashMap<Integer, Capteur> capteurTroncon;
+	
+	private ArrayList<Train> trains;
+	
+	public ArrayList<Train> getTrains() {
+		return trains;
+	}
+	
+	public void retirerTrain(Train train)
+	{
+		trains.remove(train);
+	}
+	
+	public void ajouterTrain(Train train)
+	{
+		if(!trains.contains(train))
+			trains.add(train);
+	}
 
 	public Rail(int longueur) {
 		super(longueur);
@@ -37,11 +56,11 @@ public class Rail extends Infrastructure {
 		this.droite = j2;
 	}
 
-	public HashMap<Capteur, Troncon> getCapteurTroncon() {
+	public HashMap<Integer, Capteur> getCapteurTroncon() {
 		return capteurTroncon;
 	}
 
-	public void setCapteurTroncon(HashMap<Capteur, Troncon> capteurNumeroTroncon) {
+	public void setCapteurTroncon(HashMap<Integer, Capteur> capteurNumeroTroncon) {
 		this.capteurTroncon = capteurNumeroTroncon;
 	}
 	
@@ -62,9 +81,8 @@ public class Rail extends Infrastructure {
 	 * @return true/false si le train est sur la jonction
 	 */
 	@Override
-	public boolean trainPasse() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean trainPassant() {
+		return !trains.isEmpty();
 	}
 
 	@Override

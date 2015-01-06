@@ -24,7 +24,7 @@ public class JonctionSimple extends Jonction {
 	}
 
 	@Override
-	public boolean trainPasse() {
+	public boolean trainPassant() {
 		// TODO Auto-generated method stub
 		return false;
 	}

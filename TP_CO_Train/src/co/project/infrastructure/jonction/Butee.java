@@ -22,7 +22,7 @@ public class Butee extends Jonction {
 	}
 
 	@Override
-	public boolean trainPasse() {
+	public boolean trainPassant() {
 		return false;
 	}
 

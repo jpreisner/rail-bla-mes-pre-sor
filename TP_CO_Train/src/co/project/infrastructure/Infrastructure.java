@@ -24,7 +24,7 @@ public abstract class Infrastructure {
 	/**
 	 * @return true/false si le train est sur la jonction
 	 */
-	public abstract boolean trainPasse();
+	public abstract boolean trainPassant();
 	
 	@Override
 	public String toString() {

@@ -3,7 +3,7 @@ package co.project.infrastructure.jonction;
 import java.util.ArrayList;
 
 import co.project.ElemRegulation;
-import co.project.capteur.CapteurPresence;
+import co.project.capteur.Capteur;
 import co.project.exception.ErreurAiguillage;
 import co.project.exception.ErreurConstruction;
 import co.project.exception.ErreurJonction;
@@ -44,7 +44,7 @@ public class Aiguillage extends Jonction {
 	}
 
 	public void setRailConnecte1(Rail r1) throws ErreurAiguillage {
-		if (trainPasse()) {
+		if (trainPassant()) {
 			throw new ErreurAiguillage("changement d'aiguillage impossible sur le rail : " + r1);
 		} else {
 			this.railConnecte1 = r1;
@@ -52,7 +52,7 @@ public class Aiguillage extends Jonction {
 	}
 
 	public void setRailConnecte2(Rail r2) throws ErreurAiguillage {
-		if (trainPasse()) {
+		if (trainPassant()) {
 			throw new ErreurAiguillage("changement d'aiguillage impossible sur le rail : " + r2);
 		} else {
 			this.railConnecte2 = r2;
@@ -65,13 +65,8 @@ public class Aiguillage extends Jonction {
 	}
 
 	@Override
-	public boolean trainPasse() {
-		for (CapteurPresence capt : elemRegul.getListCapteurs()) {
-			if (capt.trainPassant()) {
-				return true;
-			}
-		}
-		return false;
+	public boolean trainPassant() {
+		return (railConnecte1.trainPassant() || railConnecte2.trainPassant());
 	}
 
 	@Override
