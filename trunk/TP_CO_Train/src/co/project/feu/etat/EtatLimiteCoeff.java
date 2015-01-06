@@ -1,4 +1,4 @@
-package co.project.feu;
+package co.project.feu.etat;
 
 
 public abstract class EtatLimiteCoeff extends EtatSemaphore{

@@ -1,25 +1,24 @@
-package co.project.feu;
+package co.project.feu.etat;
 
-public final class EtatOrange extends EtatRalenti {
+public final class EtatVert extends EtatNeutre {
 
 	/* Unique instance non initialisee */
-	private static EtatOrange INSTANCE = null;
+	private static EtatVert INSTANCE = null;
 
 	// Constructeur prive
-	private EtatOrange() {
-		super(1f/2);
+	private EtatVert() {
+		super();
 	}
 
 	/**
 	 * @return unique point d'acces du singleton reseau
 	 */
-	public static synchronized EtatOrange getInstance() {
+	public static synchronized EtatVert getInstance() {
 		if (INSTANCE == null) {
-			INSTANCE = new EtatOrange();
+			INSTANCE = new EtatVert();
 		}
 		return INSTANCE;
 	}
-	
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
 		return getInstance();
@@ -27,6 +26,7 @@ public final class EtatOrange extends EtatRalenti {
 	
 	@Override
 	public String toString() {
-		return "[Orange]";
+		return "[Vert]";
 	}
+
 }

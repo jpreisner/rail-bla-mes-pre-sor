@@ -1,4 +1,4 @@
-package co.project.feu;
+package co.project.feu.etat;
 
 import co.project.exception.ErreurSemaphore;
 import co.project.feu.semaphore.Semaphore;
