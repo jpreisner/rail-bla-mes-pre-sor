@@ -5,12 +5,10 @@ import java.util.ArrayList;
 import co.project.exception.ErreurConstruction;
 import co.project.exception.ErreurJonction;
 import co.project.exception.ErreurTrain;
-import co.project.infrastructure.FabriqueInfrastructure;
 import co.project.infrastructure.Infrastructure;
 import co.project.infrastructure.Reseau;
 import co.project.infrastructure.jonction.Aiguillage;
 import co.project.infrastructure.jonction.Butee;
-import co.project.infrastructure.jonction.Jonction;
 import co.project.infrastructure.jonction.JonctionSimple;
 import co.project.infrastructure.rail.Rail;
 import co.project.train.Direction;
@@ -130,19 +128,24 @@ public class TestTrain {
 
 		try {
 			Reseau.getInstance().verifieReseau();
-
+			//System.out.println("Train avant deplacement"+train);
 			try {
 				Reseau.getInstance().deplacementTrain(train);
 				Reseau.getInstance().deplacementTrain(train);
 				Reseau.getInstance().deplacementTrain(train);
 				Reseau.getInstance().deplacementTrain(train);
-//				Reseau.getInstance().deplacementTrain(train);
-			} catch (ErreurJonction | ErreurTrain e) {
-				// TODO Auto-generated catch block
+				Reseau.getInstance().deplacementTrain(train);
+			} catch (ErreurJonction e) {
+				//Arrivee a une butee
+				System.out.println("MESSAGE SYSTEME : Le train "+train.getId()+" est arrivee a la fin de la ligne");
+			}
+			catch (ErreurTrain e) {
 				e.printStackTrace();
 			}
-
-			System.out.println("Nouveau etat du réseau : \n" + Reseau.getInstance());
+			
+			//System.out.println("Train apres deplacement "+train+"\n");
+			
+			System.out.println("Nouvel etat du réseau : \n" + Reseau.getInstance());
 
 		} catch (ErreurConstruction e1) {
 			// TODO Auto-generated catch block

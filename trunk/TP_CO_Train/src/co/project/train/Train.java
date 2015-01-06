@@ -84,7 +84,8 @@ public class Train implements Observer{
 	@Override
 	public String toString() {
 		return "\nTrain [ id : " + idTrain + ", taille : " + taille
-				+ ", Vitesse maximale : " + vMax + " tr/t ] ";
+				+ "\n\tRail : "+rail + " Etat = "+etat
+				+ "\n\tVitesse maximale : " + vMax + " tr/t ] ";
 	}
 
 	/**

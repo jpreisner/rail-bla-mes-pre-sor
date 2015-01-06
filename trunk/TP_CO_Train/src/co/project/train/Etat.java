@@ -37,4 +37,8 @@ public class Etat {
 		this.tronconTete = tronconTete;
 	}
 
+	@Override
+	public String toString() {
+		return "[troncon =" + tronconTete + " Direction = " + direction + "]";
+	}
 }
