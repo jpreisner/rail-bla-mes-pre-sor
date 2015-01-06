@@ -1,12 +1,11 @@
 package co.project.capteur;
 
-import co.project.ElemRegulation;
 import co.project.infrastructure.rail.Rail;
 
 public class CapteurPresence extends Capteur {
 
-	public CapteurPresence(Rail rail) {
-		super(rail);
+	public CapteurPresence(Rail rail, int numTronconRail) {
+		super(rail,numTronconRail);
 	}
 
 	@Override
