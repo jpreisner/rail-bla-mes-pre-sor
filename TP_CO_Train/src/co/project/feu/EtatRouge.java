@@ -1,13 +1,13 @@
 package co.project.feu;
 
-public final class EtatRouge extends EtatFeu {
+public final class EtatRouge extends EtatStop {
 
 	/* Unique instance non initialisee */
 	private static EtatRouge INSTANCE = null;
 
 	// Constructeur prive
 	private EtatRouge() {
-		coefficient = Float.valueOf(0);
+		super();
 	}
 
 	/**

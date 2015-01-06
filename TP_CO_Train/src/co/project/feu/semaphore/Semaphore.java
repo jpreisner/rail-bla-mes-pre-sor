@@ -1,14 +1,15 @@
-package co.project.feu;
+package co.project.feu.semaphore;
 
-import java.util.Arrays;
 import java.util.Observable;
 
 import co.project.exception.ErreurSemaphore;
+import co.project.feu.EtatLimiteCoeff;
+import co.project.feu.EtatRouge;
 
 public abstract class Semaphore extends Observable{
 
-	protected EtatFeu etat;
-	protected EtatFeu[] etatsPossibles;
+	protected EtatLimiteCoeff etat;
+	protected EtatLimiteCoeff[] etatsPossibles;
 
 	// Rouge par defaut au debut
 	public Semaphore() {
@@ -17,20 +18,17 @@ public abstract class Semaphore extends Observable{
 
 	public void changeEtat() throws ErreurSemaphore {
 		etat = etat.changeEtat(this);
-		if(etat == EtatVert.getInstance())
-		{
-			setChanged();
-			notifyObservers();
-		}
+		setChanged();
+		notifyObservers(etat);
 	}
 	
 	
 	
-	public EtatFeu getEtat() {
+	public EtatLimiteCoeff getEtat() {
 		return etat;
 	}
 
-	public EtatFeu getNextEtat() throws ErreurSemaphore
+	public EtatLimiteCoeff getNextEtat() throws ErreurSemaphore
 	{
 		for(int i = 0; i<etatsPossibles.length; i++)
 		{
