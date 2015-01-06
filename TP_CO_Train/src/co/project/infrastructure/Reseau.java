@@ -104,7 +104,7 @@ public final class Reseau {
 					// Erreur si on retombe directe sur une butee
 					if(reseauInfra.get(i).getClass().getName().equals("Butee")){
 						// Erreur de type : [B][Rail][B]
-						throw new ErreurConstruction("Une portion du reseau est isole entre 2 but�es");
+						throw new ErreurConstruction("Une portion du reseau est isole entre 2 butees");
 					}
 				}
 			}
