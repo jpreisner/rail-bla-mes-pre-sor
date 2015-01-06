@@ -1,12 +1,15 @@
-package co.project.feu;
+package co.project.feu.semaphore;
 
 import co.project.exception.ErreurSemaphore;
+import co.project.feu.EtatLimiteCoeff;
+import co.project.feu.EtatRouge;
+import co.project.feu.EtatVert;
 
 public class FeuBicolore extends Semaphore {
 
 	public FeuBicolore() {
 		super();
-		etatsPossibles = new EtatFeu[] { EtatVert.getInstance(), EtatRouge.getInstance()};
+		etatsPossibles = new EtatLimiteCoeff[] { EtatVert.getInstance(), EtatRouge.getInstance()};
 	}
 
 	@Override

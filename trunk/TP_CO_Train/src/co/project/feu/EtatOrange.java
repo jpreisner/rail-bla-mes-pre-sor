@@ -1,14 +1,13 @@
 package co.project.feu;
 
-public final class EtatOrange extends EtatFeu {
+public final class EtatOrange extends EtatRalenti {
 
 	/* Unique instance non initialisee */
 	private static EtatOrange INSTANCE = null;
 
 	// Constructeur prive
 	private EtatOrange() {
-		super();
-		coefficient = Float.valueOf(1/2);
+		super(1f/2);
 	}
 
 	/**
