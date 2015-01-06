@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import co.project.exception.ErreurConstruction;
 import co.project.exception.ErreurJonction;
 import co.project.exception.ErreurTrain;
+import co.project.infrastructure.jonction.Jonction;
 import co.project.infrastructure.rail.Rail;
 import co.project.train.Train;
 
@@ -94,20 +95,6 @@ public final class Reseau {
 			throw new ErreurConstruction("Votre reseau est vide");
 		else
 		{
-			for(int i = 0; i < reseauInfra.size(); i++){
-				if(reseauInfra.get(i).getClass().getName().equals("Butee")){
-					// on incremente i tant qu'on a des rails
-					do{
-						i++;
-					} while(!reseauInfra.get(i).getClass().getName().equals("Rail"));
-					
-					// Erreur si on retombe directe sur une butee
-					if(reseauInfra.get(i).getClass().getName().equals("Butee")){
-						// Erreur de type : [B][Rail][B]
-						throw new ErreurConstruction("Une portion du reseau est isole entre 2 butees");
-					}
-				}
-			}
 			/* si un rail a une jonction manquante */
 			for(Infrastructure infra : reseauInfra){
 				try{
@@ -116,9 +103,25 @@ public final class Reseau {
 						throw new ErreurConstruction("le rail "+rail+", a une jonction manquante");
 					}
 				}catch(ClassCastException c){
-					/* ne rien faire, c'est une jonction */
+					/* Jonction */
+					try{
+						Jonction jonction = (Jonction) infra;
+						if(jonction.){
+							throw new ErreurConstruction("le rail "+jonction+", a une jonction manquante");
+						}
+					}catch(ClassCastException c){
+						/* ne rien faire, c'est une jonction */
+					}
 				}
 			}
+			
+			/* si un  reseau a un element null*/
+			for(Infrastructure infra : reseauInfra){
+				if(infra == null){					
+					throw new ErreurConstruction("Un element du reseau est null");
+				}
+			}
+
 		}
 	}
 	

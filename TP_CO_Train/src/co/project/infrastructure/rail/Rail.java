@@ -3,7 +3,7 @@ package co.project.infrastructure.rail;
 import java.util.HashMap;
 
 import co.project.capteur.Capteur;
-import co.project.feu.Semaphore;
+import co.project.feu.semaphore.Semaphore;
 import co.project.infrastructure.Infrastructure;
 import co.project.infrastructure.jonction.Jonction;
 
