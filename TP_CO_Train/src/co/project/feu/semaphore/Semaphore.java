@@ -3,8 +3,8 @@ package co.project.feu.semaphore;
 import java.util.Observable;
 
 import co.project.exception.ErreurSemaphore;
-import co.project.feu.EtatLimiteCoeff;
-import co.project.feu.EtatRouge;
+import co.project.feu.etat.EtatLimiteCoeff;
+import co.project.feu.etat.EtatRouge;
 
 public abstract class Semaphore extends Observable{
 

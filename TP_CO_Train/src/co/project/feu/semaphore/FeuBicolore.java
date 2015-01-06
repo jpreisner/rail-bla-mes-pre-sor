@@ -1,9 +1,9 @@
 package co.project.feu.semaphore;
 
 import co.project.exception.ErreurSemaphore;
-import co.project.feu.EtatLimiteCoeff;
-import co.project.feu.EtatRouge;
-import co.project.feu.EtatVert;
+import co.project.feu.etat.EtatLimiteCoeff;
+import co.project.feu.etat.EtatRouge;
+import co.project.feu.etat.EtatVert;
 
 public class FeuBicolore extends Semaphore {
 
