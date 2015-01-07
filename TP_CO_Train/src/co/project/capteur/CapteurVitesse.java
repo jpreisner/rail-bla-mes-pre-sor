@@ -1,6 +1,8 @@
 package co.project.capteur;
 
+import co.project.exception.ErreurCapteur;
 import co.project.infrastructure.rail.Rail;
+import co.project.train.Direction;
 import co.project.train.Train;
 
 public class CapteurVitesse extends Capteur {
@@ -9,15 +11,25 @@ public class CapteurVitesse extends Capteur {
 		super(rail, numTronconRail);
 	}
 
-	/* FIXME vitesse du train passant sur le troncon */
-	public double getVitesse() {
-		double vitesseResult = 0;
+	/**
+	 * @return Vitesse du train passant sur le troncon
+	 * @throws ErreurCapteur
+	 */
+	public double getVitesse() throws ErreurCapteur {
 		for (Train train : getRail().getTrains()) {
-			if (train.getEtat().getTronconTete() == getNumTronconRail()) {
-				vitesseResult = train.getVitesseCourante();
+			if(train.getEtat().getDirection().equals(Direction.DROITE)){
+				if (train.getEtat().getTronconTete() >= getNumTronconRail() &&
+						train.getEtat().getTronconTete()-train.getTaille() <= getNumTronconRail()) {
+					return train.getVitesseCourante();
+				}
+			}else{
+				if (train.getEtat().getTronconTete() <= getNumTronconRail() &&
+						train.getEtat().getTronconTete()+train.getTaille() >= getNumTronconRail()) {
+					return train.getVitesseCourante();
+				}
 			}
 		}
-		return vitesseResult;
+		throw new ErreurCapteur("Le capteur n'a pas de train passant");
 	}
 
 	@Override

@@ -1,19 +1,20 @@
 package co.project.feu.semaphore;
 
+import java.util.Arrays;
 import java.util.Observable;
 
 import co.project.exception.ErreurSemaphore;
 import co.project.feu.etat.EtatSemaphore;
-import co.project.feu.etat.coeff.stop.EtatRouge;
+import co.project.train.Direction;
 
-public abstract class Semaphore extends Observable{
+public abstract class Semaphore extends Observable {
 
 	protected EtatSemaphore etat;
 	protected EtatSemaphore[] etatsPossibles;
+	protected Direction direction;
 
-	// Rouge par defaut au debut
-	public Semaphore() {
-		etat = EtatRouge.getInstance();
+	public Semaphore(Direction direction) {
+		this.direction = direction;
 	}
 
 	public void changeEtat() throws ErreurSemaphore {
@@ -21,40 +22,41 @@ public abstract class Semaphore extends Observable{
 		setChanged();
 		notifyObservers(etat);
 	}
-	
-	
-	
+
 	public EtatSemaphore getEtat() {
 		return etat;
 	}
 
-	public EtatSemaphore getNextEtat() throws ErreurSemaphore
-	{
-		for(int i = 0; i<etatsPossibles.length; i++)
-		{
+	public void setEtat(EtatSemaphore etat) throws ErreurSemaphore {
+		if (Arrays.asList(etatsPossibles).contains(etat)) {
+			this.etat = etat;
+			setChanged();
+			notifyObservers(etat);
+		} else {
+			throw new ErreurSemaphore("Cet etat n'est pas possible pour le semaphore");
+		}
+	}
+
+	public EtatSemaphore getNextEtat() throws ErreurSemaphore {
+		for (int i = 0; i < etatsPossibles.length; i++) {
 			/**
 			 * Vu que ce sont des singleton
 			 */
-			if(etat==etatsPossibles[i])
-			{
+			if (etat == etatsPossibles[i]) {
 				/**
 				 * On est pas a la fin de la liste d'etat possible
 				 */
-				if(i!=etatsPossibles.length-1)
-				{
-					return etatsPossibles[i+1];
+				if (i != etatsPossibles.length - 1) {
+					return etatsPossibles[i + 1];
 				}
 				/**
 				 * On retourne a l'etat initial
 				 */
-				else
-				{
+				else {
 					return etatsPossibles[0];
 				}
 			}
-				
 		}
-		
 		throw new ErreurSemaphore("Pas d'etat suivant : votre semaphore n'a qu'un seul etat possible");
 	}
 }
