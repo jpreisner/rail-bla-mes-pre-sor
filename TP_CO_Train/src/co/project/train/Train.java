@@ -97,7 +97,6 @@ public class Train implements Observer{
 		
 		if(rail.getSema()!=null)
 		{
-			//TODO cast force : mettre la vitesse en double
 			setVitesseCourante(rail.getSema().getEtat().getVitesse(vCourante));
 		}
 		
@@ -179,18 +178,17 @@ public class Train implements Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		
+
 		try {
 			EtatLimiteCoeff etat = (EtatLimiteCoeff)arg;
 			
 			/**
-			 * TODO En fonction de la signalisation ADAPTER la vitesse
+			 * TODO Redemarrage du train apres arret a un etatStop
 			 */
 			
 			//start();
 		} catch (ClassCastException e) {
-			// TODO: handle exception
+			
 		}
 	}
 	
