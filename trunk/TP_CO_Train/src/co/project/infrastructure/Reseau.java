@@ -135,7 +135,7 @@ public final class Reseau {
 		testCollisionQueue(train);
 	}
 	
-	private void testCollisionQueue(Train train) {
+	private void testCollisionQueue(Train train) throws ErreurCollision {
 		/**
 		 * Cas ou la tete de "train" touche la queue d'un autre train2!=train
 		 * 
@@ -150,7 +150,10 @@ public final class Reseau {
 		for (Train train2 : matRoulant) { 
 			if(!train.equals(train2)){
 				if(train.getRail().equals(train2.getQueue().getRail())){
-				
+					if(Math.abs(train.getEtat().getTronconTete()-train2.getQueue().getTroncon())<=2){
+						throw new ErreurCollision("Collision : le train : "+train+
+							"\n a rattrape le train : "+train2);
+					}
 				}else{
 					
 				}
