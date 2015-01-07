@@ -2,6 +2,7 @@ package co.project.tests;
 
 import java.util.ArrayList;
 
+import co.project.exception.ErreurCollision;
 import co.project.exception.ErreurConstruction;
 import co.project.exception.ErreurJonction;
 import co.project.exception.ErreurTrain;
@@ -140,8 +141,8 @@ public class TestTrain {
 				//Arrivee a une butee
 				System.out.println("MESSAGE SYSTEME : Le train "+train.getId()+" est arrivee a la fin de la ligne");
 			}
-			catch (ErreurTrain e) {
-				e.printStackTrace();
+			catch (ErreurCollision e) {
+				System.out.println("Collision detecte");
 			}
 			
 			//System.out.println("Train apres deplacement "+train+"\n");
