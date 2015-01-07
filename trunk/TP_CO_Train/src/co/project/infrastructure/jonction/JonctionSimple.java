@@ -25,8 +25,7 @@ public class JonctionSimple extends Jonction {
 
 	@Override
 	public boolean trainPassant() {
-		// TODO Auto-generated method stub
-		return false;
+		return (getRailGauche().trainPassant() && getRailDroite().trainPassant());
 	}
 
 	public Rail getRailGauche()

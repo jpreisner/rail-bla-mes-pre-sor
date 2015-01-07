@@ -3,10 +3,12 @@ package co.project.infrastructure.jonction;
 import java.util.ArrayList;
 
 import co.project.ElemRegulation;
-import co.project.capteur.Capteur;
 import co.project.exception.ErreurAiguillage;
 import co.project.exception.ErreurConstruction;
 import co.project.exception.ErreurJonction;
+import co.project.exception.ErreurSemaphore;
+import co.project.feu.etat.coeff.neutre.EtatVert;
+import co.project.feu.etat.coeff.stop.EtatRouge;
 import co.project.infrastructure.rail.Rail;
 
 public class Aiguillage extends Jonction {
@@ -25,6 +27,7 @@ public class Aiguillage extends Jonction {
 		railConnecte1 = this.rails.get(0);
 		railConnecte2 = this.rails.get(1);
 		connecteRailJonction();
+		initialiserFeux();
 	}
 
 	public ArrayList<Rail> getrails() {
@@ -94,7 +97,26 @@ public class Aiguillage extends Jonction {
 				rail.setJonctionDroite(this);
 			}
 		}
+	}
 
+	/**
+	 * Cette methode permet de mettre tous les feux des rails de l'aiguillage a
+	 * rouge , sauf le railconnecte1 a vert .
+	 */
+	private void initialiserFeux() {
+		/* railconnecte1 au vert */
+		try {
+			railConnecte1.getSema().setEtat(EtatVert.getInstance());
+
+			/* autres rails au rouge */
+			for (Rail rail : rails) {
+				if (!rail.equals(railConnecte1)) {
+					rail.getSema().setEtat(EtatRouge.getInstance());
+				}
+			}
+		} catch (ErreurSemaphore e) {
+			System.out.println("Initialisation des semaphores de l'aiguillage impossible");
+		}
 	}
 
 }

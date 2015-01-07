@@ -22,7 +22,7 @@ public abstract class Infrastructure {
 	}
 
 	/**
-	 * @return true/false si le train est sur la jonction
+	 * @return true/false si le train est sur l'infrastructure (Rail, Jonction, ...)
 	 */
 	public abstract boolean trainPassant();
 	

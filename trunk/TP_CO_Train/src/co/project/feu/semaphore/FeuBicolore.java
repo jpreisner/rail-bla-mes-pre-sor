@@ -1,15 +1,17 @@
 package co.project.feu.semaphore;
 
 import co.project.exception.ErreurSemaphore;
-import co.project.feu.etat.coeff.EtatLimiteCoeff;
+import co.project.feu.etat.EtatSemaphore;
 import co.project.feu.etat.coeff.neutre.EtatVert;
 import co.project.feu.etat.coeff.stop.EtatRouge;
+import co.project.train.Direction;
 
 public class FeuBicolore extends Semaphore {
 
-	public FeuBicolore() {
-		super();
-		etatsPossibles = new EtatLimiteCoeff[] { EtatVert.getInstance(), EtatRouge.getInstance()};
+	public FeuBicolore(Direction direction) {
+		super(direction);
+		etatsPossibles = new EtatSemaphore[] { EtatVert.getInstance(), EtatRouge.getInstance()};
+		etat = etatsPossibles[0];
 	}
 
 	@Override
@@ -18,19 +20,18 @@ public class FeuBicolore extends Semaphore {
 	}
 
 	public static void main(String[] args) {
-		FeuBicolore bico = new FeuBicolore();
+		FeuBicolore bico = new FeuBicolore(Direction.DROITE);
 		System.out.println(bico.etat);
 		try {
 			bico.changeEtat();
 		} catch (ErreurSemaphore e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 		System.out.println(bico.etat);
 
 		System.out.println("----");
 		
-		FeuTricolore bicoTri = new FeuTricolore();
+		FeuTricolore bicoTri = new FeuTricolore(Direction.GAUCHE);
 		System.out.println(bicoTri.etat);//Rouge au depart par defaut
 		try {
 			bicoTri.changeEtat();//Vert
@@ -43,8 +44,7 @@ public class FeuBicolore extends Semaphore {
 			bicoTri.changeEtat();//Vert
 			System.out.println(bicoTri.etat);
 		} catch (ErreurSemaphore e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 		
 		

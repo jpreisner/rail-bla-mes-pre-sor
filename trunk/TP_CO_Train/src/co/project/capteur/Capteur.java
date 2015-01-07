@@ -3,6 +3,8 @@ package co.project.capteur;
 import java.util.Observable;
 
 import co.project.infrastructure.rail.Rail;
+import co.project.train.Direction;
+import co.project.train.Train;
 
 public abstract class Capteur extends Observable {
 	private Rail rail;
@@ -14,14 +16,30 @@ public abstract class Capteur extends Observable {
 	}
 
 	/**
-	 * notifie les observeurs si un train passe sur le capteur
+	 * 
+	 * @return true/false si un train passe sur le capteur
 	 */
-	public void trainPassant() {
-		if (rail.getCapteurTroncon().get(numTronconRail).equals(this)) {
-			if (rail.trainPassant()) {
-				setChanged();
-				notifyObservers(this);
+	protected boolean trainPassant() {
+		for (Train train : getRail().getTrains()) {
+			if (train.getEtat().getDirection().equals(Direction.DROITE)) {
+				if (train.getEtat().getTronconTete() >= getNumTronconRail()
+						&& train.getEtat().getTronconTete() - train.getTaille() <= getNumTronconRail()) {
+					return true;
+				}
+			} else {
+				if (train.getEtat().getTronconTete() <= getNumTronconRail()
+						&& train.getEtat().getTronconTete() + train.getTaille() >= getNumTronconRail()) {
+					return true;
+				}
 			}
+		}
+		return false;
+	}
+
+	public void notifieTrainPassant() {
+		if (trainPassant()) {
+			setChanged();
+			notifyObservers(this);
 		}
 	}
 
