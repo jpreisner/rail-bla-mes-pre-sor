@@ -123,7 +123,7 @@ public class TestTrain {
 		}
 		System.out.println("\n");
 
-		Train train = new Train(5, 300, pCourante, Direction.GAUCHE);
+		Train train = new Train(8, 3, pCourante, Direction.DROITE);
 		Reseau.getInstance().addTrain(train);
 
 		try {
@@ -131,10 +131,11 @@ public class TestTrain {
 			//System.out.println("Train avant deplacement"+train);
 			try {
 				Reseau.getInstance().deplacementTrain(train);
-				/*Reseau.getInstance().deplacementTrain(train);
 				Reseau.getInstance().deplacementTrain(train);
 				Reseau.getInstance().deplacementTrain(train);
-				Reseau.getInstance().deplacementTrain(train);*/
+				Reseau.getInstance().deplacementTrain(train);
+				//Reseau.getInstance().deplacementTrain(train);
+				System.out.println("Queue : "+train.getQueue());
 			} catch (ErreurJonction e) {
 				//Arrivee a une butee
 				System.out.println("MESSAGE SYSTEME : Le train "+train.getId()+" est arrivee a la fin de la ligne");

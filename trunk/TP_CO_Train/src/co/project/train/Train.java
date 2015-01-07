@@ -102,6 +102,7 @@ public class Train implements Observer{
 			setVitesseCourante(rail.getSema().getEtat().getVitesse(vCourante));
 		}
 		
+		
 		/*
 		 * On se deplace seulement si on a une vitesse > 0
 		 */
@@ -121,13 +122,10 @@ public class Train implements Observer{
 			 * tête du train et que l'extremité de cette dernière
 			 */
 			int diff = etat.getTronconTete() - rail.getLongueur();
-			//On est au bout de la rail donc on passe simplement à la suivante
-			if (diff == 0) {
-				rail = railSuivanteDirection();
-			}
+
 			//On est au delà de la capacité de la rail
 			//Un changement de rail est nécessaire
-			else if(diff>0)
+			if(diff>0)
 			{
 				/**
 				 * On change de rail de facon instantannément
@@ -163,6 +161,62 @@ public class Train implements Observer{
 	}
 	
 	/**
+	 * Retourne la queue du train
+	 * @return une PaireRailTroncon : contient l'information de la rail ou 
+	 * se trouve la queue et a la fois le troncon
+	 */
+	public PaireRailTroncon getQueue()
+	{
+		/**
+		 * A l'initialisation le nombre de troncon nous restant
+		 * a parcourir est taille du train - la position du troncon courant
+		 */
+		int troncon = getTaille() - etat.getTronconTete();
+		System.out.println("troncon "+troncon);
+		Rail precedente = null;
+		boolean continuer = true;
+		/**
+		 * On parcours tant que notre nombre de troncon est positif 
+		 * Et qu'il faut continuer a parcourir les rail
+		 */
+		while(troncon>0 && continuer) {
+			try {
+				/**
+				 * On recupere la rail precedente
+				 */
+				if(precedente==null)
+					precedente = railPrecedenteDirection(rail);
+				else
+					precedente = railPrecedenteDirection(precedente);
+				
+				/**
+				 * On dispose de 2 cas
+				 * 1) (if) la rail n'a pas la taille suffisante pour 
+				 * stocker un nombre de troncon : troncon 
+				 * Auquel cas on decremente troncon de la taille de la rail
+				 * 
+				 * 2) (else) notre rail peut contenir un nombre de troncon : troncon
+				 * Auquel cas on s'arrete
+				 */
+				if(precedente.getLongueur()<=troncon)
+					troncon-=precedente.getLongueur();
+				else
+					continuer = false;
+			} catch (ErreurJonction e) {
+				return null;
+			}
+		}
+		
+		if(precedente==null)
+			return new PaireRailTroncon(rail, troncon);
+		/**
+		 * Pour recuperer la position exacte du troncon ou se trouve la queue
+		 * On retourne la taille de la rail - le nombre de troncon nous restant
+		 */
+		return new PaireRailTroncon(precedente, precedente.getLongueur()-troncon);
+	}
+	
+	/**
 	 * Retourne la rail suivante de la rail courante en fonction de la direction
 	 * @return la rail suivante de la rail courante en fonction de la direction
 	 * @throws ErreurJonction
@@ -173,6 +227,20 @@ public class Train implements Observer{
 			return rail.getJonctionDroite().getRailSuivant(rail);
 		else	
 			return rail.getJonctionGauche().getRailSuivant(rail);
+	}
+	
+
+	/**
+	 * Retourne la rail precedente de la rail courante en fonction de la direction
+	 * @return la rail suivante de la rail courante en fonction de la direction
+	 * @throws ErreurJonction
+	 */
+	private Rail railPrecedenteDirection(Rail railParam) throws ErreurJonction
+	{
+		if(etat.getDirection().equals(Direction.GAUCHE))
+			return railParam.getJonctionDroite().getRailSuivant(railParam);
+		else	
+			return railParam.getJonctionGauche().getRailSuivant(railParam);
 	}
 	
 	public void stop()
