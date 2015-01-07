@@ -100,4 +100,9 @@ public class Rail extends Infrastructure {
 	public String toString() {
 		return "[ Rail id = " + idInfrastructure + " ]";
 	}
+
+	@Override
+	public boolean verifierElement() {
+		return (getJonctionDroite() != null && getJonctionGauche() != null);
+	}
 }

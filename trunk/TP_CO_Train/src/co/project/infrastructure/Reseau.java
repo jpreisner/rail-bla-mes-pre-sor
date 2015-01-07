@@ -96,15 +96,8 @@ public final class Reseau {
 		{
 			/* si un rail a une jonction manquante */
 			for(Infrastructure infra : reseauInfra){
-				try{
-					Rail rail = (Rail) infra;
-					if(rail.getJonctionDroite()==null || rail.getJonctionGauche()==null){
-						throw new ErreurConstruction("le rail "+rail+", a une jonction manquante");
-					}
-				}catch(ClassCastException c){
-					/* Jonction */
-					
-				}
+				if(!infra.verifierElement())
+					throw new ErreurConstruction("Element "+infra+" est mal construit");
 			}
 			
 			/* si un  reseau a un element null*/

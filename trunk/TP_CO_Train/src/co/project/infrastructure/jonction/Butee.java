@@ -40,4 +40,9 @@ public class Butee extends Jonction {
 			}
 		}
 	}
+	
+	@Override
+	public boolean verifierElement() {
+		return (getRail() != null);
+	}
 }
