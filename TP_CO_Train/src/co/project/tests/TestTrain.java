@@ -58,7 +58,7 @@ public class TestTrain {
 			infrastructure.add(r2);
 
 			// MAJ de la jonction droite et gauche de r1
-			r1.setJonctionDroite(js1);
+			//r1.setJonctionDroite(js1);
 
 			Rail r3 = new Rail(8);
 			JonctionSimple js2 = new JonctionSimple(r2, r3);
@@ -66,7 +66,7 @@ public class TestTrain {
 			infrastructure.add(r3);
 
 			// MAJ de la jonction droite et gauche de r2
-			r2.setJonctionDroite(js2);
+			//r2.setJonctionDroite(js2);
 
 			Rail r4 = new Rail(10);
 			JonctionSimple js3 = new JonctionSimple(r3, r4);
@@ -74,7 +74,7 @@ public class TestTrain {
 			infrastructure.add(r4);
 
 			// MAJ de la jonction droite et gauche de r3
-			r3.setJonctionDroite(js3);
+			//r3.setJonctionDroite(js3);
 
 			/*
 			 * Rail de l'aiguillage r4,r5,r6 ...
@@ -92,11 +92,11 @@ public class TestTrain {
 
 			// MAJ de la jonction droite et gauche de r5
 			Butee butee2 = new Butee(r5);
-			r5.setJonctionDroite(butee2);
+			//r5.setJonctionDroite(butee2);
 
 			// MAJ de la jonction droite et gauche de r6
 			Butee butee3 = new Butee(r6);
-			r6.setJonctionDroite(butee3);
+			//r6.setJonctionDroite(butee3);
 
 			infrastructure.add(r5);
 			infrastructure.add(butee2);
@@ -123,7 +123,7 @@ public class TestTrain {
 		}
 		System.out.println("\n");
 
-		Train train = new Train(5, 300, pCourante, Direction.DROITE);
+		Train train = new Train(5, 11, pCourante, Direction.GAUCHE);
 		Reseau.getInstance().addTrain(train);
 
 		try {
@@ -131,10 +131,10 @@ public class TestTrain {
 			//System.out.println("Train avant deplacement"+train);
 			try {
 				Reseau.getInstance().deplacementTrain(train);
+				/*Reseau.getInstance().deplacementTrain(train);
 				Reseau.getInstance().deplacementTrain(train);
 				Reseau.getInstance().deplacementTrain(train);
-				Reseau.getInstance().deplacementTrain(train);
-				Reseau.getInstance().deplacementTrain(train);
+				Reseau.getInstance().deplacementTrain(train);*/
 			} catch (ErreurJonction e) {
 				//Arrivee a une butee
 				System.out.println("MESSAGE SYSTEME : Le train "+train.getId()+" est arrivee a la fin de la ligne");

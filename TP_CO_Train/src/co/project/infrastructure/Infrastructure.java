@@ -21,6 +21,7 @@ public abstract class Infrastructure {
 		return longueur;
 	}
 	
+	public abstract boolean verifierElement();
 	@Override
 	public String toString() {
 		return "Element Infrastructure [ id : "+idInfrastructure+

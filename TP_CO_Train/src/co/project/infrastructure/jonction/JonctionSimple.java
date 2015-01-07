@@ -56,4 +56,9 @@ public class JonctionSimple extends Jonction {
 			}
 		}
 	}
+	
+	@Override
+	public boolean verifierElement() {
+		return (getRailGauche() != null && getRailDroite() != null);
+	}
 }

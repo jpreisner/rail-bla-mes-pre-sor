@@ -114,13 +114,15 @@ public class Aiguillage extends Jonction {
 	private void initialiserFeux() {
 		/* railconnecte1 au vert */
 		try {
-			railConnecte1.getSema().setEtat(EtatVert.getInstance());
+			if(railConnecte1.getSema()!=null){
+			railConnecte1.getSema().setEtatNeutre();
 
 			/* autres rails au rouge */
 			for (Rail rail : rails) {
 				if (!rail.equals(railConnecte1)) {
-					rail.getSema().setEtat(EtatRouge.getInstance());
+					rail.getSema().setEtatStop();
 				}
+			}
 			}
 		} catch (ErreurSemaphore e) {
 			System.out.println("Initialisation des semaphores de l'aiguillage impossible");
@@ -143,4 +145,13 @@ public class Aiguillage extends Jonction {
 		}
 	}
 
+	@Override
+	public boolean verifierElement() {
+		if(rails.size()<3){
+			return false;
+		}
+		return(getRailConnecte1() != null && getRailConnecte2() != null);
+		
+		//FIXME verifie qu'elle ont toute une etat stop
+	}
 }

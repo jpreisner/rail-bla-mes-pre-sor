@@ -90,7 +90,7 @@ public class ElemRegulation implements Observer {
 		}
 		bloquerSemaphores(aiguillage);
 		aiguillage.changementAiguillage(r1, r2);
-		
+		//FIXME Liberer r1,r2 => semaphore au vert
 	}
 
 	/**
