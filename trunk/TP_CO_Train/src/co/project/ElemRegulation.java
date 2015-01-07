@@ -82,15 +82,29 @@ public class ElemRegulation implements Observer {
 	 * @param aiguillage
 	 * @param r1
 	 * @param r2
+	 * @param sensPassage : true si sens semaphore  r1->r2, false si sens semaphore r2->r1
 	 * @throws ErreurAiguillage
 	 */
-	public void changementAiguillage(Aiguillage aiguillage, Rail r1, Rail r2) throws ErreurAiguillage{
+	public void changementAiguillage(Aiguillage aiguillage, Rail r1, Rail r2, boolean sensPassage) throws ErreurAiguillage{
 		if(!listAiguillage.contains(aiguillage)){
 			throw new ErreurAiguillage("L'aiguillage n'appartient pas a cet element de regulation");
 		}
+		/* passe les semaphores au rouge */
 		bloquerSemaphores(aiguillage);
+		
+		/* change l'aiguillage */
 		aiguillage.changementAiguillage(r1, r2);
-		//FIXME Liberer r1,r2 => semaphore au vert
+		
+		/* repasse un semaphore au vert */
+		try{
+			if(sensPassage){
+				aiguillage.getRailConnecte1().getSema().setEtatNeutre();
+			}else{
+				aiguillage.getRailConnecte2().getSema().setEtatNeutre();
+			}
+		}catch(ErreurSemaphore errSem){
+			throw new ErreurAiguillage("le passage d'un semaphore au vert apres changement d'aiguillage pose probleme");
+		}
 	}
 
 	/**

@@ -2,6 +2,7 @@ package co.project.infrastructure;
 
 import java.util.ArrayList;
 
+import co.project.exception.ErreurCollision;
 import co.project.exception.ErreurConstruction;
 import co.project.exception.ErreurJonction;
 import co.project.exception.ErreurTrain;
@@ -108,6 +109,28 @@ public final class Reseau {
 			}
 
 		}
+	}
+	
+	/**
+	 * Pour tester si dans le reseau, il y a une collision entre les differents trains 
+	 * @throws ErreurCollision
+	 */
+	public void testCollisions() throws ErreurCollision{
+		/* collision de face*/
+		for (Train train1 : matRoulant) {
+			for (Train train2 : matRoulant) {
+				if(!train1.equals(train2)){
+					if(train1.getRail().equals(train2.getRail())&&
+							train1.getEtat().getTronconTete()==train2.getEtat().getTronconTete()){
+						throw new ErreurCollision("Collision de face entre le train : "+train1+
+								"\n et le train : "+train2);
+					}
+				}
+			}
+		}
+		
+		/* collision en tete a queue*/
+		
 	}
 	
 	@Override
