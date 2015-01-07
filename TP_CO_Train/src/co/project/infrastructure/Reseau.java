@@ -72,9 +72,9 @@ public final class Reseau {
 	 * Fonction permettant le déplacement d'un train dans le réseau
 	 * @param train
 	 * @throws ErreurJonction
-	 * @throws ErreurTrain
+	 * @throws ErreurCollision
 	 */
-	public void deplacementTrain(Train train) throws ErreurJonction,ErreurTrain
+	public void deplacementTrain(Train train) throws ErreurJonction,ErreurCollision
 	{
 		train.deplacer();
 	}
@@ -111,37 +111,77 @@ public final class Reseau {
 		}
 	}
 	
+	public void deplaceTousTrains(){
+		for (Train train : matRoulant) {
+			try {
+				deplacementTrain(train);
+			} catch (ErreurJonction | ErreurCollision e) {
+				
+			}
+		}
+	}
+	
 	/**
-	 * Pour tester si dans le reseau, il y a une collision entre les differents trains 
+	 * Pour tester si dans le reseau, il y a une collision entre les differents trains et celui en parametre
+	 * @param train 
 	 * @throws ErreurCollision
+	 * @throws ErreurJonction 
 	 */
-	public void testCollisions() throws ErreurCollision{
-		
+	public void testCollisions(Train train) throws ErreurCollision, ErreurJonction{		
 		//FIXME faire une methode de simulation : on projette un train vers sa futur destination :
 		//et on regarde si sa tete ou sa queue est en collision avec un autre train
 		//FIXME non correcte : verifie qu'il sont sur la meme rail : s'il y a deux trains sens contraire
-		
-		ArrayList<Integer> zoneTrain = new ArrayList<Integer>();
-		
-	
-		
+						
 		/* collision de face*/
-		/*for (Train train1 : matRoulant) {
-			for (Train train2 : matRoulant) {
-				if(!train1.equals(train2)){
-					if(train1.getRail().equals(train2.getRail())&&
-							train1.getEtat().getTronconTete()==train2.getEtat().getTronconTete()){
-						throw new ErreurCollision("Collision de face entre le train : "+train1+
-								"\n et le train : "+train2);
+		testCollisionFace(train);
+				
+		/* collision en tete a queue*/	
+		testCollisionQueue(train);
+
+	}
+	
+	private void testCollisionQueue(Train train) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void testCollisionFace(Train train) throws ErreurCollision, ErreurJonction {
+
+		for (Train train2 : matRoulant) { 
+			if(!train.equals(train2)){
+				if(train.getRail().equals(train2.getRail())){
+					/* cas 1 : meme rail (un troncon separe les 
+					 * 2 trains ou pas de troncon separe les 2 trains*/
+					if(Math.abs(train.getEtat().getTronconTete()-train2.getEtat().getTronconTete())<=2){
+						throw new ErreurCollision("Collision de face entre le train : "+train+
+							"\n et le train : "+train2);
+					}
+				}else{
+					/* cas 2 : rail differente */
+					if(train.railSuivanteDirection().equals(train2.getRail())){
+						if(train.getRail().getLongueur() == train.getEtat().getTronconTete() &&
+								train2.getEtat().getTronconTete()==0){
+							/* pas de troncon qui separe les 2 trains */
+							throw new ErreurCollision("Collision de face entre le train : "+train+
+									"\n et le train : "+train2);
+						}else if(isTrainSepare(train, train2) || isTrainSepare(train2, train))
+						{
+							throw new ErreurCollision("Collision de face entre le train : "+train+
+									"\n et le train : "+train2);
+						}
 					}
 				}
 			}
-		}*/
-		
-		/* collision en tete a queue*/
+		}		
 		
 	}
 	
+	private boolean isTrainSepare(Train train, Train train2)
+	{
+		return (train.getRail().getLongueur()-1 == train.getEtat().getTronconTete() && 
+				train2.getEtat().getTronconTete()==0);
+	}
+
 	@Override
 	public String toString() {
 		String result = "";

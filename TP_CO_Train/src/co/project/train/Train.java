@@ -3,8 +3,10 @@ package co.project.train;
 import java.util.Observable;
 import java.util.Observer;
 
+import co.project.exception.ErreurCollision;
 import co.project.exception.ErreurJonction;
 import co.project.feu.etat.coeff.EtatLimiteCoeff;
+import co.project.infrastructure.Reseau;
 import co.project.infrastructure.rail.Rail;
 
 public class Train implements Observer{
@@ -89,11 +91,11 @@ public class Train implements Observer{
 	}
 
 	/**
-	 * Fonction du deplacement du train
+	 * Fonction du deplacement du train, il teste les collisions a chaque deplacement de train
 	 * @throws ErreurJonction
 	 */
 	//TODO Prendre en compte les semaphores
-	public void deplacer() throws ErreurJonction {
+	public void deplacer() throws ErreurJonction , ErreurCollision {
 		
 		if(rail.getSema()!=null)
 		{
@@ -111,7 +113,7 @@ public class Train implements Observer{
 			for(int i = 0; i<vCourante; i++)
 			{
 				etat.deplaceTroncontete(1);
-				
+				Reseau.getInstance().testCollisions(this);
 			}
 			
 			/**
@@ -165,7 +167,7 @@ public class Train implements Observer{
 	 * @return la rail suivante de la rail courante en fonction de la direction
 	 * @throws ErreurJonction
 	 */
-	private Rail railSuivanteDirection() throws ErreurJonction
+	public Rail railSuivanteDirection() throws ErreurJonction
 	{
 		if(etat.getDirection().equals(Direction.DROITE))
 			return rail.getJonctionDroite().getRailSuivant(rail);
