@@ -127,22 +127,35 @@ public final class Reseau {
 	 * @throws ErreurCollision
 	 * @throws ErreurJonction 
 	 */
-	public void testCollisions(Train train) throws ErreurCollision, ErreurJonction{		
-		//FIXME faire une methode de simulation : on projette un train vers sa futur destination :
-		//et on regarde si sa tete ou sa queue est en collision avec un autre train
-		//FIXME non correcte : verifie qu'il sont sur la meme rail : s'il y a deux trains sens contraire
-						
+	public void testCollisions(Train train) throws ErreurCollision, ErreurJonction{
 		/* collision de face*/
 		testCollisionFace(train);
 				
 		/* collision en tete a queue*/	
 		testCollisionQueue(train);
-
 	}
 	
 	private void testCollisionQueue(Train train) {
-		// TODO Auto-generated method stub
+		/**
+		 * Cas ou la tete de "train" touche la queue d'un autre train2!=train
+		 * 
+		 * 1) Tete et queue son sur meme rail
+		 * 	a) Queue et tete ne sont pas separe par un troncon
+		 * 	b) Ils sont separe par un troncon
+		 * 2) Tete et queue sont sur des rails differentes
+		 * 	a) meme cas a) que 1)
+		 * 	b) meme cas b) que 1)
+		 */
 		
+		for (Train train2 : matRoulant) { 
+			if(!train.equals(train2)){
+				if(train.getRail().equals(train2.getRail())){
+				
+				}else{
+					
+				}
+			}
+		}	
 	}
 
 	private void testCollisionFace(Train train) throws ErreurCollision, ErreurJonction {
