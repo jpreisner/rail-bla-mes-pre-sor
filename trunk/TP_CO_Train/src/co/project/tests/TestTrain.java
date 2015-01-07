@@ -96,7 +96,7 @@ public class TestTrain {
 
 			// MAJ de la jonction droite et gauche de r6
 			Butee butee3 = new Butee(r6);
-			//r6.setJonctionDroite(butee3);
+			r6.setJonctionDroite(butee3);
 
 			infrastructure.add(r5);
 			infrastructure.add(butee2);
