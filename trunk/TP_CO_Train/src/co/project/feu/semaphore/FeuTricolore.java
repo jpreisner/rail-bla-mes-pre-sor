@@ -1,5 +1,6 @@
 package co.project.feu.semaphore;
 
+import co.project.exception.ErreurSemaphore;
 import co.project.feu.etat.EtatSemaphore;
 import co.project.feu.etat.coeff.neutre.EtatVert;
 import co.project.feu.etat.coeff.ralenti.EtatOrange;
@@ -17,6 +18,16 @@ public class FeuTricolore extends Semaphore {
 	@Override
 	public String toString() {
 		return "Feu Tricolore, " + etat;
+	}
+
+	@Override
+	public void setEtatStop() throws ErreurSemaphore {
+		setEtat(EtatRouge.getInstance());
+	}
+
+	@Override
+	public void setEtatNeutre() throws ErreurSemaphore {
+		setEtat(EtatVert.getInstance());
 	}
 
 }

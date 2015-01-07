@@ -10,7 +10,7 @@ public class JonctionSimple extends Jonction {
 		super(0);
 		rails.add(rail1);
 		rails.add(rail2);
-		connecteRailJonction();
+		initRailJonction();
 	}
 
 	@Override
@@ -21,11 +21,6 @@ public class JonctionSimple extends Jonction {
 		} else {
 			return getRailGauche();
 		} 
-	}
-
-	@Override
-	public boolean trainPassant() {
-		return (getRailGauche().trainPassant() && getRailDroite().trainPassant());
 	}
 
 	public Rail getRailGauche()
@@ -44,7 +39,7 @@ public class JonctionSimple extends Jonction {
 	}
 
 	@Override
-	public void connecteRailJonction() throws ErreurConstruction {
+	public void initRailJonction() throws ErreurConstruction {
 		if (!getRailGauche().connectable() || !getRailDroite().connectable()) {
 			throw new ErreurConstruction("Les 2 rails ont deja des jonctions, pose de jonction simple impossible");
 		} else {

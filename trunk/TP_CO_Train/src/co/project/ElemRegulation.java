@@ -5,28 +5,30 @@ import java.util.Observable;
 import java.util.Observer;
 
 import co.project.capteur.Capteur;
-import co.project.feu.semaphore.Semaphore;
+import co.project.exception.ErreurAiguillage;
+import co.project.exception.ErreurSemaphore;
 import co.project.infrastructure.jonction.Aiguillage;
+import co.project.infrastructure.rail.Rail;
 
 public class ElemRegulation implements Observer {
 
 	private ArrayList<Aiguillage> listAiguillage;
 	private ArrayList<Capteur> listCapteur;
-	private ArrayList<Semaphore> listFeu;
+//	private ArrayList<Semaphore> listFeu;
 
 	public ElemRegulation(Aiguillage aiguillage) {
 		this.listAiguillage =new ArrayList<Aiguillage>() ;
 		this.listCapteur = new ArrayList<Capteur>();
-		this.listFeu = new ArrayList<Semaphore>();
+//		this.listFeu = new ArrayList<Semaphore>();
 	}
 
 	public ArrayList<Capteur> getListCapteurs() {
 		return listCapteur;
 	}
 
-	public ArrayList<Semaphore> getListFeux() {
-		return listFeu;
-	}
+//	public ArrayList<Semaphore> getListFeux() {
+//		return listFeu;
+//	}
 
 	public ArrayList<Aiguillage> getListAiguillage() {
 		return listAiguillage;
@@ -57,6 +59,38 @@ public class ElemRegulation implements Observer {
 			/* FIFO */
 			break;
 		}
+	}
+	
+	/**
+	 * Mettre toutes les semaphores dans ETATSTOP avant changement
+	 * @param aiguillage 
+	 */
+	private void bloquerSemaphores(Aiguillage aiguillage){
+		for (Rail rail : aiguillage.getrails()) {
+			try {
+				if(rail.getSema() != null){
+					rail.getSema().setEtatStop();
+				}
+			} catch (ErreurSemaphore e) {
+				System.out.println("Passage de tous les semaphores a un etat d'arret impossible");
+			}
+		}
+	}
+	
+	/**
+	 * Effectue le changement d'aiguillage selon les rails en parametres
+	 * @param aiguillage
+	 * @param r1
+	 * @param r2
+	 * @throws ErreurAiguillage
+	 */
+	public void changementAiguillage(Aiguillage aiguillage, Rail r1, Rail r2) throws ErreurAiguillage{
+		if(!listAiguillage.contains(aiguillage)){
+			throw new ErreurAiguillage("L'aiguillage n'appartient pas a cet element de regulation");
+		}
+		bloquerSemaphores(aiguillage);
+		aiguillage.changementAiguillage(r1, r2);
+		
 	}
 
 	/**

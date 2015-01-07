@@ -59,4 +59,15 @@ public abstract class Semaphore extends Observable {
 		}
 		throw new ErreurSemaphore("Pas d'etat suivant : votre semaphore n'a qu'un seul etat possible");
 	}
+	
+	/**
+	 * Passe le semaphore a l'etat d'arret
+	 */
+	public abstract void setEtatStop() throws ErreurSemaphore;
+	
+	
+	/**
+	 * Passe le semaphore a l'etat neutre
+	 */
+	public abstract void setEtatNeutre() throws ErreurSemaphore;
 }

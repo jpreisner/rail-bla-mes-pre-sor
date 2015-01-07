@@ -10,6 +10,7 @@ import co.project.exception.ErreurSemaphore;
 import co.project.feu.etat.coeff.neutre.EtatVert;
 import co.project.feu.etat.coeff.stop.EtatRouge;
 import co.project.infrastructure.rail.Rail;
+import co.project.train.Train;
 
 public class Aiguillage extends Jonction {
 
@@ -26,7 +27,7 @@ public class Aiguillage extends Jonction {
 		this.rails = rails;
 		railConnecte1 = this.rails.get(0);
 		railConnecte2 = this.rails.get(1);
-		connecteRailJonction();
+		initRailJonction();
 		initialiserFeux();
 	}
 
@@ -67,9 +68,16 @@ public class Aiguillage extends Jonction {
 		return (rail.equals(railConnecte1)) ? railConnecte2 : railConnecte1;
 	}
 
-	@Override
+	/**
+	 * @return true/false si un train est sur l'aiguilage
+	 */
 	public boolean trainPassant() {
-		return (railConnecte1.trainPassant() || railConnecte2.trainPassant());
+		for (Train train : railConnecte1.getTrains()) {
+			if(railConnecte2.getTrains().contains(train)){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
@@ -84,7 +92,7 @@ public class Aiguillage extends Jonction {
 	}
 
 	@Override
-	public void connecteRailJonction() throws ErreurConstruction {
+	public void initRailJonction() throws ErreurConstruction {
 		for (Rail rail : rails) {
 			if (!rail.connectable()) {
 				throw new ErreurConstruction("le rail : " + rail + ", n'est pas connectable a l'aiguillage.");
@@ -116,6 +124,22 @@ public class Aiguillage extends Jonction {
 			}
 		} catch (ErreurSemaphore e) {
 			System.out.println("Initialisation des semaphores de l'aiguillage impossible");
+		}
+	}
+	
+	/**
+	 * @param Rail r1
+	 * @param Rail r2
+	 * @throws ErreurAiguillage
+	 */
+	public void changementAiguillage(Rail r1, Rail r2) throws ErreurAiguillage{
+		if(!rails.contains(r1) || !rails.contains(r2)){
+			throw new ErreurAiguillage("un des rails passees en parametres ne sont pas dans l'aiguillage");
+		}
+		else{
+			
+			setRailConnecte1(r1);
+			setRailConnecte2(r2);
 		}
 	}
 

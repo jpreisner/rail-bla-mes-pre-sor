@@ -19,6 +19,16 @@ public class FeuBicolore extends Semaphore {
 		return "Feu Bicolore, " + etat;
 	}
 
+	@Override
+	public void setEtatStop() throws ErreurSemaphore {
+		setEtat(EtatRouge.getInstance());
+	}
+
+	@Override
+	public void setEtatNeutre() throws ErreurSemaphore {
+		setEtat(EtatVert.getInstance());
+	}
+	
 	public static void main(String[] args) {
 		FeuBicolore bico = new FeuBicolore(Direction.DROITE);
 		System.out.println(bico.etat);

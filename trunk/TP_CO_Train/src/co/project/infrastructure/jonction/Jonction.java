@@ -24,10 +24,11 @@ public abstract class Jonction extends Infrastructure {
 	abstract public Rail getRailSuivant(Rail rail) throws ErreurJonction;
 	
 	/**
-	 * Cette methode, apellee dans le constructeur de la jonction, permet de lier l'extremite du rail a la jonction actuelle
+	 * Cette methode, apellee dans le constructeur de la jonction, 
+	 * permet de lier l'extremite du rail a la jonction actuelle
 	 * @throws ErreurConstruction
 	 */
-	abstract public void connecteRailJonction() throws ErreurConstruction;
+	abstract public void initRailJonction() throws ErreurConstruction;
 	
 	@Override
 	public String toString() {

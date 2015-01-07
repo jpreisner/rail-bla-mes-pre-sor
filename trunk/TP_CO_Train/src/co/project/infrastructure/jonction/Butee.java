@@ -9,7 +9,7 @@ public class Butee extends Jonction {
 	public Butee(Rail rail) throws ErreurConstruction {
 		super(0);
 		rails.add(rail);
-		connecteRailJonction();
+		initRailJonction();
 	}
 
 	public Rail getRail() {
@@ -22,17 +22,12 @@ public class Butee extends Jonction {
 	}
 
 	@Override
-	public boolean trainPassant() {
-		return false;
-	}
-
-	@Override
 	public String toString() {
 		return "[B]";
 	}
 
 	@Override
-	public void connecteRailJonction() throws ErreurConstruction {
+	public void initRailJonction() throws ErreurConstruction {
 		if (!getRail().connectable()) {
 			throw new ErreurConstruction("Le rail a deja 2 jonctions a ses extremites, pose de butee impossible");
 		} else {

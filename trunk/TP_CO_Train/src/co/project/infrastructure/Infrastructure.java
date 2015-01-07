@@ -20,11 +20,6 @@ public abstract class Infrastructure {
 	public int getLongueur() {
 		return longueur;
 	}
-
-	/**
-	 * @return true/false si le train est sur l'infrastructure (Rail, Jonction, ...)
-	 */
-	public abstract boolean trainPassant();
 	
 	@Override
 	public String toString() {

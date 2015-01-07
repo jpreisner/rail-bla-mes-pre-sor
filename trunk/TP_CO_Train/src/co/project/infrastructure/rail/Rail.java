@@ -10,13 +10,12 @@ import co.project.infrastructure.jonction.Jonction;
 import co.project.train.Train;
 
 public class Rail extends Infrastructure {
-	/* nb de troncons TODO */
-
 	/* 2 jonctions aux extremitees du rail */
 	private Jonction gauche;
 	private Jonction droite;
 	private Semaphore sema;
 
+	/* nb de troncons/capteur */
 	private HashMap<Integer, Capteur> capteurTroncon;
 	
 	private ArrayList<Train> trains;
@@ -75,11 +74,6 @@ public class Rail extends Infrastructure {
 
 	public boolean connectable() {
 		return (getJonctionDroite() == null || getJonctionGauche() == null);
-	}
-
-	@Override
-	public boolean trainPassant() {
-		return !trains.isEmpty();
 	}
 
 	@Override
