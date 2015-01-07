@@ -105,7 +105,14 @@ public class Train implements Observer{
 		 */
 		if(vCourante>0)
 		{
-			etat.deplaceTroncontete(vCourante);
+			/**
+			 * Deplacement de troncon en troncon
+			 */
+			for(int i = 0; i<vCourante; i++)
+			{
+				etat.deplaceTroncontete(1);
+				
+			}
 			
 			/**
 			 * Représente la différence de taille qu'on a entre la disposition de la

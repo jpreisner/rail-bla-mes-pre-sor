@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import co.project.capteur.Capteur;
+import co.project.exception.ErreurCollision;
 import co.project.feu.semaphore.Semaphore;
 import co.project.infrastructure.Infrastructure;
 import co.project.infrastructure.jonction.Jonction;
+import co.project.train.Interval;
 import co.project.train.Train;
 
 public class Rail extends Infrastructure {
@@ -104,5 +106,17 @@ public class Rail extends Infrastructure {
 	@Override
 	public boolean verifierElement() {
 		return (getJonctionDroite() != null && getJonctionGauche() != null);
+	}
+	
+	public void testCollisions() throws ErreurCollision{
+		
+		ArrayList<Interval> intervals = new ArrayList<Interval>();
+		
+		for (Train train : trains) {
+			
+			
+			
+		}
+		
 	}
 }

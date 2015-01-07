@@ -114,14 +114,19 @@ public class Aiguillage extends Jonction {
 	private void initialiserFeux() {
 		/* railconnecte1 au vert */
 		try {
-			railConnecte1.getSema().setEtat(EtatVert.getInstance());
-
-			/* autres rails au rouge */
-			for (Rail rail : rails) {
-				if (!rail.equals(railConnecte1)) {
-					rail.getSema().setEtat(EtatRouge.getInstance());
+			if(railConnecte1.getSema()!=null && railConnecte2.getSema()!=null)
+			{
+				railConnecte1.getSema().setEtat(EtatVert.getInstance());
+				railConnecte2.getSema().setEtat(EtatVert.getInstance());
+				
+				/* autres rails au rouge */
+				for (Rail rail : rails) {
+					if (!rail.equals(railConnecte1)) {
+						rail.getSema().setEtat(EtatRouge.getInstance());
+					}
 				}
 			}
+			
 		} catch (ErreurSemaphore e) {
 			System.out.println("Initialisation des semaphores de l'aiguillage impossible");
 		}
@@ -133,6 +138,11 @@ public class Aiguillage extends Jonction {
 	 * @throws ErreurAiguillage
 	 */
 	public void changementAiguillage(Rail r1, Rail r2) throws ErreurAiguillage{
+		
+		if(!r1.equals(r2))
+		{
+			throw new ErreurAiguillage("Les aiguillages amont "+r1+" aval "+r2+" sont identique sur l'aiguillage "+this);
+		}
 		if(!rails.contains(r1) || !rails.contains(r2)){
 			throw new ErreurAiguillage("un des rails passees en parametres ne sont pas dans l'aiguillage");
 		}
