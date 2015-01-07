@@ -7,6 +7,7 @@ import co.project.exception.ErreurConstruction;
 import co.project.exception.ErreurJonction;
 import co.project.exception.ErreurTrain;
 import co.project.infrastructure.rail.Rail;
+import co.project.train.PaireRailTroncon;
 import co.project.train.Train;
 
 public final class Reseau {
@@ -148,9 +149,10 @@ public final class Reseau {
 		 */
 		
 		for (Train train2 : matRoulant) { 
+			PaireRailTroncon queue = train2.getQueue();
 			if(!train.equals(train2)){
-				if(train.getRail().equals(train2.getQueue().getRail())){
-					if(Math.abs(train.getEtat().getTronconTete()-train2.getQueue().getTroncon())<=2){
+				if(train.getRail().equals(queue.getRail())){
+					if(Math.abs(train.getEtat().getTronconTete()-queue.getTroncon())<=2){
 						throw new ErreurCollision("Collision : le train : "+train+
 							"\n a rattrape le train : "+train2);
 					}
