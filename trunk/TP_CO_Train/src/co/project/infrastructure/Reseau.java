@@ -116,8 +116,17 @@ public final class Reseau {
 	 * @throws ErreurCollision
 	 */
 	public void testCollisions() throws ErreurCollision{
+		
+		//FIXME faire une methode de simulation : on projette un train vers sa futur destination :
+		//et on regarde si sa tete ou sa queue est en collision avec un autre train
+		//FIXME non correcte : verifie qu'il sont sur la meme rail : s'il y a deux trains sens contraire
+		
+		ArrayList<Integer> zoneTrain = new ArrayList<Integer>();
+		
+	
+		
 		/* collision de face*/
-		for (Train train1 : matRoulant) {
+		/*for (Train train1 : matRoulant) {
 			for (Train train2 : matRoulant) {
 				if(!train1.equals(train2)){
 					if(train1.getRail().equals(train2.getRail())&&
@@ -127,7 +136,7 @@ public final class Reseau {
 					}
 				}
 			}
-		}
+		}*/
 		
 		/* collision en tete a queue*/
 		

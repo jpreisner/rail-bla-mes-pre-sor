@@ -123,7 +123,7 @@ public class TestTrain {
 		}
 		System.out.println("\n");
 
-		Train train = new Train(5, 11, pCourante, Direction.GAUCHE);
+		Train train = new Train(5, 300, pCourante, Direction.GAUCHE);
 		Reseau.getInstance().addTrain(train);
 
 		try {
