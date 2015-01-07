@@ -149,7 +149,7 @@ public final class Reseau {
 		
 		for (Train train2 : matRoulant) { 
 			if(!train.equals(train2)){
-				if(train.getRail().equals(train2.getRail())){
+				if(train.getRail().equals(train2.getQueue().getRail())){
 				
 				}else{
 					
