@@ -124,17 +124,19 @@ public class TestTrain {
 		}
 		System.out.println("\n");
 
-		Train train = new Train(8, 3, pCourante, Direction.DROITE);
+		Train train = new Train(18, 7, pCourante, Direction.DROITE);
 		Reseau.getInstance().addTrain(train);
+		//System.out.println("Queue : "+train.getQueue());
 
 		try {
 			Reseau.getInstance().verifieReseau();
-			//System.out.println("Train avant deplacement"+train);
+			System.out.println("Train avant deplacement"+train);
 			try {
 				Reseau.getInstance().deplacementTrain(train);
 				Reseau.getInstance().deplacementTrain(train);
 				Reseau.getInstance().deplacementTrain(train);
 				Reseau.getInstance().deplacementTrain(train);
+				System.out.println("Train avant deplacement"+train);
 				//Reseau.getInstance().deplacementTrain(train);
 				System.out.println("Queue : "+train.getQueue());
 			} catch (ErreurJonction e) {

@@ -172,7 +172,9 @@ public class Train implements Observer{
 		 * a parcourir est taille du train - la position du troncon courant
 		 */
 		int troncon = getTaille() - etat.getTronconTete();
-		System.out.println("troncon "+troncon);
+		//System.out.println("Ma rail: "+rail);
+		//System.out.println("getTaille "+getTaille()+" etat = "+etat.getTronconTete());
+		//System.out.println("troncon "+troncon);
 		Rail precedente = null;
 		boolean continuer = true;
 		/**
@@ -202,6 +204,7 @@ public class Train implements Observer{
 					troncon-=precedente.getLongueur();
 				else
 					continuer = false;
+				
 			} catch (ErreurJonction e) {
 				return null;
 			}
@@ -213,7 +216,10 @@ public class Train implements Observer{
 		 * Pour recuperer la position exacte du troncon ou se trouve la queue
 		 * On retourne la taille de la rail - le nombre de troncon nous restant
 		 */
-		return new PaireRailTroncon(precedente, precedente.getLongueur()-troncon);
+		if(troncon==0)
+			return new PaireRailTroncon(precedente, troncon);
+		else
+			return new PaireRailTroncon(precedente, precedente.getLongueur()-troncon);
 	}
 	
 	/**
