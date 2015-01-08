@@ -17,6 +17,10 @@ public abstract class Semaphore extends Observable {
 		this.direction = direction;
 	}
 
+	/**
+	 * Passe a l'etat suivant du semaphore selon son cycle
+	 * @throws ErreurSemaphore
+	 */
 	public void changeEtat() throws ErreurSemaphore {
 		etat = etat.changeEtat(this);
 		setChanged();
@@ -31,6 +35,11 @@ public abstract class Semaphore extends Observable {
 		return direction;
 	}
 
+	/**
+	 * change d'etat selon l'etat en parametre
+	 * @param etat
+	 * @throws ErreurSemaphore
+	 */
 	public void setEtat(EtatSemaphore etat) throws ErreurSemaphore {
 		if (Arrays.asList(etatsPossibles).contains(etat)) {
 			this.etat = etat;

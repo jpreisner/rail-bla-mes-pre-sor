@@ -6,7 +6,6 @@ public class Paire<T1,T2> {
 	T2 second;
 	
 	public Paire() {
-		// TODO Auto-generated constructor stub
 		first = null;
 		second = null;
 	}
@@ -29,14 +28,11 @@ public class Paire<T1,T2> {
 	
 	@Override
 	public int hashCode() {
-		// TODO Auto-generated method stub
 		return first.hashCode()+second.hashCode();
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
-		
 		if(this==obj)
 			return true;
 		if(obj==null)
@@ -54,8 +50,7 @@ public class Paire<T1,T2> {
 				return true;
 			
 		} catch (ClassCastException e) {
-			// TODO: handle exception
-			
+		
 			return false;
 		}
 		
@@ -65,7 +60,6 @@ public class Paire<T1,T2> {
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return "("+first.toString()+","+second.toString()+")";
 	}
 	

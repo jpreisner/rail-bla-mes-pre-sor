@@ -74,6 +74,9 @@ public class Rail extends Infrastructure {
 		this.sema = sema;
 	}
 
+	/**
+	 * @return true/false si le rail est connectable ou pas
+	 */
 	public boolean connectable() {
 		return (getJonctionDroite() == null || getJonctionGauche() == null);
 	}

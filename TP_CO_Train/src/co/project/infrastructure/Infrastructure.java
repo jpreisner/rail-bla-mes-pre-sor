@@ -21,7 +21,11 @@ public abstract class Infrastructure {
 		return longueur;
 	}
 	
+	/**
+	 * @return true/false si l'element d'infrastructure est bien connecte au reseau
+	 */
 	public abstract boolean verifierElement();
+	
 	@Override
 	public String toString() {
 		return "Element Infrastructure [ id : "+idInfrastructure+
