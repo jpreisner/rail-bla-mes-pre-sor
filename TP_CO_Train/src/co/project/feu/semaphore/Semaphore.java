@@ -26,6 +26,10 @@ public abstract class Semaphore extends Observable {
 	public EtatSemaphore getEtat() {
 		return etat;
 	}
+	
+	public Direction getDirection() {
+		return direction;
+	}
 
 	public void setEtat(EtatSemaphore etat) throws ErreurSemaphore {
 		if (Arrays.asList(etatsPossibles).contains(etat)) {

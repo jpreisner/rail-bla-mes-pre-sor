@@ -92,12 +92,13 @@ public class Train implements Observer{
 
 	/**
 	 * Fonction du deplacement du train, il teste les collisions a chaque deplacement de train
+	 * Train observe les semaphores qui sont dans sa direction
 	 * @throws ErreurJonction
 	 */
-	//TODO Prendre en compte les semaphores
 	public void deplacer() throws ErreurJonction , ErreurCollision {
 		
-		if(rail.getSema()!=null)
+		if(rail.getSema()!=null && 
+				etat.getDirection().equals(rail.getSema().getDirection()))
 		{
 			setVitesseCourante(rail.getSema().getEtat().getVitesse(vCourante));
 		}
