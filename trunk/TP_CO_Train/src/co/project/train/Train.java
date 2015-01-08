@@ -96,6 +96,9 @@ public class Train implements Observer{
 	 */
 	public void deplacer() throws ErreurJonction , ErreurCollision {
 		
+		System.out.println("\t\t\tAVANT DEPLACEMENT -------");
+		System.out.println(this);
+		
 		int deplacement = 0;
 		
 		if(etat.getDirection() == Direction.DROITE)
@@ -152,7 +155,7 @@ public class Train implements Observer{
 			int diff = etat.getTronconTete() - rail.getLongueur();
 			if(etat.getDirection().equals(Direction.GAUCHE))
 			{
-				System.out.println("***** "+diff);
+				System.out.println(etat.getTronconTete()+"-"+rail.getLongueur()+"==== ***** "+diff);
 			}
 			//On est au delà de la capacité de la rail
 			//Un changement de rail est nécessaire
@@ -196,6 +199,9 @@ public class Train implements Observer{
 
 			}
 		}
+		
+		System.out.println("\t\t\tAPRES DEPLACEMENT -------");
+		System.out.println(this);
 	}
 	
 	/**
