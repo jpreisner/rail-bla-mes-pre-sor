@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import co.project.capteur.Capteur;
 import co.project.exception.ErreurCollision;
+import co.project.exception.ErreurConstruction;
 import co.project.feu.semaphore.Semaphore;
 import co.project.infrastructure.Infrastructure;
 import co.project.infrastructure.jonction.Jonction;
@@ -60,11 +61,6 @@ public class Rail extends Infrastructure {
 		return capteurTroncon;
 	}
 
-	public void setCapteurTroncon(HashMap<Integer, Capteur> capteurNumeroTroncon) {
-		this.capteurTroncon = capteurNumeroTroncon;
-	}
-	
-
 	public Semaphore getSema() {
 		return sema;
 	}
@@ -73,6 +69,14 @@ public class Rail extends Infrastructure {
 		this.sema = sema;
 	}
 
+	
+	public void addCapteurTroncon(int numTroncon, Capteur capt)throws ErreurConstruction{
+		if (getCapteurTroncon().containsKey(numTroncon)){
+			throw new ErreurConstruction("il y a deja un capteur sur ce troncon");
+		}else{
+			getCapteurTroncon().put(numTroncon, capt);
+		}
+	}
 	/**
 	 * @return true/false si le rail est connectable ou pas
 	 */
