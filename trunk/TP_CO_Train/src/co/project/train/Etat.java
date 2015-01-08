@@ -22,7 +22,10 @@ public class Etat {
 	}
 
 	public void deplaceTroncontete(int tronconTete) {
-		this.tronconTete += tronconTete;
+		if(direction == Direction.DROITE)
+			this.tronconTete += tronconTete;
+		else
+			this.tronconTete -= tronconTete;
 	}
 
 	public Direction getDirection() {
