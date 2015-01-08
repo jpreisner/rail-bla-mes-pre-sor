@@ -73,6 +73,37 @@ public abstract class Semaphore extends Observable {
 		throw new ErreurSemaphore("Pas d'etat suivant : votre semaphore n'a qu'un seul etat possible");
 	}
 	
+	/**
+	 * Retourne l'etat neutre de la semaphore
+	 * @return (null si aucun etat neutre)
+	 */
+	public abstract EtatSemaphore getEtatNeutre();
+	
+	/**
+	 * Retourne l'etat stop de la semaphore
+	 * @return (null si aucun etat neutre)
+	 */
+	public abstract EtatSemaphore getEtatStop();
+	
+	/**
+	 * Vrai si l'etat actuel est stop
+	 * @return
+	 */
+	public boolean isEtatStop() {
+		if(getEtatStop()==null)
+			return false;
+		return (etat.equals(getEtatStop()));
+	}
+	/**
+	 * Vrai si l'etat actuel est neutre
+	 * @return
+	 */
+	public boolean isEtatNeutre() {
+		if(getEtatNeutre()==null)
+			return false;
+		return (etat.equals(getEtatNeutre()));
+	}
+	
 	@Override
 	public abstract Object clone() throws CloneNotSupportedException;
 	

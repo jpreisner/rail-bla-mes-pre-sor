@@ -2,10 +2,15 @@ package co.project.tests;
 
 import java.util.ArrayList;
 
+import javax.swing.plaf.ButtonUI;
+
+import co.project.ElemRegulation;
 import co.project.exception.ErreurCollision;
 import co.project.exception.ErreurConstruction;
 import co.project.exception.ErreurJonction;
 import co.project.exception.ErreurTrain;
+import co.project.feu.semaphore.FeuBicolore;
+import co.project.feu.semaphore.FeuTricolore;
 import co.project.infrastructure.FabriqueInfrastructure;
 import co.project.infrastructure.Infrastructure;
 import co.project.infrastructure.Reseau;
@@ -161,6 +166,39 @@ public class TestTrain {
 	// }
 
 	public static void main(String[] args) {
-		FabriqueInfrastructure.creeSegment(10, 10, 0);
+		try {
+			ElemRegulation element = new ElemRegulation();
+			ArrayList<Infrastructure> infra = FabriqueInfrastructure.creeSegment(15, 5, 2, element ,new FeuTricolore(Direction.DROITE), new FeuBicolore(Direction.GAUCHE));
+			try {
+				Rail railDebut = (Rail)infra.get(0);
+				Butee buteeDebut = new Butee(railDebut);
+				railDebut.setJonctionGauche(buteeDebut);
+				infra.add(0, buteeDebut);
+				
+				Rail railFin = (Rail)infra.get(infra.size()-1);
+				Butee buteeFin = new Butee(railFin);
+				railDebut.setJonctionDroite(buteeFin);
+				infra.add(infra.size(), buteeFin);
+				
+				System.out.println("Reseau : "+Reseau.getInstance());
+				Reseau.getInstance().addPartieReseau(infra);
+				Reseau.getInstance().verifieReseau();
+				
+				
+				Reseau.getInstance().addTrain(new Train(10, 2 , (Rail)infra.get(3), Direction.DROITE));
+				
+				Reseau.getInstance().start();
+				
+			} catch (ErreurConstruction e) {
+				e.printStackTrace();
+			}
+			
+			
+			
+			
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

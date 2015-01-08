@@ -17,7 +17,7 @@ public class Rail extends Infrastructure {
 	private Semaphore semaDroite,semaGauche;
 
 	/* nb de troncons/capteur */
-	private HashMap<Integer, Capteur> capteurTroncon;
+	private HashMap<Capteur, Integer> capteurTroncon;
 	
 	private ArrayList<Train> trains;
 	
@@ -38,6 +38,8 @@ public class Rail extends Infrastructure {
 
 	public Rail(int longueur) {
 		super(longueur);
+		trains = new ArrayList<Train>();
+		capteurTroncon = new HashMap<Capteur, Integer>();
 	}
 
 	public Jonction getJonctionGauche() {
@@ -56,11 +58,11 @@ public class Rail extends Infrastructure {
 		this.droite = j2;
 	}
 
-	public HashMap<Integer, Capteur> getCapteurTroncon() {
+	public HashMap<Capteur, Integer> getCapteurTroncon() {
 		return capteurTroncon;
 	}
 
-	public void setCapteurTroncon(HashMap<Integer, Capteur> capteurNumeroTroncon) {
+	public void setCapteurTroncon(HashMap<Capteur, Integer> capteurNumeroTroncon) {
 		this.capteurTroncon = capteurNumeroTroncon;
 	}
 	
@@ -80,13 +82,12 @@ public class Rail extends Infrastructure {
 	public void setSemaGauche(Semaphore sema) {
 		this.semaGauche = sema;
 	}
-
 	
-	public void addCapteurTroncon(int numTroncon, Capteur capt)throws ErreurConstruction{
-		if (getCapteurTroncon().containsKey(numTroncon)){
+	public void addCapteurTroncon(Capteur capt)throws ErreurConstruction{
+		if (getCapteurTroncon().containsKey(capt)){
 			throw new ErreurConstruction("il y a deja un capteur sur ce troncon");
 		}else{
-			getCapteurTroncon().put(numTroncon, capt);
+			getCapteurTroncon().put(capt, capt.getNumTronconRail());
 		}
 	}
 	/**
