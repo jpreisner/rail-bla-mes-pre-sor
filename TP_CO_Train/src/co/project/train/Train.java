@@ -96,8 +96,8 @@ public class Train implements Observer{
 	 */
 	public void deplacer() throws ErreurJonction , ErreurCollision {
 		
-		System.out.println("\t\t\tAVANT DEPLACEMENT -------");
-		System.out.println(this);
+		/*System.out.println("\t\t\tAVANT DEPLACEMENT -------");
+		System.out.println(this);*/
 		
 		int deplacement = 0;
 		
@@ -145,65 +145,40 @@ public class Train implements Observer{
 			for(int i = 0; i<vCourante; i++)
 			{
 				etat.deplaceTroncontete(1);
+				System.out.println("etat = "+etat);
+				if(etat.getDirection().equals(Direction.DROITE))
+					algoDeplacementDroite();
+				else
+					algoDeplacementGauche();
 				Reseau.getInstance().testCollisions(this);
 			}
 			
-			/**
-			 * Représente la différence de taille qu'on a entre la disposition de la
-			 * tête du train et que l'extremité de cette dernière
-			 */
-			int diff = etat.getTronconTete() - rail.getLongueur();
-			if(etat.getDirection().equals(Direction.GAUCHE))
-			{
-				System.out.println(etat.getTronconTete()+"-"+rail.getLongueur()+"==== ***** "+diff);
-			}
-			//On est au delà de la capacité de la rail
-			//Un changement de rail est nécessaire
-			if((diff>0 && etat.getDirection().equals(Direction.DROITE)) || (diff<0 && etat.getDirection().equals(Direction.GAUCHE)))
-			{
-				diff = Math.abs(diff);
-				/**
-				 * On change de rail de facon instantannément
-				 * Puis on regarde à travers la boucle
-				 * si la rail peut supporter la tête du train
-				 */
-				rail.retirerTrain(this);
-				rail = railSuivanteDirection();
-				rail.ajouterTrain(this);
-				boolean continuer = true;
-				while (continuer) {
-					/**
-					 * La rail courante est suffisante
-					 * On change la disposition de la nouvelle tête
-					 * Puis on s'arrête
-					 */
-					if (rail.getLongueur() > diff) {
-						if(etat.getDirection().equals(Direction.DROITE))
-							etat.setTronconTete(diff);
-						else
-							etat.setTronconTete(diff);
-						continuer = false;
-					}
-					/**
-					 * Il y a encore du chemin à faire
-					 * La rail courante ne suffit pas on va regarder la suivante
-					 * On décremente la différence par la taille de la rail suivante
-					 */
-					else {
-						diff -= rail.getLongueur();
-						rail.retirerTrain(this);
-						rail = railSuivanteDirection();
-						rail.ajouterTrain(this);
-					}
-				}
-
-			}
+			
 		}
 		
-		System.out.println("\t\t\tAPRES DEPLACEMENT -------");
-		System.out.println(this);
+		/*System.out.println("\t\t\tAPRES DEPLACEMENT -------");
+		System.out.println(this);*/
 	}
 	
+	private void algoDeplacementDroite() throws ErreurJonction {
+		
+		if(etat.getTronconTete() == rail.getLongueur())
+		{
+			rail = railSuivanteDirection();
+			etat.setTronconTete(0);
+		}
+		
+	}
+
+	private void algoDeplacementGauche() throws ErreurJonction {
+		
+		if(etat.getTronconTete() == -1)
+		{
+			rail = railSuivanteDirection();
+			etat.setTronconTete(rail.getLongueur()-1);
+		}
+	}
+
 	/**
 	 * Retourne la queue du train
 	 * @return une PaireRailTroncon : contient l'information de la rail ou 
@@ -231,7 +206,7 @@ public class Train implements Observer{
 					precedente = railPrecedenteDirection(rail);
 				else
 					precedente = railPrecedenteDirection(precedente);
-				System.out.println("precendente.getLongueur() = "+precedente.getLongueur());
+				//System.out.println("precendente.getLongueur() = "+precedente.getLongueur());
 				/**
 				 * On dispose de 2 cas
 				 * 1) (if) la rail n'a pas la taille suffisante pour 
@@ -250,7 +225,7 @@ public class Train implements Observer{
 			}
 		}
 		
-		System.out.println("troncon = "+troncon + " precedente = "+precedente);
+		//System.out.println("troncon = "+troncon + " precedente = "+precedente);
 		if(precedente==null)
 			return new PaireRailTroncon(rail, troncon);
 		/**
@@ -258,7 +233,7 @@ public class Train implements Observer{
 		 * On retourne la taille de la rail - le nombre de troncon nous restant
 		 */
 		int tmp = precedente.getLongueur()-troncon;
-		System.out.println("tmp = "+tmp);
+		//System.out.println("tmp = "+tmp);
 		if(troncon==0)
 			return new PaireRailTroncon(precedente, troncon);
 		else if(troncon>0)
