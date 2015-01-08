@@ -36,6 +36,9 @@ public abstract class Capteur extends Observable {
 		return false;
 	}
 
+	/**
+	 * Si un train passe sur le capteur, cette methode notifie tous les observers
+	 */
 	public void notifieTrainPassant() {
 		if (trainPassant()) {
 			setChanged();

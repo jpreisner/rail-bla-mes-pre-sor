@@ -12,11 +12,10 @@ import co.project.feu.etat.coeff.stop.EtatRouge;
 import co.project.infrastructure.rail.Rail;
 import co.project.train.Train;
 
+/**
+ * au moins 3 rails
+ */
 public class Aiguillage extends Jonction {
-
-	/* au moins 3 rails */
-
-	/* element de regulation */
 	private ElemRegulation elemRegul;
 	/* rails connectes de l'aiguillage */
 	private Rail railConnecte1;
@@ -47,6 +46,11 @@ public class Aiguillage extends Jonction {
 		return railConnecte2;
 	}
 
+	/**
+	 * Connecte le rail1 a l'aiguillage
+	 * @param r1
+	 * @throws ErreurAiguillage
+	 */
 	public void setRailConnecte1(Rail r1) throws ErreurAiguillage {
 		if (trainPassant()) {
 			throw new ErreurAiguillage("changement d'aiguillage impossible sur le rail : " + r1);
@@ -55,6 +59,11 @@ public class Aiguillage extends Jonction {
 		}
 	}
 
+	/**
+	 * Connecte le rail2 a l'aiguillage
+	 * @param r2
+	 * @throws ErreurAiguillage
+	 */
 	public void setRailConnecte2(Rail r2) throws ErreurAiguillage {
 		if (trainPassant()) {
 			throw new ErreurAiguillage("changement d'aiguillage impossible sur le rail : " + r2);
@@ -157,8 +166,7 @@ public class Aiguillage extends Jonction {
 		if(rails.size()<3){
 			return false;
 		}
-		return(getRailConnecte1() != null && getRailConnecte2() != null);
-		
+		return(getRailConnecte1() != null && getRailConnecte2() != null);		
 		//FIXME verifie qu'elle ont toute une etat stop
 	}
 }

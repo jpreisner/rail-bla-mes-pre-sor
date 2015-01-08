@@ -14,21 +14,16 @@ public class ElemRegulation implements Observer {
 
 	private ArrayList<Aiguillage> listAiguillage;
 	private ArrayList<Capteur> listCapteur;
-//	private ArrayList<Semaphore> listFeu;
 
 	public ElemRegulation(Aiguillage aiguillage) {
 		this.listAiguillage =new ArrayList<Aiguillage>() ;
 		this.listCapteur = new ArrayList<Capteur>();
-//		this.listFeu = new ArrayList<Semaphore>();
 	}
 
 	public ArrayList<Capteur> getListCapteurs() {
 		return listCapteur;
 	}
 
-//	public ArrayList<Semaphore> getListFeux() {
-//		return listFeu;
-//	}
 
 	public ArrayList<Aiguillage> getListAiguillage() {
 		return listAiguillage;

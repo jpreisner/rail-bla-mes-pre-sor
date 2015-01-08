@@ -2,6 +2,7 @@ package co.project.infrastructure;
 
 import java.util.ArrayList;
 
+import co.project.ElemRegulation;
 import co.project.exception.ErreurCollision;
 import co.project.exception.ErreurConstruction;
 import co.project.exception.ErreurJonction;
@@ -12,6 +13,7 @@ public final class Reseau {
 
 	/* Unique instance non initialisee */
 	private static Reseau INSTANCE = null;
+	private ArrayList<ElemRegulation> regulations;
 	private ArrayList<Infrastructure> reseauInfra;
 	private ArrayList<Train> matRoulant;
 
@@ -19,6 +21,7 @@ public final class Reseau {
 	 * Constructeur prive
 	 */
 	private Reseau() {
+		this.regulations = new ArrayList<ElemRegulation>();
 		this.reseauInfra = new ArrayList<Infrastructure>();
 		this.matRoulant = new ArrayList<Train>();
 	}
@@ -41,6 +44,10 @@ public final class Reseau {
 		return getInstance();
 	}
 	
+	public ArrayList<ElemRegulation> getRegulations(){
+		return regulations;
+	}
+	
 	public ArrayList<Infrastructure> getReseauInfra() {
 		return reseauInfra;
 	}
@@ -49,6 +56,10 @@ public final class Reseau {
 		return matRoulant;
 	}
 
+	public void addElemRegulation(ElemRegulation e) {
+		regulations.add(e);
+	}
+	
 	public void addTrain(Train t) {
 		matRoulant.add(t);
 	}

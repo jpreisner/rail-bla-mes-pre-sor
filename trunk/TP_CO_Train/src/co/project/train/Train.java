@@ -25,7 +25,6 @@ public class Train implements Observer{
 	private Etat etat;
 
 	/* position de la tete sur les troncons */
-
 	public Train(int taille, int vMax, Rail rail, Direction direction) {
 		this.idTrain = id;
 		this.taille = taille;
@@ -33,7 +32,6 @@ public class Train implements Observer{
 		this.vCourante = vMax;
 		this.etat = new Etat(direction);
 		this.rail = rail;
-		// this.etatTrain = new EtatCourant(pCourante, direction);
 		id++;
 	}
 
@@ -80,9 +78,6 @@ public class Train implements Observer{
 		return etat;
 	}
 
-	/*
-	 * public EtatCourant getEtatTrain() { return etatTrain; }
-	 */
 	@Override
 	public String toString() {
 		return "\nTrain [ id : " + idTrain + ", taille : " + taille
@@ -247,6 +242,9 @@ public class Train implements Observer{
 			return railParam.getJonctionGauche().getRailSuivant(railParam);
 	}
 	
+	/**
+	 * Arrete le train
+	 */
 	public void stop()
 	{
 		setVitesseCourante(0);
@@ -259,18 +257,10 @@ public class Train implements Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {
-
 		try {
-			/**
-			 * TODO Redemarrage du train apres arret a un etatStop
-			 */
-			try {
-				EtatStop etatStop = (EtatStop) arg;
-			} catch (ClassCastException e) {
-				start();
-			}
+			EtatStop etatStop = (EtatStop) arg;
 		} catch (ClassCastException e) {
-			
+			start();
 		}
 	}
 	
