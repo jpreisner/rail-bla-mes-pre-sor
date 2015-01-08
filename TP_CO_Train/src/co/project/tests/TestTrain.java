@@ -46,7 +46,7 @@ public class TestTrain {
 
 		ArrayList<Infrastructure> infrastructure = new ArrayList<Infrastructure>();
 		// infrastructure.add(aiguillage);
-
+		Train train = null;
 		try {
 			Rail r1 = new Rail(10);
 			Butee butee1 = new Butee(r1);
@@ -103,6 +103,8 @@ public class TestTrain {
 			infrastructure.add(butee2);
 			infrastructure.add(r6);
 			infrastructure.add(butee3);
+			train = new Train(5, 7, r1, Direction.DROITE);
+
 		} catch (ErreurConstruction e) {
 			e.printStackTrace();
 		}
@@ -115,7 +117,6 @@ public class TestTrain {
 				pCourante = (Rail) infra;
 				break;
 			} catch (ClassCastException e) {
-				// TODO: handle exception
 			}
 		}
 
@@ -124,7 +125,6 @@ public class TestTrain {
 		}
 		System.out.println("\n");
 
-		Train train = new Train(18, 7, pCourante, Direction.DROITE);
 		Reseau.getInstance().addTrain(train);
 		//System.out.println("Queue : "+train.getQueue());
 

@@ -5,7 +5,7 @@ import java.util.Observer;
 
 import co.project.exception.ErreurCollision;
 import co.project.exception.ErreurJonction;
-import co.project.feu.etat.coeff.EtatLimiteCoeff;
+import co.project.feu.etat.coeff.stop.EtatStop;
 import co.project.infrastructure.Reseau;
 import co.project.infrastructure.rail.Rail;
 
@@ -110,6 +110,7 @@ public class Train implements Observer{
 		{
 			/**
 			 * Deplacement de troncon en troncon
+			 * on teste les collisions du train a chaque deplacement de tronçon
 			 */
 			for(int i = 0; i<vCourante; i++)
 			{
@@ -172,9 +173,6 @@ public class Train implements Observer{
 		 * a parcourir est taille du train - la position du troncon courant
 		 */
 		int troncon = getTaille() - etat.getTronconTete();
-		//System.out.println("Ma rail: "+rail);
-		//System.out.println("getTaille "+getTaille()+" etat = "+etat.getTronconTete());
-		//System.out.println("troncon "+troncon);
 		Rail precedente = null;
 		boolean continuer = true;
 		/**
@@ -204,7 +202,6 @@ public class Train implements Observer{
 					troncon-=precedente.getLongueur();
 				else
 					continuer = false;
-				
 			} catch (ErreurJonction e) {
 				return null;
 			}
@@ -263,13 +260,14 @@ public class Train implements Observer{
 	public void update(Observable o, Object arg) {
 
 		try {
-			EtatLimiteCoeff etat = (EtatLimiteCoeff)arg;
-			
 			/**
 			 * TODO Redemarrage du train apres arret a un etatStop
 			 */
-			
-			//start();
+			try {
+				EtatStop etatStop = (EtatStop) arg;
+			} catch (ClassCastException e) {
+				start();
+			}
 		} catch (ClassCastException e) {
 			
 		}
