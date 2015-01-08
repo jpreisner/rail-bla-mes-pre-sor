@@ -150,11 +150,15 @@ public class Train implements Observer{
 			 * tête du train et que l'extremité de cette dernière
 			 */
 			int diff = etat.getTronconTete() - rail.getLongueur();
-
+			if(etat.getDirection().equals(Direction.GAUCHE))
+			{
+				System.out.println("***** "+diff);
+			}
 			//On est au delà de la capacité de la rail
 			//Un changement de rail est nécessaire
-			if(diff>0)
+			if((diff>0 && etat.getDirection().equals(Direction.DROITE)) || (diff<0 && etat.getDirection().equals(Direction.GAUCHE)))
 			{
+				diff = Math.abs(diff);
 				/**
 				 * On change de rail de facon instantannément
 				 * Puis on regarde à travers la boucle
