@@ -110,13 +110,4 @@ public class Rail extends Infrastructure {
 		return (getJonctionDroite() != null && getJonctionGauche() != null);
 	}
 	
-	public void testCollisions() throws ErreurCollision{
-		
-		for (Train train : trains) {
-			
-			
-			
-		}
-		
-	}
 }
