@@ -10,6 +10,7 @@ import co.project.exception.ErreurSemaphore;
 import co.project.feu.semaphore.Semaphore;
 import co.project.infrastructure.jonction.Aiguillage;
 import co.project.infrastructure.rail.Rail;
+import co.project.train.Train;
 
 public class ElemRegulation implements Observer {
 
@@ -70,15 +71,13 @@ public class ElemRegulation implements Observer {
 	 * action en fonction des informations du capteur 2 cas possibles :
 	 * favoritisme systematique d'une des branches du reseau OU systeme FIFO.
 	 */
-	public void ActionSemaphore(int algo) {
-		switch (algo) {
-		case 0:
-			/* favoritisme 1-2 */
-			break;
-		case 1:
-			/* FIFO */
-			break;
-		}
+	public void gestionAiguillage() {
+
+	}
+	
+	public void gestionAiguillageTrain(Train t)
+	{
+		
 	}
 	
 	/**
@@ -86,10 +85,19 @@ public class ElemRegulation implements Observer {
 	 * @param aiguillage 
 	 */
 	private void bloquerSemaphores(Aiguillage aiguillage){
-		for (Rail rail : aiguillage.getrails()) {
+		for (Rail rail : aiguillage.getRails()) {
 			try {
-				if(rail.getSema() != null){
-					rail.getSema().setEtatStop();
+				if(rail.getJonctionDroite().equals(aiguillage)){
+					if(rail.getSemaDroite()!=null)
+					{
+						rail.getSemaDroite().setEtatStop();
+					}
+				}
+				else if(rail.getJonctionGauche().equals(aiguillage)){
+					if(rail.getSemaGauche()!=null)
+					{
+						rail.getSemaGauche().setEtatStop();
+					}
 				}
 			} catch (ErreurSemaphore e) {
 				System.out.println("Passage de tous les semaphores a un etat d'arret impossible");
@@ -116,12 +124,7 @@ public class ElemRegulation implements Observer {
 		aiguillage.changementAiguillage(r1, r2);
 		
 		/* repasse les deux semaphores au vert */
-		try{
-				aiguillage.getRailConnecte1().getSema().setEtatNeutre();
-				aiguillage.getRailConnecte2().getSema().setEtatNeutre();
-		}catch(ErreurSemaphore errSem){
-			throw new ErreurAiguillage("le passage d'un semaphore au vert apres changement d'aiguillage pose probleme");
-		}
+		aiguillage.initialiserFeux();
 	}
 
 	/**
@@ -136,6 +139,92 @@ public class ElemRegulation implements Observer {
 		
 		try {
 			Capteur capt = (Capteur)arg;
+			
+			ArrayList<Rail> railDispo = new ArrayList<Rail>();
+			
+			if(capt.getNumTronconRail() > capt.getRail().getLongueur()/2)
+			{
+				try {
+					Aiguillage a = (Aiguillage)capt.getRail().getJonctionDroite();
+					
+					if(!capt.getRail().getSemaDroite().isEtatNeutre() && !a.trainPassant())
+					{
+						for(Rail rail : a.getRails())
+						{
+							if(rail.getTrains().isEmpty())
+							{
+								railDispo.add(rail);
+							}
+						}
+						
+						if(railDispo.isEmpty())
+						{
+							throw new ErreurAiguillage("Tout les trains attendent a l'aiguillage");
+						}
+						else
+						{
+							int random = (int) (Math.random()*(railDispo.size()));
+							Rail r2 = railDispo.get(random);
+							
+							try {
+								a.changementAiguillage(capt.getRail(), r2);
+							} catch (ErreurAiguillage e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						
+					}
+
+					
+				} catch (ClassCastException e) {
+					// TODO: handle exception
+				} catch (ErreurAiguillage e) {
+					System.out.println("Tout les trains attendent a l'aiguillage");
+				}
+			}
+			else
+			{
+				try {
+					Aiguillage a = (Aiguillage)capt.getRail().getJonctionGauche();
+					
+					if(!capt.getRail().getSemaGauche().isEtatNeutre() && !a.trainPassant())
+					{
+						for(Rail rail : a.getRails())
+						{
+							if(rail.getTrains().isEmpty())
+							{
+								railDispo.add(rail);
+							}
+						}
+						
+						if(railDispo.isEmpty())
+						{
+							throw new ErreurAiguillage("Tout les trains attendent a l'aiguillage");
+						}
+						else
+						{
+							int random = (int) (Math.random()*(railDispo.size()));
+							Rail r2 = railDispo.get(random);
+							
+							try {
+								a.changementAiguillage(capt.getRail(), r2);
+							} catch (ErreurAiguillage e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						
+					}
+
+					
+				} catch (ClassCastException e) {
+					// TODO: handle exception
+				} catch (ErreurAiguillage e) {
+					System.out.println("Tout les trains attendent a l'aiguillage");
+				}
+			}
+			
 		} catch (ClassCastException e) {
 			// TODO: handle exception
 		}
