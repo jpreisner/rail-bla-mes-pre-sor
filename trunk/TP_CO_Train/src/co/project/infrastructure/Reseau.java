@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import co.project.exception.ErreurCollision;
 import co.project.exception.ErreurConstruction;
 import co.project.exception.ErreurJonction;
-import co.project.exception.ErreurTrain;
-import co.project.infrastructure.rail.Rail;
 import co.project.train.PaireRailTroncon;
 import co.project.train.Train;
 
@@ -108,10 +106,19 @@ public final class Reseau {
 					throw new ErreurConstruction("Un element du reseau est null");
 				}
 			}
+			
+			for (Train train : matRoulant) {
+				if ((train.getQueue() == null) || train.getRail() == null){
+					throw new ErreurConstruction("Train : "+train+" n'est pas correctement sur le reseau");
+				}
+			}
 
 		}
 	}
 	
+	/**
+	 * Deplace tous les trains du reseau ( troncon par troncon )
+	 */
 	public void deplaceTousTrains(){
 		for (Train train : matRoulant) {
 			try {
@@ -136,39 +143,71 @@ public final class Reseau {
 		testCollisionQueue(train);
 	}
 	
-	private void testCollisionQueue(Train train) throws ErreurCollision {
-		/**
-		 * Cas ou la tete de "train" touche la queue d'un autre train2!=train
-		 * 
-		 * 1) Tete et queue son sur meme rail
-		 * 	a) Queue et tete ne sont pas separe par un troncon
-		 * 	b) Ils sont separe par un troncon
-		 * 2) Tete et queue sont sur des rails differentes
-		 * 	a) meme cas a) que 1)
-		 * 	b) meme cas b) que 1)
-		 */
+	/**
+	 * 
+	 * Cas ou la tete de "train" touche la queue d'un autre train2!=train
+	 * @param train
+	 * @throws ErreurCollision
+	 * @throws ErreurJonction
+	 */
+	private void testCollisionQueue(Train train) throws ErreurCollision, ErreurJonction {
 		
 		for (Train train2 : matRoulant) { 
 			PaireRailTroncon queue = train2.getQueue();
 			if(!train.equals(train2)){
 				if(train.getRail().equals(queue.getRail())){
+					/* 1) Tete et queue son sur meme rail
+					 * 	a) Queue et tete ne sont pas separe par un troncon
+					 * 	b) Ils sont separe par un troncon*/
 					if(Math.abs(train.getEtat().getTronconTete()-queue.getTroncon())<=2){
 						throw new ErreurCollision("Collision : le train : "+train+
 							"\n a rattrape le train : "+train2);
 					}
 				}else{
-					
+					/* cas 2 : rail differente */
+					if(train.railSuivanteDirection().equals(queue.getRail())){
+						if(train.getRail().getLongueur() == train.getEtat().getTronconTete() &&
+								queue.getTroncon()==0){
+							/* pas de troncon qui separe les 2 trains */
+							throw new ErreurCollision("Collision : le train : "+train+
+									"\n a rattrape le train : "+train2);
+						}else if(isTrainSepare(train, queue))
+						{
+							throw new ErreurCollision("Collision : le train : "+train+
+									"\n a rattrape le train : "+train2);
+						}
+					}
 				}
 			}
 		}	
 	}
-
+	
+	/**
+	 * @param train
+	 * @param train2
+	 * @return true/false si le train et la queue de train sont separes d'1 troncon sur des rails differentes 
+	 */
+	private boolean isTrainSepare(Train train, PaireRailTroncon paire)
+	{
+		return (train.getRail().getLongueur()-1 == train.getEtat().getTronconTete() && 
+				paire.getTroncon() == 0)||
+				(train.getRail().getLongueur() == train.getEtat().getTronconTete() && 
+				paire.getTroncon() == 1);
+	}
+	
+	/**
+	 * 
+	 * Cas ou la tete du train touche la tete d'un autre train en parametre
+	 * @param train
+	 * @throws ErreurCollision
+	 * @throws ErreurJonction
+	 */
 	private void testCollisionFace(Train train) throws ErreurCollision, ErreurJonction {
 
 		for (Train train2 : matRoulant) { 
 			if(!train.equals(train2)){
 				if(train.getRail().equals(train2.getRail())){
-					/* cas 1 : meme rail (un troncon separe les 
+					/* cas 1 : meme rail, un troncon separe les 
 					 * 2 trains ou pas de troncon separe les 2 trains*/
 					if(Math.abs(train.getEtat().getTronconTete()-train2.getEtat().getTronconTete())<=2){
 						throw new ErreurCollision("Collision de face entre le train : "+train+
@@ -191,9 +230,13 @@ public final class Reseau {
 				}
 			}
 		}		
-		
 	}
 	
+	/**
+	 * @param train
+	 * @param train2
+	 * @return true/false si les trains sont separes d'1 troncon sur des rails differentes 
+	 */
 	private boolean isTrainSepare(Train train, Train train2)
 	{
 		return (train.getRail().getLongueur()-1 == train.getEtat().getTronconTete() && 
