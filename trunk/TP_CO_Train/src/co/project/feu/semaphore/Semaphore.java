@@ -73,6 +73,9 @@ public abstract class Semaphore extends Observable {
 		throw new ErreurSemaphore("Pas d'etat suivant : votre semaphore n'a qu'un seul etat possible");
 	}
 	
+	@Override
+	public abstract Object clone() throws CloneNotSupportedException;
+	
 	/**
 	 * Passe le semaphore a l'etat d'arret
 	 */

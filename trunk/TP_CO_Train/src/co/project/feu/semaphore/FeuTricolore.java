@@ -29,5 +29,15 @@ public class FeuTricolore extends Semaphore {
 	public void setEtatNeutre() throws ErreurSemaphore {
 		setEtat(EtatVert.getInstance());
 	}
+	
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		FeuTricolore copie = new FeuTricolore(this.direction);
+		
+		copie.etatsPossibles = this.etatsPossibles.clone();
+		copie.etat = this.etat;
+		
+		return copie;
+	}
 
 }
