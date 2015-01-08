@@ -92,21 +92,48 @@ public class Train implements Observer{
 	 */
 	public void deplacer() throws ErreurJonction , ErreurCollision {
 		
-		if(rail.getSema()!=null && 
-				etat.getDirection().equals(rail.getSema().getDirection()))
+		int deplacement = 0;
+		
+		if(etat.getDirection() == Direction.DROITE)
 		{
-			setVitesseCourante(rail.getSema().getEtat().getVitesse(vCourante));
+			if(rail.getSemaDroite()!=null && etat.getDirection().equals(rail.getSemaDroite().getDirection()))
+			{
+				setVitesseCourante(rail.getSemaDroite().getEtat().getVitesse(vCourante));
+				deplacement = etat.getTronconTete();
+			}
+		}
+		else
+		{
+			if(rail.getSemaGauche()!=null && etat.getDirection().equals(rail.getSemaGauche().getDirection()))
+			{
+				setVitesseCourante(rail.getSemaGauche().getEtat().getVitesse(vCourante));
+				deplacement = rail.getLongueur()-etat.getTronconTete();
+			}
 		}
 		
-		
+		/**
+		 * On se deplace jusqu'a l'etat stop
+		 */
+		if(vCourante==0)
+		{
+			for(int i = 0; i<deplacement; i++)
+			{
+				etat.deplaceTroncontete(1);
+				try {
+					Reseau.getInstance().testCollisions(this);
+				} catch (ErreurCollision e) {
+					break;
+				}
+			}
+		}
 		/*
 		 * On se deplace seulement si on a une vitesse > 0
 		 */
-		if(vCourante>0)
+		else if(vCourante>0)
 		{
 			/**
 			 * Deplacement de troncon en troncon
-			 * on teste les collisions du train a chaque deplacement de tron�on
+			 * on teste les collisions du train a chaque deplacement de tron�on
 			 */
 			for(int i = 0; i<vCourante; i++)
 			{
@@ -129,8 +156,9 @@ public class Train implements Observer{
 				 * Puis on regarde à travers la boucle
 				 * si la rail peut supporter la tête du train
 				 */
-				
+				rail.retirerTrain(this);
 				rail = railSuivanteDirection();
+				rail.ajouterTrain(this);
 				boolean continuer = true;
 				while (continuer) {
 					/**
@@ -149,7 +177,9 @@ public class Train implements Observer{
 					 */
 					else {
 						diff -= rail.getLongueur();
+						rail.retirerTrain(this);
 						rail = railSuivanteDirection();
+						rail.ajouterTrain(this);
 					}
 				}
 
@@ -234,7 +264,7 @@ public class Train implements Observer{
 	 * @return la rail suivante de la rail courante en fonction de la direction
 	 * @throws ErreurJonction
 	 */
-	private Rail railPrecedenteDirection(Rail railParam) throws ErreurJonction
+	public Rail railPrecedenteDirection(Rail railParam) throws ErreurJonction
 	{
 		if(etat.getDirection().equals(Direction.GAUCHE))
 			return railParam.getJonctionDroite().getRailSuivant(railParam);
