@@ -2,9 +2,11 @@ package co.project.train;
 
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Queue;
 
 import co.project.exception.ErreurCollision;
 import co.project.exception.ErreurJonction;
+import co.project.exception.ErreurTrain;
 import co.project.feu.etat.coeff.stop.EtatStop;
 import co.project.infrastructure.Reseau;
 import co.project.infrastructure.rail.Rail;
@@ -81,7 +83,9 @@ public class Train implements Observer{
 	@Override
 	public String toString() {
 		return "\nTrain [ id : " + idTrain + ", taille : " + taille
-				+ "\n\tRail : "+rail + " Etat = "+etat
+				+ "\n\tRail : "+rail
+				+ " \n\tEtat = "+etat
+				+ "\n\tVitesse courante : " + vCourante + " tr/t"
 				+ "\n\tVitesse maximale : " + vMax + " tr/t ] ";
 	}
 
@@ -167,7 +171,10 @@ public class Train implements Observer{
 					 * Puis on s'arrête
 					 */
 					if (rail.getLongueur() > diff) {
-						etat.setTronconTete(diff);
+						if(etat.getDirection().equals(Direction.DROITE))
+							etat.setTronconTete(diff);
+						else
+							etat.setTronconTete(diff);
 						continuer = false;
 					}
 					/**
@@ -214,7 +221,7 @@ public class Train implements Observer{
 					precedente = railPrecedenteDirection(rail);
 				else
 					precedente = railPrecedenteDirection(precedente);
-				
+				System.out.println("precendente.getLongueur() = "+precedente.getLongueur());
 				/**
 				 * On dispose de 2 cas
 				 * 1) (if) la rail n'a pas la taille suffisante pour 
@@ -233,16 +240,21 @@ public class Train implements Observer{
 			}
 		}
 		
+		System.out.println("troncon = "+troncon + " precedente = "+precedente);
 		if(precedente==null)
 			return new PaireRailTroncon(rail, troncon);
 		/**
 		 * Pour recuperer la position exacte du troncon ou se trouve la queue
 		 * On retourne la taille de la rail - le nombre de troncon nous restant
 		 */
+		int tmp = precedente.getLongueur()-troncon;
+		System.out.println("tmp = "+tmp);
 		if(troncon==0)
 			return new PaireRailTroncon(precedente, troncon);
-		else
-			return new PaireRailTroncon(precedente, precedente.getLongueur()-troncon);
+		else if(troncon>0)
+			return new PaireRailTroncon(precedente, precedente.getLongueur()-troncon-1);
+		else 
+			return new PaireRailTroncon(precedente, precedente.getLongueur()-1);
 	}
 	
 	/**
@@ -307,5 +319,33 @@ public class Train implements Observer{
 		} catch (ClassCastException e) {
 			return false;
 		}
+	}
+
+	public void inverseDirection() throws ErreurTrain{
+		if(vCourante>0)
+			throw new ErreurTrain("Impossible d'inverse la direction d'un train en mouvement");
+		
+		boolean exceptionButee = false;
+		try {
+			railSuivanteDirection();
+		} catch (ErreurJonction e) {
+			exceptionButee = true;
+		}
+		
+		if(!exceptionButee)
+			throw new ErreurTrain("Impossible de changer la direction de train car il n'est pas en fin de butee");
+		
+		
+		
+		PaireRailTroncon queue = getQueue();
+		System.out.println("Paire queue "+queue);
+		
+		rail = queue.getRail();
+		
+		if(etat.getDirection().equals(Direction.DROITE))
+			etat.setDirection(Direction.GAUCHE);
+		else
+			etat.setDirection(Direction.DROITE);
+		etat.setTronconTete(queue.getTroncon());
 	}
 }
