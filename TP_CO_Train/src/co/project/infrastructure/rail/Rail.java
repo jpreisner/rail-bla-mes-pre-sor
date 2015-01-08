@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import co.project.capteur.Capteur;
-import co.project.exception.ErreurCollision;
 import co.project.exception.ErreurConstruction;
 import co.project.feu.semaphore.Semaphore;
 import co.project.infrastructure.Infrastructure;
@@ -15,7 +14,7 @@ public class Rail extends Infrastructure {
 	/* 2 jonctions aux extremitees du rail */
 	private Jonction gauche;
 	private Jonction droite;
-	private Semaphore sema;
+	private Semaphore semaDroite,semaGauche;
 
 	/* nb de troncons/capteur */
 	private HashMap<Integer, Capteur> capteurTroncon;
@@ -61,12 +60,25 @@ public class Rail extends Infrastructure {
 		return capteurTroncon;
 	}
 
-	public Semaphore getSema() {
-		return sema;
+	public void setCapteurTroncon(HashMap<Integer, Capteur> capteurNumeroTroncon) {
+		this.capteurTroncon = capteurNumeroTroncon;
+	}
+	
+
+	public Semaphore getSemaDroite() {
+		return semaDroite;
 	}
 
-	public void setSema(Semaphore sema) {
-		this.sema = sema;
+	public void setSemaDroite(Semaphore sema) {
+		this.semaDroite = sema;
+	}
+	
+	public Semaphore getSemaGauche() {
+		return semaGauche;
+	}
+
+	public void setSemaGauche(Semaphore sema) {
+		this.semaGauche = sema;
 	}
 
 	
