@@ -30,7 +30,7 @@ public class Aiguillage extends Jonction {
 		initialiserFeux();
 	}
 
-	public ArrayList<Rail> getrails() {
+	public ArrayList<Rail> getRails() {
 		return rails;
 	}
 
@@ -51,7 +51,7 @@ public class Aiguillage extends Jonction {
 	 * @param r1
 	 * @throws ErreurAiguillage
 	 */
-	public void setRailConnecte1(Rail r1) throws ErreurAiguillage {
+	private void setRailConnecte1(Rail r1) throws ErreurAiguillage {
 		if (trainPassant()) {
 			throw new ErreurAiguillage("changement d'aiguillage impossible sur le rail : " + r1);
 		} else {
@@ -64,7 +64,7 @@ public class Aiguillage extends Jonction {
 	 * @param r2
 	 * @throws ErreurAiguillage
 	 */
-	public void setRailConnecte2(Rail r2) throws ErreurAiguillage {
+	private void setRailConnecte2(Rail r2) throws ErreurAiguillage {
 		if (trainPassant()) {
 			throw new ErreurAiguillage("changement d'aiguillage impossible sur le rail : " + r2);
 		} else {
@@ -123,15 +123,28 @@ public class Aiguillage extends Jonction {
 	private void initialiserFeux() {
 		/* railconnecte1 au vert */
 		try {
-			if(railConnecte1.getSema()!=null && railConnecte2.getSema()!=null)
+			
+			if(getRailConnecte1().getJonctionDroite().equals(this))
+				getRailConnecte1().getSemaDroite().setEtat(EtatVert.getInstance());
+			else
+				getRailConnecte1().getSemaGauche().setEtat(EtatVert.getInstance());
+			
+			if(getRailConnecte2().getJonctionDroite().equals(this))
+				getRailConnecte2().getSemaDroite().setEtat(EtatVert.getInstance());
+			else
+				getRailConnecte2().getSemaGauche().setEtat(EtatVert.getInstance());
+			
+			for(Rail rail : rails)
 			{
-				railConnecte1.getSema().setEtat(EtatVert.getInstance());
-				railConnecte2.getSema().setEtat(EtatVert.getInstance());
-				
-				/* autres rails au rouge */
-				for (Rail rail : rails) {
-					if (!rail.equals(railConnecte1)) {
-						rail.getSema().setEtat(EtatRouge.getInstance());
+				if(!rail.equals(railConnecte1) && !rail.equals(railConnecte2))
+				{
+					if(rail.getJonctionDroite().equals(this))
+					{
+						rail.getSemaDroite().setEtat(EtatRouge.getInstance());
+					}
+					else if(rail.getJonctionGauche().equals(this))
+					{
+						rail.getSemaGauche().setEtat(EtatRouge.getInstance());
 					}
 				}
 			}
