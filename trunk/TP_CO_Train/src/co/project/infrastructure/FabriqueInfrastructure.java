@@ -25,11 +25,12 @@ public class FabriqueInfrastructure {
 	 * avec un semaphore tous les n rails
 	 * @param nbRails
 	 * @param tRails
-	 * @param intSema
+	 * @param intSema ???
 	 * @param elem
 	 * @return
+	 * @throws CloneNotSupportedException 
 	 */
-	public static ArrayList<Infrastructure> creeSegment(int nbRails, int tRails, int intSema, ElemRegulation elem)
+	public static ArrayList<Infrastructure> creeSegment(int nbRails, int tRails, int intSema, ElemRegulation elem, Semaphore s1, Semaphore s2) throws CloneNotSupportedException
 	{
 		ArrayList<Infrastructure> alInfra = new ArrayList<Infrastructure>();
 		ArrayList<Rail> alRail = new ArrayList<Rail>();
@@ -39,28 +40,51 @@ public class FabriqueInfrastructure {
 		try{
 			for(int i=0;i<nbRails;i++){
 				Rail rail = new Rail(tRails);
-				Semaphore sema = new FeuTricolore(Direction.DROITE);
-				alSema.add(sema);
-				rail.setSema(sema );
+				//Semaphore sema = new FeuTricolore(Direction.DROITE);
+				
 				alRail.add(rail);
-				if(i%intSema == 0){
-					Capteur capt = new CapteurPresence(rail, tRails/2);
-					alCapteur.add(capt);
-					/* ajout du capteur au milieu du rail*/
-					rail.addCapteurTroncon(tRails/2, capt );
-				}
-			}		
 
+			}
+			
+			/**
+			 * Creation des capteurs
+			 * Ils sont associe automatiquement a la rail auxquels ils sont attaches
+			 */
+			CapteurPresence c1 = new CapteurPresence(alRail.get(0), 0);
+			CapteurPresence c2 = new CapteurPresence(alRail.get(alRail.size()-1), alRail.get(alRail.size()-1).getLongueur()-1);
+		
+			
+			alCapteur.add(c1);
+			alCapteur.add(c2);
+
+			Semaphore s1copie = (Semaphore)s1.clone();
+			Semaphore s2copie = (Semaphore)s2.clone();
+			
+			alRail.get(0).setSemaDroite(s1copie);
+			
+			alRail.get(alRail.size()-1).setSemaGauche(s2copie);
+			
+			alSema.add(s1copie);
+			alSema.add(s2copie);
+			
 			for(int i=0;i<nbRails-1;i++){
 				alJonctionSimple.add(new JonctionSimple(alRail.get(i),alRail.get(i+1)));
 			}
+			
+			
 		}catch(ErreurConstruction ec){
 			System.out.println("Erreur dans la fabrication d'un segment simple"+ec);
 		}
 		elem.ajoutListCapteur(alCapteur);
 		elem.ajoutListSemaphores(alSema);
-		alInfra.addAll(alRail);
-		alInfra.addAll(alJonctionSimple);
+		
+		for(int i = 0; i<alRail.size()-1;i++)
+		{
+			alInfra.add(alRail.get(i));
+			alInfra.add(alJonctionSimple.get(i));
+		}
+		alInfra.add(alRail.get(alRail.size()-1));
+		
 		return alInfra;
 	}
 	
@@ -93,21 +117,21 @@ public class FabriqueInfrastructure {
 		return creeAiguillageN(4, tailleRail, sema);
 	}
 	
-	private static void attributionSemaphore(Aiguillage aiguillage, Semaphore sema)
+	private static void attributionSemaphore(Aiguillage aiguillage, Semaphore sema) throws CloneNotSupportedException
 	{
 		int i = 0;
 		
 		while(i<aiguillage.getRails().size()/2)
 		{
 			aiguillage.getRails().get(i).setJonctionDroite(aiguillage);
-			aiguillage.getRails().get(i).setSemaDroite(sema);
+			aiguillage.getRails().get(i).setSemaDroite((Semaphore) sema.clone());
 			i++;
 		}
 		
 		while(i<aiguillage.getRails().size())
 		{
 			aiguillage.getRails().get(i).setJonctionGauche(aiguillage);
-			aiguillage.getRails().get(i).setSemaGauche(sema);
+			aiguillage.getRails().get(i).setSemaGauche((Semaphore) sema.clone());
 			i++;
 		}
 		
@@ -130,40 +154,18 @@ public class FabriqueInfrastructure {
 			throw new ErreurConstruction("La creation d'un aiguillage necessite d'avoir au moins 3 rails");
 		
 		ArrayList<Rail> listRails = new ArrayList<Rail>();
-		Semaphore tmp = (Semaphore)sema.clone();
+		
 		
 		for(int i = 0; i<n; i++)
 		{
 			Rail r = new Rail(tailleRail);
-			
-			try {
-				sema.setEtat(EtatRouge.getInstance());
-			} catch (ErreurSemaphore e) {
-				System.err.println("Erreur dans la creation de semaphore dans la fabrique : l'aiguillage en X");
-			}
 			listRails.add(r);
 		}
 		
 		Aiguillage a = new Aiguillage(listRails);
 		attributionSemaphore(a,sema);
 		
-		/**
-		 * Passage de l'etat rouge au vert seulement pour les rails connectees
-		 */
-		try {
-			if(a.getRailConnecte1().getJonctionDroite().equals(a))
-				a.getRailConnecte1().getSemaDroite().changeEtat();
-			else
-				a.getRailConnecte1().getSemaGauche().changeEtat();
-			
-			if(a.getRailConnecte2().getJonctionDroite().equals(a))
-				a.getRailConnecte2().getSemaDroite().changeEtat();
-			else
-				a.getRailConnecte2().getSemaGauche().changeEtat();
-			
-		} catch (ErreurSemaphore e) {
-			System.err.println("Erreur dans la changement d'etat de la semaphore dans la fabrique : l'aiguillage en X");
-		}
+		a.initialiserFeux();
 		
 		return a;
 	}

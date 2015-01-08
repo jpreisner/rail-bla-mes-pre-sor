@@ -9,6 +9,7 @@ import co.project.exception.ErreurJonction;
 import co.project.exception.ErreurSemaphore;
 import co.project.feu.etat.coeff.neutre.EtatVert;
 import co.project.feu.etat.coeff.stop.EtatRouge;
+import co.project.feu.semaphore.Semaphore;
 import co.project.infrastructure.rail.Rail;
 import co.project.train.Train;
 
@@ -82,8 +83,62 @@ public class Aiguillage extends Jonction {
 	 */
 	public boolean trainPassant() {
 		for (Train train : railConnecte1.getTrains()) {
-			if(railConnecte2.getTrains().contains(train)){
+			if(railConnecteEstOccupee(train, railConnecte2))
+			{
 				return true;
+			}
+		}
+		
+		for (Train train : railConnecte2.getTrains()) {
+			if(railConnecteEstOccupee(train, railConnecte1))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	public boolean railConnecteEstOccupee(Train t, Rail r)
+	{
+		/**
+		 * A l'initialisation le nombre de troncon nous restant
+		 * a parcourir est taille du train - la position du troncon courant
+		 */
+		int troncon = t.getTaille() - t.getEtat().getTronconTete();
+		Rail precedente = null;
+		boolean continuer = true;
+		/**
+		 * On parcours tant que notre nombre de troncon est positif 
+		 * Et qu'il faut continuer a parcourir les rail
+		 */
+		while(troncon>0 && continuer) {
+			try {
+				/**
+				 * On recupere la rail precedente
+				 */
+				if(precedente==null)
+					precedente = t.railPrecedenteDirection(t.getRail());
+				else
+					precedente = t.railPrecedenteDirection(precedente);
+				
+				/**
+				 * On dispose de 2 cas
+				 * 1) (if) la rail n'a pas la taille suffisante pour 
+				 * stocker un nombre de troncon : troncon 
+				 * Auquel cas on decremente troncon de la taille de la rail
+				 * 
+				 * 2) (else) notre rail peut contenir un nombre de troncon : troncon
+				 * Auquel cas on s'arrete
+				 */
+				
+				if(precedente.equals(r))
+				{
+					return true;
+				}
+				
+			} catch (ErreurJonction e) {
+				return false;
 			}
 		}
 		return false;
@@ -120,31 +175,47 @@ public class Aiguillage extends Jonction {
 	 * Cette methode permet de mettre tous les feux des rails de l'aiguillage a
 	 * rouge , sauf le railconnecte1 a vert .
 	 */
-	private void initialiserFeux() {
+	public void initialiserFeux() {
 		/* railconnecte1 au vert */
 		try {
 			
-			if(getRailConnecte1().getJonctionDroite().equals(this))
-				getRailConnecte1().getSemaDroite().setEtat(EtatVert.getInstance());
-			else
-				getRailConnecte1().getSemaGauche().setEtat(EtatVert.getInstance());
+			Semaphore semaRail1 = railConnecte1.getSemaDroite();
+			if(semaRail1!=null)
+			{
+				if(semaRail1.getEtatNeutre()!=null)
+				{
+					if(getRailConnecte1().getJonctionDroite().equals(this))
+						getRailConnecte1().getSemaDroite().setEtatNeutre();
+					else
+						getRailConnecte1().getSemaGauche().setEtatNeutre();
+				}
+			}
 			
-			if(getRailConnecte2().getJonctionDroite().equals(this))
-				getRailConnecte2().getSemaDroite().setEtat(EtatVert.getInstance());
-			else
-				getRailConnecte2().getSemaGauche().setEtat(EtatVert.getInstance());
+			Semaphore semaRail2 = railConnecte2.getSemaGauche();
+			if(semaRail2!=null)
+			{
+				if(semaRail2.getEtatNeutre()!=null)
+				{
+					if(getRailConnecte2().getJonctionDroite().equals(this))
+						getRailConnecte2().getSemaDroite().setEtatNeutre();
+					else
+						getRailConnecte2().getSemaGauche().setEtatNeutre();
+				}
+			}
+			
+			
 			
 			for(Rail rail : rails)
 			{
 				if(!rail.equals(railConnecte1) && !rail.equals(railConnecte2))
 				{
-					if(rail.getJonctionDroite().equals(this))
+					if(rail.getJonctionDroite().equals(this) && rail.getSemaDroite()!=null && rail.getSemaDroite().getEtatStop()!=null)
 					{
-						rail.getSemaDroite().setEtat(EtatRouge.getInstance());
+						rail.getSemaDroite().setEtatStop();
 					}
-					else if(rail.getJonctionGauche().equals(this))
+					else if(rail.getJonctionGauche().equals(this) && rail.getSemaGauche()!=null && rail.getSemaGauche().getEtatStop()!=null)
 					{
-						rail.getSemaGauche().setEtat(EtatRouge.getInstance());
+						rail.getSemaGauche().setEtatStop();;
 					}
 				}
 			}
@@ -172,6 +243,8 @@ public class Aiguillage extends Jonction {
 			setRailConnecte1(r1);
 			setRailConnecte2(r2);
 		}
+		
+		this.initialiserFeux();
 	}
 
 	@Override

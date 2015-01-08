@@ -1,11 +1,16 @@
 package co.project.infrastructure;
 
 import java.util.ArrayList;
+import java.util.Map.Entry;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import co.project.ElemRegulation;
+import co.project.capteur.Capteur;
 import co.project.exception.ErreurCollision;
 import co.project.exception.ErreurConstruction;
 import co.project.exception.ErreurJonction;
+import co.project.infrastructure.rail.Rail;
 import co.project.train.PaireRailTroncon;
 import co.project.train.Train;
 
@@ -16,6 +21,8 @@ public final class Reseau {
 	private ArrayList<ElemRegulation> regulations;
 	private ArrayList<Infrastructure> reseauInfra;
 	private ArrayList<Train> matRoulant;
+	private Timer timer;
+	private ExecutionReseau execution;
 
 	/**
 	 * Constructeur prive
@@ -68,9 +75,20 @@ public final class Reseau {
 		reseauInfra.addAll(alInfra);
 	}
 	
-	public void startTimer(){
+	public void start(){
+		
+		timer = new Timer();
+		execution = new ExecutionReseau();
+		timer.schedule(execution, 0, 1000);
+
+	}
+	
+	public void stop(){
+		
 		
 	}
+	
+	
 	/**
 	 * Mettre les trains au bon endroit sur les rails
 	 */
@@ -170,22 +188,42 @@ public final class Reseau {
 					/* 1) Tete et queue son sur meme rail
 					 * 	a) Queue et tete ne sont pas separe par un troncon
 					 * 	b) Ils sont separe par un troncon*/
-					if(Math.abs(train.getEtat().getTronconTete()-queue.getTroncon())<=2){
+					//Train derriere Train2
+					if(train.getEtat().getTronconTete() < queue.getTroncon())
+					{
+						if(train.getVitesseCourante()>train2.getVitesseCourante())
+							throw new ErreurCollision("Collision : le train : "+train+
+									"\n a rattrape le train : "+train2);
+					}
+					else if(train.getQueue().getTroncon() < train2.getEtat().getTronconTete())
+					{
+						if(train.getVitesseCourante()<train2.getVitesseCourante())
+							throw new ErreurCollision("Collision : le train : "+train2+
+									"\n a rattrape le train : "+train);
+					}
+					
+					
+					/*if(Math.abs(train.getEtat().getTronconTete()-queue.getTroncon())<=2){
 						throw new ErreurCollision("Collision : le train : "+train+
 							"\n a rattrape le train : "+train2);
-					}
+					}*/
 				}else{
 					/* cas 2 : rail differente */
 					if(train.railSuivanteDirection().equals(queue.getRail())){
-						if(train.getRail().getLongueur() == train.getEtat().getTronconTete() &&
+						//train est colle a l'extremite de sa rail et train2 a l'extremite aussi (en troncon 0 par contre)
+						if(train.getRail().getLongueur()-1 == train.getEtat().getTronconTete() &&
 								queue.getTroncon()==0){
 							/* pas de troncon qui separe les 2 trains */
-							throw new ErreurCollision("Collision : le train : "+train+
-									"\n a rattrape le train : "+train2);
-						}else if(isTrainSepare(train, queue))
+							if(train.getVitesseCourante()>train2.getVitesseCourante())
+								throw new ErreurCollision("Collision : le train : "+train+
+										"\n a rattrape le train : "+train2);
+						}
+						//train separe d'une rail de queue du train2
+						else if(isTrainSepare(train, queue))
 						{
-							throw new ErreurCollision("Collision : le train : "+train+
-									"\n a rattrape le train : "+train2);
+							if(train.getVitesseCourante()>train2.getVitesseCourante())
+								throw new ErreurCollision("Collision : le train : "+train+
+										"\n a rattrape le train : "+train2);
 						}
 					}
 				}
@@ -200,9 +238,9 @@ public final class Reseau {
 	 */
 	private boolean isTrainSepare(Train train, PaireRailTroncon paire)
 	{
-		return (train.getRail().getLongueur()-1 == train.getEtat().getTronconTete() && 
+		return (train.getRail().getLongueur()-2 == train.getEtat().getTronconTete() && 
 				paire.getTroncon() == 0)||
-				(train.getRail().getLongueur() == train.getEtat().getTronconTete() && 
+				(train.getRail().getLongueur()-1 == train.getEtat().getTronconTete() && 
 				paire.getTroncon() == 1);
 	}
 	
@@ -227,7 +265,7 @@ public final class Reseau {
 				}else{
 					/* cas 2 : rail differente */
 					if(train.railSuivanteDirection().equals(train2.getRail())){
-						if(train.getRail().getLongueur() == train.getEtat().getTronconTete() &&
+						if(train.getRail().getLongueur()-1 == train.getEtat().getTronconTete() &&
 								train2.getEtat().getTronconTete()==0){
 							/* pas de troncon qui separe les 2 trains */
 							throw new ErreurCollision("Collision de face entre le train : "+train+
@@ -250,7 +288,7 @@ public final class Reseau {
 	 */
 	private boolean isTrainSepare(Train train, Train train2)
 	{
-		return (train.getRail().getLongueur()-1 == train.getEtat().getTronconTete() && 
+		return (train.getRail().getLongueur()-2 == train.getEtat().getTronconTete() && 
 				train2.getEtat().getTronconTete()==0);
 	}
 
@@ -267,6 +305,47 @@ public final class Reseau {
 		}
 		
 		return result;
+	}
+	
+	class ExecutionReseau extends TimerTask
+	{
+
+		@Override
+		public void run() {
+			
+			System.out.println("Unite de temps : \n");
+			for(Infrastructure r : Reseau.getInstance().getReseauInfra())
+			{
+				try {
+					
+					Rail rail = (Rail)r;
+					for(Entry<Capteur,Integer> entry : rail.getCapteurTroncon().entrySet())
+					{
+						Capteur key = entry.getKey();
+						key.notifieTrainPassant();
+					}
+					
+				} catch (ClassCastException e) {
+					
+				}
+			}
+			
+			for(Train train : Reseau.getInstance().getMatRoulant())
+			{
+				try {
+					train.deplacer();
+				} catch (ErreurCollision e) {
+					System.err.println("Erreur Collision : ");
+					e.printStackTrace();
+				} catch (ErreurJonction e) {
+					System.err.println("Erreur Jonction : ");
+					e.printStackTrace();
+				}
+			}
+			
+			System.out.println(Reseau.getInstance()+"\n-----------\n\n");
+		}
+		
 	}
 
 }

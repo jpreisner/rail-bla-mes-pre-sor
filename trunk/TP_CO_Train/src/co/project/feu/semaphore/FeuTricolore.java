@@ -40,4 +40,14 @@ public class FeuTricolore extends Semaphore {
 		return copie;
 	}
 
+	@Override
+	public EtatSemaphore getEtatNeutre() {
+		return etatsPossibles[0];
+	}
+
+	@Override
+	public EtatSemaphore getEtatStop() {
+		return etatsPossibles[2];
+	}
+
 }
