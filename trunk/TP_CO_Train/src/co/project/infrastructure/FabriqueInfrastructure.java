@@ -6,6 +6,9 @@ import co.project.ElemRegulation;
 import co.project.capteur.Capteur;
 import co.project.capteur.CapteurPresence;
 import co.project.exception.ErreurConstruction;
+import co.project.exception.ErreurSemaphore;
+import co.project.feu.etat.coeff.stop.EtatRouge;
+import co.project.feu.etat.coeff.stop.EtatStop;
 import co.project.feu.semaphore.FeuTricolore;
 import co.project.feu.semaphore.Semaphore;
 import co.project.infrastructure.jonction.Aiguillage;
@@ -64,17 +67,19 @@ public class FabriqueInfrastructure {
 	/**
 	 * @return Aiguillage en X, avec 4 rails connectes, mais sans rails amont ni aval
 	 * @throws ErreurConstruction 
+	 * @throws CloneNotSupportedException 
 	 */
-	public static Aiguillage creeAiguillageX() throws ErreurConstruction {
-		return creeAiguillageX(TAILLE_RAIL_DEFAUT);
+	public static Aiguillage creeAiguillageX(Semaphore sema) throws ErreurConstruction, CloneNotSupportedException {
+		return creeAiguillageX(TAILLE_RAIL_DEFAUT,sema);
 	}
 
 	/**
 	 * @return Aiguillage en Y, avec 3 rails connectes, mais sans rails amont ni aval
 	 * @throws ErreurConstruction 
+	 * @throws CloneNotSupportedException 
 	 */
-	public static Aiguillage creeAiguillageY() throws ErreurConstruction {
-		return creeAiguillageY(TAILLE_RAIL_DEFAUT);
+	public static Aiguillage creeAiguillageY(Semaphore sema) throws ErreurConstruction, CloneNotSupportedException {
+		return creeAiguillageY(TAILLE_RAIL_DEFAUT,sema);
 	}
 
 	/**
@@ -82,14 +87,30 @@ public class FabriqueInfrastructure {
 	 * @param tailleRail : la taille de chaque rail autour
 	 * @return Aiguillage en X, avec 4 rails connectes, mais sans rails amont ni aval
 	 * @throws ErreurConstruction
+	 * @throws CloneNotSupportedException 
 	 */
-	public static Aiguillage creeAiguillageX(int tailleRail) throws ErreurConstruction {
-		ArrayList<Rail> listRails = new ArrayList<Rail>();
-		listRails.add(new Rail(tailleRail));
-		listRails.add(new Rail(tailleRail));
-		listRails.add(new Rail(tailleRail));
-		listRails.add(new Rail(tailleRail));
-		return new Aiguillage(listRails);
+	public static Aiguillage creeAiguillageX(int tailleRail, Semaphore sema) throws ErreurConstruction, CloneNotSupportedException {
+		return creeAiguillageN(4, tailleRail, sema);
+	}
+	
+	private static void attributionSemaphore(Aiguillage aiguillage, Semaphore sema)
+	{
+		int i = 0;
+		
+		while(i<aiguillage.getRails().size()/2)
+		{
+			aiguillage.getRails().get(i).setJonctionDroite(aiguillage);
+			aiguillage.getRails().get(i).setSemaDroite(sema);
+			i++;
+		}
+		
+		while(i<aiguillage.getRails().size())
+		{
+			aiguillage.getRails().get(i).setJonctionGauche(aiguillage);
+			aiguillage.getRails().get(i).setSemaGauche(sema);
+			i++;
+		}
+		
 	}
 
 	/**
@@ -97,13 +118,54 @@ public class FabriqueInfrastructure {
 	 * @param tailleRail : la taille de chaque rail autour
 	 * @return Aiguillage en Y, avec 3 rails connectes, mais sans rails amont ni aval
 	 * @throws ErreurConstruction
+	 * @throws CloneNotSupportedException 
 	 */
-	public static Aiguillage creeAiguillageY(int tailleRail) throws ErreurConstruction {
+	public static Aiguillage creeAiguillageY(int tailleRail,Semaphore sema) throws ErreurConstruction, CloneNotSupportedException {
+		return creeAiguillageN(3, tailleRail, sema);
+	}
+	
+	public static Aiguillage creeAiguillageN(int n,int tailleRail, Semaphore sema) throws CloneNotSupportedException, ErreurConstruction
+	{
+		if(n<2)
+			throw new ErreurConstruction("La creation d'un aiguillage necessite d'avoir au moins 3 rails");
+		
 		ArrayList<Rail> listRails = new ArrayList<Rail>();
-		listRails.add(new Rail(tailleRail));
-		listRails.add(new Rail(tailleRail));
-		listRails.add(new Rail(tailleRail));
-		return new Aiguillage(listRails);
+		Semaphore tmp = (Semaphore)sema.clone();
+		
+		for(int i = 0; i<n; i++)
+		{
+			Rail r = new Rail(tailleRail);
+			
+			try {
+				sema.setEtat(EtatRouge.getInstance());
+			} catch (ErreurSemaphore e) {
+				System.err.println("Erreur dans la creation de semaphore dans la fabrique : l'aiguillage en X");
+			}
+			listRails.add(r);
+		}
+		
+		Aiguillage a = new Aiguillage(listRails);
+		attributionSemaphore(a,sema);
+		
+		/**
+		 * Passage de l'etat rouge au vert seulement pour les rails connectees
+		 */
+		try {
+			if(a.getRailConnecte1().getJonctionDroite().equals(a))
+				a.getRailConnecte1().getSemaDroite().changeEtat();
+			else
+				a.getRailConnecte1().getSemaGauche().changeEtat();
+			
+			if(a.getRailConnecte2().getJonctionDroite().equals(a))
+				a.getRailConnecte2().getSemaDroite().changeEtat();
+			else
+				a.getRailConnecte2().getSemaGauche().changeEtat();
+			
+		} catch (ErreurSemaphore e) {
+			System.err.println("Erreur dans la changement d'etat de la semaphore dans la fabrique : l'aiguillage en X");
+		}
+		
+		return a;
 	}
 	
 }
