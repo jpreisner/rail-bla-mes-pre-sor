@@ -10,7 +10,9 @@ import co.project.capteur.Capteur;
 import co.project.exception.ErreurCollision;
 import co.project.exception.ErreurConstruction;
 import co.project.exception.ErreurJonction;
+import co.project.exception.ErreurTrain;
 import co.project.infrastructure.rail.Rail;
+import co.project.train.Direction;
 import co.project.train.PaireRailTroncon;
 import co.project.train.Train;
 
@@ -79,6 +81,7 @@ public final class Reseau {
 		
 		timer = new Timer();
 		execution = new ExecutionReseau();
+		//2 eme parametre en ms
 		timer.schedule(execution, 0, 1000);
 
 	}
@@ -338,8 +341,14 @@ public final class Reseau {
 					System.err.println("Erreur Collision : ");
 					e.printStackTrace();
 				} catch (ErreurJonction e) {
-					System.err.println("Erreur Jonction : ");
-					e.printStackTrace();
+					train.stop();
+					try {
+						train.inverseDirection();
+					} catch (ErreurTrain e1) {
+						e1.printStackTrace();
+					}
+					train.start();
+					System.out.println("Le train est arrive en fin de butee");
 				}
 			}
 			
