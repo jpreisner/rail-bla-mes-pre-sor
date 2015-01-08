@@ -16,10 +16,14 @@ import co.project.train.Direction;
 public class FabriqueInfrastructure {
 
 	private static int TAILLE_RAIL_DEFAUT = 10;
+
 	/**
 	 * Creer une ligne de rails connectee par des jonctions simples, sans butee aux extremitees
 	 * avec un semaphore tous les n rails
-	 * @param nb
+	 * @param nbRails
+	 * @param tRails
+	 * @param intSema
+	 * @param elem
 	 * @return
 	 */
 	public static ArrayList<Infrastructure> creeSegment(int nbRails, int tRails, int intSema, ElemRegulation elem)
