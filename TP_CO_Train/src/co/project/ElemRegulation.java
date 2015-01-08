@@ -7,6 +7,7 @@ import java.util.Observer;
 import co.project.capteur.Capteur;
 import co.project.exception.ErreurAiguillage;
 import co.project.exception.ErreurSemaphore;
+import co.project.feu.semaphore.Semaphore;
 import co.project.infrastructure.jonction.Aiguillage;
 import co.project.infrastructure.rail.Rail;
 
@@ -14,14 +15,32 @@ public class ElemRegulation implements Observer {
 
 	private ArrayList<Aiguillage> listAiguillage;
 	private ArrayList<Capteur> listCapteur;
+	private ArrayList<Semaphore> listSemaphores;
 
+	/**
+	 * Element de regulation d'un aiguillage
+	 * @param aiguillage
+	 */
 	public ElemRegulation(Aiguillage aiguillage) {
 		this.listAiguillage =new ArrayList<Aiguillage>() ;
 		this.listCapteur = new ArrayList<Capteur>();
+		this.listSemaphores = new ArrayList<Semaphore>();
+	}
+	
+	/**
+	 * Element de regulation d'une ligne droite
+	 */
+	public ElemRegulation() {
+		this.listCapteur = new ArrayList<Capteur>();
+		this.listSemaphores = new ArrayList<Semaphore>();
 	}
 
 	public ArrayList<Capteur> getListCapteurs() {
 		return listCapteur;
+	}	
+	
+	public ArrayList<Semaphore> getListSemaphores() {
+		return listSemaphores;
 	}
 
 
@@ -38,6 +57,12 @@ public class ElemRegulation implements Observer {
 	public void ajoutListCapteur(ArrayList<Capteur> cap)
 	{
 		listCapteur.addAll(cap);
+		ajoutObserver();
+	}
+	
+	public void ajoutListSemaphores(ArrayList<Semaphore> sem)
+	{
+		listSemaphores.addAll(sem);
 		ajoutObserver();
 	}
 	
