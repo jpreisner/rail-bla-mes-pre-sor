@@ -29,4 +29,16 @@ public class FeuBicolore extends Semaphore {
 		setEtat(EtatVert.getInstance());
 	}
 
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		FeuBicolore copie = new FeuBicolore(this.direction);
+		
+		copie.etatsPossibles = this.etatsPossibles.clone();
+		copie.etat = this.etat;
+		
+		return copie;
+	}
+	
+	
+
 }
