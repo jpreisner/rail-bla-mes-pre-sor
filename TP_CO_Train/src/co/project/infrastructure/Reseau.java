@@ -25,6 +25,7 @@ public final class Reseau {
 	private ArrayList<Train> matRoulant;
 	private Timer timer;
 	private ExecutionReseau execution;
+	public static int intervalle = 1000;
 
 	/**
 	 * Constructeur prive
@@ -79,15 +80,18 @@ public final class Reseau {
 	
 	public void start(){
 		
+		System.out.println("Etat du reseau avant demarrage" + Reseau.getInstance());
+		
 		timer = new Timer();
 		execution = new ExecutionReseau();
 		//2 eme parametre en ms
-		timer.schedule(execution, 0, 1000);
-
+		timer.schedule(execution, 0, intervalle);
+		
 	}
 	
 	public void stop(){
 		
+		timer.cancel();
 		
 	}
 	
@@ -335,21 +339,12 @@ public final class Reseau {
 			
 			for(Train train : Reseau.getInstance().getMatRoulant())
 			{
-				try {
-					train.deplacer();
-				} catch (ErreurCollision e) {
-					System.err.println("Erreur Collision : ");
-					e.printStackTrace();
-				} catch (ErreurJonction e) {
-					train.stop();
-					try {
-						train.inverseDirection();
-					} catch (ErreurTrain e1) {
-						e1.printStackTrace();
+
+					if(train.getTime()==null)
+					{
+						train.start();
 					}
-					train.start();
-					System.out.println("Le train est arrive en fin de butee");
-				}
+			
 			}
 			
 			System.out.println(Reseau.getInstance()+"\n-----------\n\n");

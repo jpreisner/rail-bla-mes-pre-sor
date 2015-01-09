@@ -3,6 +3,8 @@ package co.project.train;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Queue;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import co.project.exception.ErreurCollision;
 import co.project.exception.ErreurJonction;
@@ -25,6 +27,10 @@ public class Train implements Observer{
 	/* private EtatCourant etatTrain; */
 	private Rail rail;
 	private Etat etat;
+	
+	//Timer
+	AutonomeTrain execution;
+	Timer time;
 
 	/* position de la tete sur les troncons */
 	public Train(int taille, int vMax, Rail rail, Direction direction) {
@@ -32,7 +38,7 @@ public class Train implements Observer{
 		this.taille = taille;
 		this.vMax = vMax;
 		this.vCourante = vMax;
-		this.etat = new Etat(direction);
+		this.etat = new Etat(direction,rail.getLongueur()-1);
 		this.rail = rail;
 		id++;
 	}
@@ -145,7 +151,7 @@ public class Train implements Observer{
 			for(int i = 0; i<vCourante; i++)
 			{
 				etat.deplaceTroncontete(1);
-				System.out.println("etat = "+etat);
+				
 				if(etat.getDirection().equals(Direction.DROITE))
 					algoDeplacementDroite();
 				else
@@ -190,7 +196,7 @@ public class Train implements Observer{
 		 * A l'initialisation le nombre de troncon nous restant
 		 * a parcourir est taille du train - la position du troncon courant
 		 */
-		int troncon = getTaille() - etat.getTronconTete();
+		int troncon = getTaille()-1 - etat.getTronconTete();
 		Rail precedente = null;
 		boolean continuer = true;
 		/**
@@ -225,7 +231,7 @@ public class Train implements Observer{
 			}
 		}
 		
-		//System.out.println("troncon = "+troncon + " precedente = "+precedente);
+		System.out.println("troncon = "+troncon + " precedente = "+precedente);
 		if(precedente==null)
 			return new PaireRailTroncon(rail, troncon);
 		/**
@@ -275,11 +281,16 @@ public class Train implements Observer{
 	public void stop()
 	{
 		setVitesseCourante(0);
+		time.cancel();
+		time = null;
 	}
 	
 	public void start()
 	{
 		setVitesseCourante(vMax); 
+		time = new Timer();
+		execution = new AutonomeTrain(this);
+		time.schedule(execution, 0, Reseau.intervalle);
 	}
 
 	@Override
@@ -333,4 +344,44 @@ public class Train implements Observer{
 			etat.setDirection(Direction.DROITE);
 		etat.setTronconTete(queue.getTroncon());
 	}
+	
+	class AutonomeTrain extends TimerTask{
+
+		Train t;
+		
+		protected AutonomeTrain(Train t) {
+			this.t = t;
+		}
+		
+		@Override
+		public void run() {
+			try {
+				t.deplacer();
+			} catch (ErreurCollision e) {
+				e.printStackTrace();
+			} catch (ErreurJonction e) {
+				t.stop();
+				try 
+				{
+					t.inverseDirection();
+				} 
+				catch (ErreurTrain e1) 
+				{
+					e1.printStackTrace();
+				}
+				t.start();
+				System.out.println("\t-\tMESSAGE SYSTEME : Le train " +t+ " est arrive en fin de butee");
+			}
+			
+			
+			
+		}
+		
+	}
+
+	public Timer getTime() {
+		return time;
+	}
+	
+	
 }

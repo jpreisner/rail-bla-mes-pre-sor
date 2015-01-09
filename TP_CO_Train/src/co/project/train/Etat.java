@@ -7,14 +7,13 @@ public class Etat {
 	private int tronconTete;
 	private Direction direction;
 
-	public Etat(int t, Direction d) {
-		this(d);
-		this.tronconTete = t;
-	}
 
-	public Etat(Direction d) {
+	public Etat(Direction d, int posTeteTrain) {
 		this.direction = d;
-		this.tronconTete = 0;
+		if(this.direction.equals(Direction.DROITE))
+			this.tronconTete = posTeteTrain;
+		else
+			this.tronconTete = 0;
 	}
 
 	public int getTronconTete() {
@@ -22,7 +21,10 @@ public class Etat {
 	}
 
 	public void deplaceTroncontete(int tronconTete) {
+		if(direction == Direction.DROITE)
 			this.tronconTete += tronconTete;
+		else
+			this.tronconTete -= tronconTete;
 	}
 
 	public Direction getDirection() {
