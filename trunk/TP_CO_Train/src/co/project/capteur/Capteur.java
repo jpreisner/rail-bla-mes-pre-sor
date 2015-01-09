@@ -1,12 +1,10 @@
 package co.project.capteur;
 
+import java.util.Map.Entry;
 import java.util.Observable;
 
 import co.project.exception.ErreurConstruction;
-import co.project.exception.ErreurJonction;
 import co.project.infrastructure.rail.Rail;
-import co.project.train.Direction;
-import co.project.train.PaireRailTroncon;
 import co.project.train.Train;
 
 public abstract class Capteur extends Observable {
@@ -28,8 +26,15 @@ public abstract class Capteur extends Observable {
 	 * 
 	 * @return true/false si un train passe sur le capteur
 	 */
-	//FIXME
-	protected boolean trainPassant() {
+	public boolean trainPassant() {
+		
+		//System.err.println("je suis capteur a " + rail +  "hashMap");
+		
+		/*for(Entry<Capteur,Integer> entry : rail.getCapteurTroncon().entrySet())
+		{
+			System.err.println("(key = "+entry.getKey() + ", " + entry.getValue() +  ")");
+		}*/
+		
 		for (Train train : getRail().getTrains()) {
 			
 			if(estSurCapteur(train))
@@ -52,19 +57,20 @@ public abstract class Capteur extends Observable {
 	
 	public boolean estSurCapteur(Train t)
 	{
+		
+		
 		/**
 		 * A l'initialisation le nombre de troncon nous restant
 		 * a parcourir est taille du train - la position du troncon courant
 		 */
-		int troncon = t.getTaille() - t.getEtat().getTronconTete();
+		int troncon = t.getTaille();
 		Rail precedente = null;
 		boolean continuer = true;
 		/**
 		 * On parcours tant que notre nombre de troncon est positif 
 		 * Et qu'il faut continuer a parcourir les rail
 		 */
-		while(troncon>0 && continuer) {
-			try {
+		while(troncon>=0 && continuer && precedente!=null) {
 				/**
 				 * On recupere la rail precedente
 				 */
@@ -72,6 +78,9 @@ public abstract class Capteur extends Observable {
 					precedente = t.railPrecedenteDirection(t.getRail());
 				else
 					precedente = t.railPrecedenteDirection(precedente);
+				
+				if(precedente==null)
+					break;
 				
 				/**
 				 * On dispose de 2 cas
@@ -83,14 +92,14 @@ public abstract class Capteur extends Observable {
 				 * Auquel cas on s'arrete
 				 */
 				
+				System.err.println("hashMap"+precedente.getCapteurTroncon());
+				
 				if(precedente.getCapteurTroncon().containsKey(this))
 				{
 					return true;
 				}
 				
-			} catch (ErreurJonction e) {
-				return false;
-			}
+			
 		}
 		return false;
 	}
