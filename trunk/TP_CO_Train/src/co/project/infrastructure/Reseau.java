@@ -25,7 +25,7 @@ public final class Reseau {
 	private ArrayList<Train> matRoulant;
 	private Timer timer;
 	private ExecutionReseau execution;
-	public static int intervalle = 1000;
+	public static int intervalle = 200;
 
 	/**
 	 * Constructeur prive
@@ -307,9 +307,9 @@ public final class Reseau {
 			result += infra ;
 		}
 		
-		for(Train train : matRoulant){
+		/*for(Train train : matRoulant){
 			result += train ;
-		}
+		}*/
 		
 		return result;
 	}
