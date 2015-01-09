@@ -168,7 +168,7 @@ public class TestTrain {
 	public static void main(String[] args) {
 		try {
 			ElemRegulation element = new ElemRegulation();
-			ArrayList<Infrastructure> infra = FabriqueInfrastructure.creeSegment(15, 5, 2, element ,new FeuTricolore(Direction.DROITE), new FeuBicolore(Direction.GAUCHE));
+			ArrayList<Infrastructure> infra = FabriqueInfrastructure.creeSegment(20, 5, 2, element ,new FeuTricolore(Direction.DROITE), new FeuBicolore(Direction.GAUCHE));
 			try {
 				Rail railDebut = (Rail)infra.get(0);
 				Butee buteeDebut = new Butee(railDebut);
@@ -186,6 +186,7 @@ public class TestTrain {
 				
 				
 				Reseau.getInstance().addTrain(new Train(26, 2 , (Rail)infra.get(9), Direction.DROITE));
+				//Reseau.getInstance().addTrain(new Train(15, 2 , (Rail)infra.get(15), Direction.GAUCHE));
 				
 				Reseau.getInstance().start();
 				

@@ -334,9 +334,13 @@ public class Train implements Observer{
 		
 		
 		PaireRailTroncon queue = getQueue();
+		if(queue==null)
+			throw new ErreurTrain("La queue du train "+this+" est introuvable impossible de le relancer");
 		System.out.println("Paire queue "+queue);
 		
 		rail = queue.getRail();
+		
+		
 		
 		if(etat.getDirection().equals(Direction.DROITE))
 			etat.setDirection(Direction.GAUCHE);
