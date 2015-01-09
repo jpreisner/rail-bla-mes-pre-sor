@@ -74,7 +74,7 @@ public class Aiguillage extends Jonction {
 	}
 
 	@Override
-	public Rail getRailSuivant(Rail rail) throws ErreurJonction {
+	public Rail getRailSuivant(Rail rail) {
 		return (rail.equals(railConnecte1)) ? railConnecte2 : railConnecte1;
 	}
 
@@ -113,7 +113,6 @@ public class Aiguillage extends Jonction {
 		 * Et qu'il faut continuer a parcourir les rail
 		 */
 		while(troncon>0 && continuer) {
-			try {
 				/**
 				 * On recupere la rail precedente
 				 */
@@ -137,9 +136,7 @@ public class Aiguillage extends Jonction {
 					return true;
 				}
 				
-			} catch (ErreurJonction e) {
-				return false;
-			}
+			
 		}
 		return false;
 	}
@@ -196,9 +193,9 @@ public class Aiguillage extends Jonction {
 			{
 				if(semaRail2.getEtatNeutre()!=null)
 				{
-					if(getRailConnecte2().getJonctionDroite().equals(this))
+					if(getRailConnecte2().getJonctionDroite()!=null && getRailConnecte2().getJonctionDroite().equals(this))
 						getRailConnecte2().getSemaDroite().setEtatNeutre();
-					else
+					else if(getRailConnecte2().getJonctionGauche()!=null && getRailConnecte2().getJonctionGauche().equals(this))
 						getRailConnecte2().getSemaGauche().setEtatNeutre();
 				}
 			}
@@ -209,11 +206,13 @@ public class Aiguillage extends Jonction {
 			{
 				if(!rail.equals(railConnecte1) && !rail.equals(railConnecte2))
 				{
-					if(rail.getJonctionDroite().equals(this) && rail.getSemaDroite()!=null && rail.getSemaDroite().getEtatStop()!=null)
+					System.out.println("--- "+rail.getSemaDroite());
+					System.out.println("rail.getJonctionDroite() " + rail.getJonctionDroite());
+					if(rail.getSemaDroite()!=null && rail.getSemaDroite().getEtatStop()!=null && rail.getJonctionDroite().equals(this))
 					{
 						rail.getSemaDroite().setEtatStop();
 					}
-					else if(rail.getJonctionGauche().equals(this) && rail.getSemaGauche()!=null && rail.getSemaGauche().getEtatStop()!=null)
+					else if(rail.getSemaGauche()!=null && rail.getSemaGauche().getEtatStop()!=null && rail.getJonctionGauche().equals(this) )
 					{
 						rail.getSemaGauche().setEtatStop();;
 					}

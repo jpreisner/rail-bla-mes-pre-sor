@@ -18,7 +18,7 @@ import co.project.train.Direction;
 
 public class FabriqueInfrastructure {
 
-	private static int TAILLE_RAIL_DEFAUT = 10;
+	private static int TAILLE_RAIL_DEFAUT = 5;
 
 	/**
 	 * Creer une ligne de rails connectee par des jonctions simples, sans butee aux extremitees
@@ -60,9 +60,9 @@ public class FabriqueInfrastructure {
 			Semaphore s1copie = (Semaphore)s1.clone();
 			Semaphore s2copie = (Semaphore)s2.clone();
 			
-			alRail.get(0).setSemaDroite(s1copie);
+			alRail.get(0).setSemaGauche(s1copie);
 			
-			alRail.get(alRail.size()-1).setSemaGauche(s2copie);
+			alRail.get(alRail.size()-1).setSemaDroite(s2copie);
 			
 			alSema.add(s1copie);
 			alSema.add(s2copie);
@@ -117,13 +117,14 @@ public class FabriqueInfrastructure {
 		return creeAiguillageN(4, tailleRail, sema);
 	}
 	
-	private static void attributionSemaphore(Aiguillage aiguillage, Semaphore sema) throws CloneNotSupportedException
+	private static void attributionSemaphore(Aiguillage aiguillage, Semaphore sema) throws CloneNotSupportedException, ErreurConstruction
 	{
 		int i = 0;
 		
 		while(i<aiguillage.getRails().size()/2)
 		{
 			aiguillage.getRails().get(i).setJonctionDroite(aiguillage);
+			aiguillage.getRails().get(i).addCapteurTroncon(new CapteurPresence(aiguillage.getRails().get(i), aiguillage.getRails().get(i).getLongueur()-1));
 			aiguillage.getRails().get(i).setSemaDroite((Semaphore) sema.clone());
 			i++;
 		}
@@ -132,6 +133,7 @@ public class FabriqueInfrastructure {
 		{
 			aiguillage.getRails().get(i).setJonctionGauche(aiguillage);
 			aiguillage.getRails().get(i).setSemaGauche((Semaphore) sema.clone());
+			aiguillage.getRails().get(i).addCapteurTroncon(new CapteurPresence(aiguillage.getRails().get(i), 6));
 			i++;
 		}
 		

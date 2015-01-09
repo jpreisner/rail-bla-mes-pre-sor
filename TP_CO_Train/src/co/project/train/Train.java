@@ -2,7 +2,6 @@ package co.project.train;
 
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Queue;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -14,6 +13,11 @@ import co.project.infrastructure.Reseau;
 import co.project.infrastructure.rail.Rail;
 
 public class Train implements Observer{
+	
+	private enum Retour{
+		EN_BUTEE,
+		NON_EN_BUTEE;
+	}
 	/* compteur d'instance */
 	private static int id = 0;
 	private int idTrain;
@@ -27,6 +31,7 @@ public class Train implements Observer{
 	/* private EtatCourant etatTrain; */
 	private Rail rail;
 	private Etat etat;
+	private boolean enDeplacement = false;
 	
 	//Timer
 	AutonomeTrain execution;
@@ -100,8 +105,9 @@ public class Train implements Observer{
 	 * Train observe les semaphores qui sont dans sa direction
 	 * @throws ErreurJonction
 	 */
-	public void deplacer() throws ErreurJonction , ErreurCollision {
+	public Retour deplacer() throws ErreurJonction , ErreurCollision {
 		
+		enDeplacement = true;
 		/*System.out.println("\t\t\tAVANT DEPLACEMENT -------");
 		System.out.println(this);*/
 		
@@ -109,10 +115,11 @@ public class Train implements Observer{
 		
 		if(etat.getDirection() == Direction.DROITE)
 		{
+			//System.out.println("..........................................."+rail.getSemaDroite());
 			if(rail.getSemaDroite()!=null && etat.getDirection().equals(rail.getSemaDroite().getDirection()))
 			{
 				setVitesseCourante(rail.getSemaDroite().getEtat().getVitesse(vCourante));
-				deplacement = etat.getTronconTete();
+				deplacement = rail.getLongueur() - 1 - etat.getTronconTete();
 			}
 		}
 		else
@@ -120,7 +127,7 @@ public class Train implements Observer{
 			if(rail.getSemaGauche()!=null && etat.getDirection().equals(rail.getSemaGauche().getDirection()))
 			{
 				setVitesseCourante(rail.getSemaGauche().getEtat().getVitesse(vCourante));
-				deplacement = rail.getLongueur()-etat.getTronconTete();
+				deplacement = etat.getTronconTete();
 			}
 		}
 		
@@ -153,67 +160,138 @@ public class Train implements Observer{
 				etat.deplaceTroncontete(1);
 				
 				if(etat.getDirection().equals(Direction.DROITE))
-					algoDeplacementDroite();
+				{
+					if(algoDeplacementDroite()==Retour.EN_BUTEE)
+						return Retour.EN_BUTEE;
+				}
 				else
-					algoDeplacementGauche();
+				{
+					if(algoDeplacementGauche()==Retour.EN_BUTEE)
+						return Retour.EN_BUTEE;
+				}
 				Reseau.getInstance().testCollisions(this);
 			}
 			
 			
 		}
 		
+		enDeplacement = false;
+		
+		return Retour.NON_EN_BUTEE;
+		
 		/*System.out.println("\t\t\tAPRES DEPLACEMENT -------");
 		System.out.println(this);*/
 	}
 	
-	private void algoDeplacementDroite() throws ErreurJonction {
+	private Retour algoDeplacementDroite(){
 		
+		//System.out.println("geTranconTete Avant : "+etat.getTronconTete() + " true ou false "+(etat.getTronconTete() == rail.getLongueur()));
 		if(etat.getTronconTete() == rail.getLongueur())
 		{
-			rail = railSuivanteDirection();
-			etat.setTronconTete(0);
+			Rail tmp = railSuivanteDirection();
+			if (tmp != null) {
+				rail.retirerTrain(this);
+				rail = railSuivanteDirection();
+				rail.ajouterTrain(this);
+				etat.setTronconTete(0);
+				return Retour.NON_EN_BUTEE;
+			} else {
+				etat.setTronconTete(rail.getLongueur() - 1);
+				return Retour.EN_BUTEE;
+			}
 		}
-		
+		return Retour.NON_EN_BUTEE;
+		//System.out.println("geTranconTete Apres: "+etat.getTronconTete());
 	}
 
-	private void algoDeplacementGauche() throws ErreurJonction {
+	private Retour algoDeplacementGauche() {
 		
-		if(etat.getTronconTete() == -1)
-		{
-			rail = railSuivanteDirection();
-			etat.setTronconTete(rail.getLongueur()-1);
+		if (etat.getTronconTete() == -1) {
+			Rail tmp = railSuivanteDirection();
+			if (tmp != null) {
+				rail.retirerTrain(this);
+				rail = railSuivanteDirection();
+				rail.ajouterTrain(this);
+				etat.setTronconTete(rail.getLongueur() - 1);
+				return Retour.NON_EN_BUTEE;
+			} else {
+				etat.setTronconTete(0);
+				return Retour.EN_BUTEE;
+				
+			}
+
 		}
+		
+		return Retour.NON_EN_BUTEE;
 	}
 
 	/**
 	 * Retourne la queue du train
 	 * @return une PaireRailTroncon : contient l'information de la rail ou 
 	 * se trouve la queue et a la fois le troncon
+	 * @throws ErreurJonction 
 	 */
 	public PaireRailTroncon getQueue()
 	{
+		
+		
+		//System.out.println("\t\t\t\t\t TRAIN AVANT " + this);
+		
+		
+		Rail precedente = null;
 		/**
 		 * A l'initialisation le nombre de troncon nous restant
 		 * a parcourir est taille du train - la position du troncon courant
 		 */
-		int troncon = getTaille() - etat.getTronconTete() - 1;
-		Rail precedente = null;
+		//int nbTroncon = getTaille() - etat.getTronconTete() - 1;
+		int nbTroncon = getTaille();
+		//System.out.println("--------------- nbTrancon initial "+nbTroncon);
+		//Dir G
+		
+		if(etat.getDirection().equals(Direction.DROITE))
+		{
+			if(etat.getTronconTete()<nbTroncon)
+			{
+				//System.out.println("getTrancon tete "+etat.getTronconTete());
+				nbTroncon -= (etat.getTronconTete()+1);
+				//System.out.println("----------------- nbTroncon : "+nbTroncon);
+				precedente = railPrecedenteDirection(rail);
+			}
+			else
+			{
+				return new PaireRailTroncon(rail, etat.getTronconTete()-nbTroncon);
+			}
+		}
+		//Dir D
+		else
+		{
+			if(rail.getLongueur()-etat.getTronconTete()<nbTroncon)
+			{
+				//System.out.println("Direction " + etat.getDirection() + " rail actuel" + rail +  "rail precedente" + railPrecedenteDirection(rail));
+				precedente = railPrecedenteDirection(rail);
+				nbTroncon -= (precedente.getLongueur()-etat.getTronconTete());
+				//System.out.println("----------------- nbTroncon : "+nbTroncon);
+			}
+			else
+			{
+				return new PaireRailTroncon(rail, etat.getTronconTete()+nbTroncon);
+			}
+		}
+		
+		
+		
+		
 		boolean continuer = true;
 		/**
 		 * On parcours tant que notre nombre de troncon est positif 
 		 * Et qu'il faut continuer a parcourir les rail
 		 */
-		while(troncon>=0 && continuer) {
-			
-			System.out.println("troncon = " + troncon);
-			try {
+		while(nbTroncon>=0 && continuer) {
 				/**
 				 * On recupere la rail precedente
 				 */
-				if(precedente==null)
-					precedente = railPrecedenteDirection(rail);
-				else
-					precedente = railPrecedenteDirection(precedente);
+
+					
 				//System.out.println("precendente.getLongueur() = "+precedente.getLongueur());
 				/**
 				 * On dispose de 2 cas
@@ -224,44 +302,36 @@ public class Train implements Observer{
 				 * 2) (else) notre rail peut contenir un nombre de troncon : troncon
 				 * Auquel cas on s'arrete
 				 */
-				if(etat.getDirection()==Direction.GAUCHE)
-					System.out.println("Condition : "+precedente.getLongueur()+"<"+troncon);
-				
-				
-				if(precedente.getLongueur()<troncon){
-					//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!precedente.getLongueur()=" + precedente.getLongueur());
-					troncon-=precedente.getLongueur();
+				//D->G
+				if(etat.getDirection()==Direction.DROITE)
+				{
+					if(nbTroncon>=precedente.getLongueur())
+					{
+						precedente = railPrecedenteDirection(precedente);
+						nbTroncon -= precedente.getLongueur();
+					}
+					else
+					{
+						return new PaireRailTroncon(precedente, precedente.getLongueur()-nbTroncon-1);
+					}
 				}
 				else
 				{
-					System.out.println("!!!!!!!!!!! troncon = " + troncon);
-					//troncon-=precedente.getLongueur();
-					continuer = false;
+					if(nbTroncon>=precedente.getLongueur())
+					{
+						precedente = railPrecedenteDirection(precedente);
+						nbTroncon -= precedente.getLongueur();
+					}
+					else
+					{
+						return new PaireRailTroncon(precedente, nbTroncon);
+					}
+					
 				}
-			} catch (ErreurJonction e) {
-				return null;
-			}
+			
 		}
 		
-		System.out.println("troncon = "+troncon + " precedente = "+precedente);
-		if(precedente==null)
-			return new PaireRailTroncon(rail, troncon);
-		/**
-		 * Pour recuperer la position exacte du troncon ou se trouve la queue
-		 * On retourne la taille de la rail - le nombre de troncon nous restant
-		 */
-		int tmp = precedente.getLongueur()-troncon;
-		//System.out.println("tmp = "+tmp);
-		
-		/**
-		 * FAIRE UN IF DIRECTION Droite ET IF Direction Gauche
-		 */
-		if(troncon==0)
-			return new PaireRailTroncon(precedente, troncon);
-		else if(troncon>0)
-			return new PaireRailTroncon(precedente, precedente.getLongueur()-troncon-1);
-		else 
-			return new PaireRailTroncon(precedente, precedente.getLongueur()-1);
+		return null;
 	}
 	
 	/**
@@ -269,7 +339,7 @@ public class Train implements Observer{
 	 * @return la rail suivante de la rail courante en fonction de la direction
 	 * @throws ErreurJonction
 	 */
-	public Rail railSuivanteDirection() throws ErreurJonction
+	public Rail railSuivanteDirection()
 	{
 		if(etat.getDirection().equals(Direction.DROITE))
 			return rail.getJonctionDroite().getRailSuivant(rail);
@@ -283,13 +353,18 @@ public class Train implements Observer{
 	 * @return la rail suivante de la rail courante en fonction de la direction
 	 * @throws ErreurJonction
 	 */
-	public Rail railPrecedenteDirection(Rail railParam) throws ErreurJonction
+	public Rail railPrecedenteDirection(Rail railParam)
 	{
+		
 		if(etat.getDirection().equals(Direction.GAUCHE))
+		{
 			return railParam.getJonctionDroite().getRailSuivant(railParam);
+		}
 		else	
 			return railParam.getJonctionGauche().getRailSuivant(railParam);
 	}
+
+
 	
 	/**
 	 * Arrete le train
@@ -298,11 +373,11 @@ public class Train implements Observer{
 	{
 		setVitesseCourante(0);
 		time.cancel();
-		time = null;
 	}
 	
 	public void start()
 	{
+		enDeplacement = false;
 		setVitesseCourante(vMax); 
 		time = new Timer();
 		execution = new AutonomeTrain(this);
@@ -338,11 +413,10 @@ public class Train implements Observer{
 			throw new ErreurTrain("Impossible d'inverse la direction d'un train en mouvement");
 		
 		boolean exceptionButee = false;
-		try {
-			railSuivanteDirection();
-		} catch (ErreurJonction e) {
-			exceptionButee = true;
-		}
+			if(railSuivanteDirection()==null)
+			{
+				exceptionButee = true;
+			}
 		
 		if(!exceptionButee)
 			throw new ErreurTrain("Impossible de changer la direction de train car il n'est pas en fin de butee");
@@ -375,27 +449,29 @@ public class Train implements Observer{
 		
 		@Override
 		public void run() {
-			try {
-				t.deplacer();
-				System.out.println("prout : "+t);
-			} catch (ErreurCollision e) {
-				e.printStackTrace();
-			} catch (ErreurJonction e) {
-				t.stop();
-				try 
-				{
-					t.inverseDirection();
-				} 
-				catch (ErreurTrain e1) 
-				{
-					e1.printStackTrace();
+			
+			if(!t.enDeplacement)
+			{
+				try {
+					if(t.deplacer()==Retour.EN_BUTEE)
+					{
+						t.stop();
+						try {
+							t.inverseDirection();
+						} catch (ErreurTrain e) {
+							e.printStackTrace();
+						}
+						t.start();
+					}
+				} catch (ErreurCollision e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ErreurJonction e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-				t.start();
-				System.out.println("\t-\tMESSAGE SYSTEME : Le train " +t+ " est arrive en fin de butee");
+				System.out.println("Train <====> : "+t+"\n\n");
 			}
-			
-			
-			
 		}
 		
 	}

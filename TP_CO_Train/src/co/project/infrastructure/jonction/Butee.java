@@ -17,8 +17,9 @@ public class Butee extends Jonction {
 	}
 
 	@Override
-	public Rail getRailSuivant(Rail rail) throws ErreurJonction {
-		throw new ErreurJonction("Fin de la voie, depassement de butee");
+	public Rail getRailSuivant(Rail rail) {
+		//throw new ErreurJonction("Fin de la voie, depassement de butee");
+		return null;
 	}
 
 	@Override
