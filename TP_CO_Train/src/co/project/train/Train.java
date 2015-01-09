@@ -196,14 +196,14 @@ public class Train implements Observer{
 		 * A l'initialisation le nombre de troncon nous restant
 		 * a parcourir est taille du train - la position du troncon courant
 		 */
-		int troncon = getTaille()-1 - etat.getTronconTete();
+		int troncon = getTaille() - etat.getTronconTete() - 1;
 		Rail precedente = null;
 		boolean continuer = true;
 		/**
 		 * On parcours tant que notre nombre de troncon est positif 
 		 * Et qu'il faut continuer a parcourir les rail
 		 */
-		while(troncon>0 && continuer) {
+		while(troncon>=0 && continuer) {
 			try {
 				/**
 				 * On recupere la rail precedente
@@ -222,10 +222,17 @@ public class Train implements Observer{
 				 * 2) (else) notre rail peut contenir un nombre de troncon : troncon
 				 * Auquel cas on s'arrete
 				 */
-				if(precedente.getLongueur()<=troncon)
+				if(etat.getDirection()==Direction.GAUCHE)
+					System.out.println("Condition : "+precedente.getLongueur()+"<"+troncon);
+				
+				
+				if(precedente.getLongueur()<troncon)
 					troncon-=precedente.getLongueur();
 				else
+				{
+					troncon-=precedente.getLongueur();;
 					continuer = false;
+				}
 			} catch (ErreurJonction e) {
 				return null;
 			}
@@ -361,6 +368,7 @@ public class Train implements Observer{
 		public void run() {
 			try {
 				t.deplacer();
+				System.out.println("prout : "+t);
 			} catch (ErreurCollision e) {
 				e.printStackTrace();
 			} catch (ErreurJonction e) {
