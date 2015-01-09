@@ -204,6 +204,8 @@ public class Train implements Observer{
 		 * Et qu'il faut continuer a parcourir les rail
 		 */
 		while(troncon>=0 && continuer) {
+			
+			System.out.println("troncon = " + troncon);
 			try {
 				/**
 				 * On recupere la rail precedente
@@ -226,11 +228,14 @@ public class Train implements Observer{
 					System.out.println("Condition : "+precedente.getLongueur()+"<"+troncon);
 				
 				
-				if(precedente.getLongueur()<troncon)
+				if(precedente.getLongueur()<troncon){
+					//System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!precedente.getLongueur()=" + precedente.getLongueur());
 					troncon-=precedente.getLongueur();
+				}
 				else
 				{
-					troncon-=precedente.getLongueur();;
+					System.out.println("!!!!!!!!!!! troncon = " + troncon);
+					//troncon-=precedente.getLongueur();
 					continuer = false;
 				}
 			} catch (ErreurJonction e) {
@@ -247,6 +252,10 @@ public class Train implements Observer{
 		 */
 		int tmp = precedente.getLongueur()-troncon;
 		//System.out.println("tmp = "+tmp);
+		
+		/**
+		 * FAIRE UN IF DIRECTION Droite ET IF Direction Gauche
+		 */
 		if(troncon==0)
 			return new PaireRailTroncon(precedente, troncon);
 		else if(troncon>0)
