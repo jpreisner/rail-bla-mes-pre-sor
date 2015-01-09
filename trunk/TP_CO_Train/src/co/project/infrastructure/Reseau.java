@@ -25,7 +25,7 @@ public final class Reseau {
 	private ArrayList<Train> matRoulant;
 	private Timer timer;
 	private ExecutionReseau execution;
-	public static int intervalle = 200;
+	public static int intervalle = 500;
 
 	/**
 	 * Constructeur prive
@@ -119,11 +119,7 @@ public final class Reseau {
 	 * S'il y a une erreur de construction du reseau
 	 * @throws ErreurConstruction
 	 */
-	
-	/**
-	 * A COMPLETER
-	 */
-	public void verifieReseau() throws ErreurConstruction
+	public void verifieReseau() throws ErreurConstruction, ErreurJonction
 	{
 		
 		if(reseauInfra.size()==0)
@@ -188,6 +184,8 @@ public final class Reseau {
 	 */
 	private void testCollisionQueue(Train train) throws ErreurCollision, ErreurJonction {
 		
+		if(matRoulant.size()==1)
+			return;
 		for (Train train2 : matRoulant) { 
 			PaireRailTroncon queue = train2.getQueue();
 			if(!train.equals(train2)){
@@ -320,16 +318,21 @@ public final class Reseau {
 		@Override
 		public void run() {
 			
-			System.out.println("Unite de temps : \n");
+			//System.out.println("----"+Reseau.getInstance());
+			
+			//System.out.println("Unite de temps : \n");
 			for(Infrastructure r : Reseau.getInstance().getReseauInfra())
 			{
 				try {
 					
 					Rail rail = (Rail)r;
+					//System.err.println("Rail parcours capteur : "+rail);
 					for(Entry<Capteur,Integer> entry : rail.getCapteurTroncon().entrySet())
 					{
 						Capteur key = entry.getKey();
 						key.notifieTrainPassant();
+						
+						//System.err.println("KEY : " + key.trainPassant());
 					}
 					
 				} catch (ClassCastException e) {

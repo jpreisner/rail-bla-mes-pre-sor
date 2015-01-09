@@ -15,6 +15,16 @@ public class Rail extends Infrastructure {
 	private Jonction gauche;
 	private Jonction droite;
 	private Semaphore semaDroite,semaGauche;
+	
+	
+
+	public Semaphore getSemGauche() {
+		return semaGauche;
+	}
+
+	public Semaphore getSemDroite() {
+		return semaDroite;
+	}
 
 	/* nb de troncons/capteur */
 	private HashMap<Capteur, Integer> capteurTroncon;
@@ -84,11 +94,8 @@ public class Rail extends Infrastructure {
 	}
 	
 	public void addCapteurTroncon(Capteur capt)throws ErreurConstruction{
-		if (getCapteurTroncon().containsKey(capt)){
-			throw new ErreurConstruction("il y a deja un capteur sur ce troncon");
-		}else{
-			getCapteurTroncon().put(capt, capt.getNumTronconRail());
-		}
+		getCapteurTroncon().put(capt, capt.getNumTronconRail());
+		//System.err.println("------>"+getCapteurTroncon().get(capt));
 	}
 	/**
 	 * @return true/false si le rail est connectable ou pas
@@ -119,7 +126,7 @@ public class Rail extends Infrastructure {
 
 	@Override
 	public String toString() {
-		return "[ Rail id = " + idInfrastructure + " ]";
+		return "[ Rail id = " + idInfrastructure + "]";
 	}
 
 	@Override

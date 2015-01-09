@@ -14,7 +14,7 @@ public class JonctionSimple extends Jonction {
 	}
 
 	@Override
-	public Rail getRailSuivant(Rail rail) throws ErreurJonction {
+	public Rail getRailSuivant(Rail rail) {
 		
 		if (rail.equals(getRailGauche())) {
 			return getRailDroite();
@@ -40,21 +40,16 @@ public class JonctionSimple extends Jonction {
 
 	@Override
 	public void initRailJonction() throws ErreurConstruction {
-		if (!getRailGauche().connectable() || !getRailDroite().connectable()) {
+		/*if (!getRailGauche().connectable() || !getRailDroite().connectable()) {
 			throw new ErreurConstruction("Les 2 rails ont deja des jonctions, pose de jonction simple impossible");
-		} else {
+		} else {*/
 			if(getRailGauche().getJonctionDroite()==null){
 				getRailGauche().setJonctionDroite(this);
-			}else{
-				getRailGauche().setJonctionGauche(this);
 			}
 			
 			if(getRailDroite().getJonctionGauche()==null){
 				getRailDroite().setJonctionGauche(this);
-			}else{
-				getRailDroite().setJonctionDroite(this);
 			}
-		}
 	}
 	
 	@Override
