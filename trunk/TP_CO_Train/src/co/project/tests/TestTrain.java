@@ -185,7 +185,7 @@ public class TestTrain {
 				Reseau.getInstance().verifieReseau();
 				
 				
-				Reseau.getInstance().addTrain(new Train(10, 2 , (Rail)infra.get(3), Direction.DROITE));
+				Reseau.getInstance().addTrain(new Train(26, 2 , (Rail)infra.get(9), Direction.DROITE));
 				
 				Reseau.getInstance().start();
 				
